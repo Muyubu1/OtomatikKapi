@@ -8,9 +8,13 @@ const _inter = Inter({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "FY Otomatik Kapı - Endüstriyel Otomatik Kapı Sistemleri",
+  title: "CKS Otomatik Kapı - Endüstriyel Otomatik Kapı Sistemleri",
   description: "Endüstriyel otomatik kapı ve yükleme sistemleri. Güvenli, hızlı ve kaliteli çözümler.",
-    generator: 'v0.app'
+  generator: 'v0.app',
+  icons: {
+    icon: '/logoCKS_br.png',
+    apple: '/logoCKS_br.png',
+  },
 }
 
 export default function RootLayout({

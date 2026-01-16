@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import { Mail, Phone, MapPin, Linkedin, Instagram, Facebook, Twitter } from "lucide-react"
 
 export default function Footer() {
@@ -9,10 +10,14 @@ export default function Footer() {
           {/* Company Info */}
           <div>
             <div className="flex items-center mb-4">
-              <div className="bg-white text-[#1e3a5f] px-2 py-1 text-xl font-bold">FY</div>
-              <div className="ml-2">
-                <div className="font-bold text-sm leading-tight">OTOMATİK KAPI</div>
-                <div className="text-orange-400 text-xs leading-tight">YÜKLEME SİSTEMLERİ</div>
+              <div className="bg-white px-3 py-2 rounded">
+                <Image
+                  src="/logoCKS_br.png"
+                  alt="CKS Otomatik Kapı Logo"
+                  width={200}
+                  height={60}
+                  className="h-12 w-auto object-contain"
+                />
               </div>
             </div>
             <p className="text-gray-300 text-sm mb-4">
@@ -38,7 +43,7 @@ export default function Footer() {
           <div>
             <h3 className="font-bold text-lg mb-4">Hızlı Linkler</h3>
             <ul className="space-y-2">
-              {["Anasayfa", "Hakkımızda", "Ürünlerimiz", "Referanslar", "Blog", "İletişim"].map((item) => (
+              {["Anasayfa", "Hakkımızda", "Ürünlerimiz", "İletişim"].map((item) => (
                 <li key={item}>
                   <Link href="#" className="text-gray-300 hover:text-orange-400 transition-colors text-sm">
                     {item}
@@ -86,10 +91,10 @@ export default function Footer() {
               <li className="flex items-center gap-3">
                 <Mail className="h-5 w-5 flex-shrink-0 text-orange-400" />
                 <a
-                  href="mailto:info@fyotomatikkapi.com"
+                  href="mailto:info@cksotomatikkapi.com"
                   className="text-gray-300 hover:text-orange-400 transition-colors text-sm"
                 >
-                  info@fyotomatikkapi.com
+                  info@cksotomatikkapi.com
                 </a>
               </li>
             </ul>
