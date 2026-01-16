@@ -5,6 +5,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { ChevronDown, ChevronRight, Linkedin, Instagram, Mail } from "lucide-react"
+import logoCKS from "@/public/logoCKS_br.png"
 
 // Mega menü kategorileri ve alt öğeleri
 const productCategories = [
@@ -135,7 +136,7 @@ export default function Header() {
             <Link href="/" className="flex items-center gap-2">
               <div className="bg-white px-3 py-2 rounded">
                 <Image
-                  src="/logoCKS_br.png"
+                  src={logoCKS}
                   alt="CKS Otomatik Kapı Logo"
                   width={200}
                   height={60}

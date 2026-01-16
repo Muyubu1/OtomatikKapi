@@ -1,6 +1,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import { Mail, Phone, MapPin, Linkedin, Instagram, Facebook, Twitter } from "lucide-react"
+import logoCKS from "@/public/logoCKS_br.png"
 
 export default function Footer() {
   return (
@@ -12,7 +13,7 @@ export default function Footer() {
             <div className="flex items-center mb-4">
               <div className="bg-white px-3 py-2 rounded">
                 <Image
-                  src="/logoCKS_br.png"
+                  src={logoCKS}
                   alt="CKS Otomatik Kapı Logo"
                   width={200}
                   height={60}

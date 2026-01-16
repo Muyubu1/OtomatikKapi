@@ -12,7 +12,7 @@ const nextConfig = {
     assetPrefix: '/OtomatikKapi/',
     trailingSlash: true,
   }),
-  
+
   typescript: {
     ignoreBuildErrors: true,
   },
