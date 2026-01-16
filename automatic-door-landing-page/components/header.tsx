@@ -79,6 +79,7 @@ const navItems = [
   { name: "Anasayfa", href: "#" },
   { name: "Hakkımızda", href: "#about" },
   { name: "Ürünlerimiz", href: "#products", hasMegaMenu: true },
+  { name: "Galeri", href: "/gallery" },
 ]
 
 export default function Header() {
