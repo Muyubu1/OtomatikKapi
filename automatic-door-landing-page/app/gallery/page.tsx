@@ -7,101 +7,193 @@ import { ArrowLeft } from 'lucide-react';
 
 const galleryData: GalleryItem[] = [
     {
-        common: 'Lion',
-        binomial: 'Panthera leo',
+        common: 'ATEX Seksiyonel Kapı',
+        binomial: 'Patlama Korumalı Kapı Sistemleri',
         photo: {
-            url: 'https://images.unsplash.com/photo-1583499871880-de841d1ace2a?w=900&auto=format&fit=crop&q=80',
-            text: 'lion couple kissing on a brown rock',
-            pos: '47% 35%',
-            by: 'Clément Roy'
+            url: '/assets/gallery/Atex-Seksiyonel-Kapi-4-773x1030.jpg',
+            text: 'Patlama riski bulunan ortamlar için özel tasarlanmış ATEX sertifikalı seksiyonel kapı sistemi',
+            pos: '50% 50%',
+            by: 'CKS Otomatik Kapı'
         }
     },
     {
-        common: 'Asiatic elephant',
-        binomial: 'Elephas maximus',
+        common: 'Bariyer Kapı Sistemleri',
+        binomial: 'Güvenlik Bariyer Sistemleri',
         photo: {
-            url: 'https://images.unsplash.com/photo-1571406761758-9a3eed5338ef?w=900&auto=format&fit=crop&q=80',
-            text: 'herd of Sri Lankan elephants walking away from a river',
-            pos: '75% 65%',
-            by: 'Alex Azabache'
+            url: '/assets/gallery/Bariyer-Kapi-Sistemleri-3-1030x685.jpg',
+            text: 'Araç giriş-çıkış kontrolü için profesyonel bariyer kapı sistemleri',
+            pos: '50% 50%',
+            by: 'CKS Otomatik Kapı'
         }
     },
     {
-        common: 'Red-tailed black cockatoo',
-        binomial: 'Calyptorhynchus banksii',
+        common: 'Dairesel Bahçe Kapısı',
+        binomial: 'Dekoratif Metal Kapı',
         photo: {
-            url: 'https://images.unsplash.com/photo-1619664208054-41eefeab29e9?w=900&auto=format&fit=crop&q=80',
-            text: 'close-up of a black cockatoo',
-            pos: '53% 43%',
-            by: 'David Clode'
+            url: '/assets/gallery/Dairesel-Bahce-Kapisi-1-1030x1030.jpg',
+            text: 'Estetik dairesel tasarıma sahip dekoratif bahçe giriş kapısı',
+            pos: '50% 50%',
+            by: 'CKS Otomatik Kapı'
         }
     },
     {
-        common: 'Dromedary',
-        binomial: 'Camelus dromedarius',
+        common: 'Dairesel Bahçe Kapısı',
+        binomial: 'Modern Bahçe Kapısı',
         photo: {
-            url: 'https://images.unsplash.com/photo-1662841238473-f4b137e123cb?w=900&auto=format&fit=crop&q=80',
-            text: 'camel and her new born calf walking in the Sahara desert',
-            pos: '65% 65%',
-            by: 'Moaz Tobok'
+            url: '/assets/gallery/Dairesel-Bahce-Kapisi-4.jpg',
+            text: 'Modern dairesel desenli özel tasarım bahçe kapısı',
+            pos: '50% 50%',
+            by: 'CKS Otomatik Kapı'
         }
     },
     {
-        common: 'Polar bear',
-        binomial: 'Ursus maritimus',
+        common: 'Endüstriyel Kepenk Kapı',
+        binomial: 'Hızlı Kepenk Sistemi',
         photo: {
-            url: 'https://images.unsplash.com/photo-1589648751789-c8ecb7a88bd5?w=900&auto=format&fit=crop&q=80',
-            text: 'polar bear on the snow, by the water, raised on the hind legs, front paws together',
-            pos: '50% 25%',
-            by: 'Hans-Jurgen Mager'
+            url: '/assets/gallery/Endustriyel-Kepenk-kapi-1-773x1030.jpg',
+            text: 'Endüstriyel tesisler için yüksek performanslı kepenk kapı sistemi',
+            pos: '50% 50%',
+            by: 'CKS Otomatik Kapı'
         }
     },
     {
-        common: 'Giant panda',
-        binomial: 'Ailuropoda melanoleuca',
+        common: 'Endüstriyel Seksiyonel Kapı',
+        binomial: 'Sanayi Tipi Kapı',
         photo: {
-            url: 'https://images.unsplash.com/photo-1659540181281-1d89d6112832?w=900&auto=format&fit=crop&q=80',
-            text: 'giant panda hanging from a tree branch',
-            pos: '47%',
-            by: 'Jiachen Lin'
+            url: '/assets/gallery/Endustriyel-Seksiyonel-Kapi.jpg',
+            text: 'Fabrika ve depo alanları için dayanıklı endüstriyel seksiyonel kapı',
+            pos: '50% 50%',
+            by: 'CKS Otomatik Kapı'
         }
     },
     {
-        common: 'Grévy\'s zebra',
-        binomial: 'Equus grevyi',
+        common: 'Endüstriyel Şerit Perde',
+        binomial: 'PVC Şerit Perde Sistemi',
         photo: {
-            url: 'https://images.unsplash.com/photo-1526095179574-86e545346ae6?w=900&auto=format&fit=crop&q=80',
-            text: 'zebra standing on wheat field, looking back towards the camera',
-            pos: '65% 35%',
-            by: 'Jeff Griffith'
+            url: '/assets/gallery/Endustriyel-Serit-Perde-1.jpeg',
+            text: 'Soğuk hava depolarına uygun endüstriyel PVC şerit perde sistemi',
+            pos: '50% 50%',
+            by: 'CKS Otomatik Kapı'
         }
     },
     {
-        common: 'Cheetah',
-        binomial: 'Acinonyx jubatus',
+        common: 'Yangın Kapısı',
+        binomial: 'Personel Yangın Kapısı',
         photo: {
-            url: 'https://images.unsplash.com/photo-1541707519942-08fd2f6480ba?w=900&auto=format&fit=crop&q=80',
-            text: 'cheetah sitting in the grass under a blue sky',
-            by: 'Mike Bird'
+            url: '/assets/gallery/fire-door-gray-personnel-door.jpg',
+            text: 'Yangın güvenliği için tasarlanmış personel geçiş kapısı',
+            pos: '50% 50%',
+            by: 'CKS Otomatik Kapı'
         }
     },
     {
-        common: 'King penguin',
-        binomial: 'Aptenodytes patagonicus',
+        common: 'Katlanır Kapı',
+        binomial: 'Endüstriyel Katlanır Kapı',
         photo: {
-            url: 'https://images.unsplash.com/photo-1595792419466-23cec2476fa6?w=900&auto=format&fit=crop&q=80',
-            text: 'king penguin with a fluffy brown chick on grey rocks',
-            pos: '35%',
-            by: 'Martin Wettstein'
+            url: '/assets/gallery/industrial-folding-door-white.jpg',
+            text: 'Geniş açıklıklar için beyaz endüstriyel katlanır kapı sistemi',
+            pos: '50% 50%',
+            by: 'CKS Otomatik Kapı'
         }
     },
     {
-        common: 'Red panda',
-        binomial: 'Ailurus fulgens',
+        common: 'Metal Seksiyonel Kapı',
+        binomial: 'Endüstriyel Panel Kapı',
         photo: {
-            url: 'https://images.unsplash.com/photo-1689799513565-44d2bc09d75b?w=900&auto=format&fit=crop&q=80',
-            text: 'a red panda in a tree',
-            by: 'Niels Baars'
+            url: '/assets/gallery/industrial-sectional-door-gray-metal.jpg',
+            text: 'Gri metal panelli endüstriyel seksiyonel kapı sistemi',
+            pos: '50% 50%',
+            by: 'CKS Otomatik Kapı'
+        }
+    },
+    {
+        common: 'Otomatik Cam Kapı',
+        binomial: 'Fotoselli Cam Kapı',
+        photo: {
+            url: '/assets/gallery/Otomatik-Cam-Kapi-2.jpg',
+            text: 'Modern fotoselli otomatik cam kapı sistemi',
+            pos: '50% 50%',
+            by: 'CKS Otomatik Kapı'
+        }
+    },
+    {
+        common: 'Otomatik Cam Kapı',
+        binomial: 'Kayar Cam Kapı',
+        photo: {
+            url: '/assets/gallery/Otomatik-Cam-Kapi-3.jpg',
+            text: 'Şık tasarımlı otomatik kayar cam kapı sistemi',
+            pos: '50% 50%',
+            by: 'CKS Otomatik Kapı'
+        }
+    },
+    {
+        common: 'Personel Yangın Kapısı',
+        binomial: 'Güvenlik Yangın Kapısı',
+        photo: {
+            url: '/assets/gallery/Personel-Yangin-Kapisi-1-772x1030.jpg',
+            text: 'Acil çıkış ve yangın güvenliği için personel kapısı',
+            pos: '50% 50%',
+            by: 'CKS Otomatik Kapı'
+        }
+    },
+    {
+        common: 'Personel Yangın Kapısı',
+        binomial: 'Çelik Yangın Kapısı',
+        photo: {
+            url: '/assets/gallery/Personel-Yangin-Kapisi-4-773x1030.jpg',
+            text: 'Yüksek dayanıklılıklı çelik personel yangın kapısı',
+            pos: '50% 50%',
+            by: 'CKS Otomatik Kapı'
+        }
+    },
+    {
+        common: 'PVC Katlanır Kapı',
+        binomial: 'Esnek Katlanır Kapı',
+        photo: {
+            url: '/assets/gallery/PVC-Katlanir-Kapi-2-1.jpg',
+            text: 'Esnek PVC malzemeden üretilmiş katlanır kapı sistemi',
+            pos: '50% 50%',
+            by: 'CKS Otomatik Kapı'
+        }
+    },
+    {
+        common: 'Seksiyonel Kapı',
+        binomial: 'Panel Garaj Kapısı',
+        photo: {
+            url: '/assets/gallery/Seksiyonel-Kapi-2-773x1030.jpg',
+            text: 'Modern tasarımlı panelli seksiyonel garaj kapısı',
+            pos: '50% 50%',
+            by: 'CKS Otomatik Kapı'
+        }
+    },
+    {
+        common: 'Spiral Yangın Kapısı',
+        binomial: 'Sarmal Yangın Kapısı',
+        photo: {
+            url: '/assets/gallery/spiral-fire-door-silver.jpg',
+            text: 'Gümüş renkli hızlı açılır spiral yangın kapısı',
+            pos: '50% 50%',
+            by: 'CKS Otomatik Kapı'
+        }
+    },
+    {
+        common: 'PVC Şerit Perde',
+        binomial: 'Şeffaf Şerit Perde',
+        photo: {
+            url: '/assets/gallery/strip-curtain-door-transparent-pvc.jpg',
+            text: 'Şeffaf PVC şerit perde kapı sistemi',
+            pos: '50% 50%',
+            by: 'CKS Otomatik Kapı'
+        }
+    },
+    {
+        common: 'Yangın Sarmal Kapı',
+        binomial: 'Spiral Yangın Güvenlik Kapısı',
+        photo: {
+            url: '/assets/gallery/Yangin-Sarmal-Kapi-5.jpg',
+            text: 'Yangın korumalı yüksek hızlı sarmal kapı sistemi',
+            pos: '50% 50%',
+            by: 'CKS Otomatik Kapı'
         }
     },
 ];
@@ -126,7 +218,7 @@ export default function GalleryPage() {
                     <p className="text-white/60">Galeriyi döndürmek için kaydırın</p>
                 </div>
                 <div className="w-full h-full">
-                    <CircularGallery items={galleryData} />
+                    <CircularGallery items={galleryData} radius={850} />
                 </div>
             </div>
         </div>
