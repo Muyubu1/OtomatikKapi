@@ -9,7 +9,7 @@ const nextConfig = {
   ...(isGitHubPages && {
     output: 'export',
     basePath: '/OtomatikKapi',
-    assetPrefix: '/OtomatikKapi',
+    assetPrefix: '/OtomatikKapi/',
     trailingSlash: true,
   }),
   

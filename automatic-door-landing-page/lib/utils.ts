@@ -5,8 +5,9 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-// GitHub Pages basePath için yardımcı fonksiyon
-const basePath = process.env.NODE_ENV === 'production' ? '/OtomatikKapi' : ''
+// GitHub Pages basePath - GITHUB_ACTIONS ortamını kontrol et
+const isGitHubPages = typeof process !== 'undefined' && process.env.GITHUB_ACTIONS === 'true'
+const basePath = isGitHubPages ? '/OtomatikKapi' : ''
 
 export function getAssetPath(path: string): string {
   // Eğer path zaten basePath ile başlıyorsa, tekrar ekleme
