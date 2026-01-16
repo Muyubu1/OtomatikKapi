@@ -7,13 +7,16 @@ import "./globals.css"
 const _inter = Inter({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
+// GitHub Pages için basePath
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+
 export const metadata: Metadata = {
   title: "CKS Otomatik Kapı - Endüstriyel Otomatik Kapı Sistemleri",
   description: "Endüstriyel otomatik kapı ve yükleme sistemleri. Güvenli, hızlı ve kaliteli çözümler.",
   generator: 'v0.app',
   icons: {
-    icon: '/logoCKS_br.png',
-    apple: '/logoCKS_br.png',
+    icon: `${basePath}/logoCKS_br.png`,
+    apple: `${basePath}/logoCKS_br.png`,
   },
 }
 

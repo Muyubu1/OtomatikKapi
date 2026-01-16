@@ -2,6 +2,7 @@
 
 // GitHub Actions'da build edilirken true olur
 const isGitHubPages = process.env.GITHUB_ACTIONS === 'true';
+const basePath = isGitHubPages ? '/OtomatikKapi' : '';
 
 const nextConfig = {
   // Sadece GitHub Pages için static export yap
@@ -12,6 +13,11 @@ const nextConfig = {
     assetPrefix: '/OtomatikKapi/',
     trailingSlash: true,
   }),
+
+  // Favicon ve diğer static asset'ler için basePath'i client'a aktar
+  env: {
+    NEXT_PUBLIC_BASE_PATH: basePath,
+  },
 
   typescript: {
     ignoreBuildErrors: true,
