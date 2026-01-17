@@ -172,7 +172,18 @@ export default function Header() {
                   </Link>
                 ),
               )}
-              <Button className="bg-[#1e3a5f] hover:bg-[#2d4a6f] text-white">İletişim</Button>
+              <Button 
+                className="bg-[#1e3a5f] hover:bg-[#2d4a6f] text-white"
+                asChild
+              >
+                <a
+                  href={`https://wa.me/905422408699?text=${encodeURIComponent("Merhaba, otomatik kapılar hakkında fiyat bilgisi almak istiyorum.")}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  İletişim
+                </a>
+              </Button>
             </div>
 
           </div>
@@ -261,7 +272,18 @@ export default function Header() {
                   )}
                 </div>
               ))}
-              <Button className="mt-4 w-full bg-[#1e3a5f] hover:bg-[#2d4a6f] text-white">İletişim</Button>
+              <Button 
+                className="mt-4 w-full bg-[#1e3a5f] hover:bg-[#2d4a6f] text-white"
+                asChild
+              >
+                <a
+                  href={`https://wa.me/905422408699?text=${encodeURIComponent("Merhaba, otomatik kapılar hakkında fiyat bilgisi almak istiyorum.")}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  İletişim
+                </a>
+              </Button>
             </div>
           </div>
         )}
