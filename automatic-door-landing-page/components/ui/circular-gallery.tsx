@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef, HTMLAttributes } from 'react';
-import { X } from 'lucide-react';
+import React, { useState, useEffect, useRef, HTMLAttributes, useCallback } from 'react';
+import { X, Hand } from 'lucide-react';
 
 // A simple utility for conditional class names
 const cn = (...classes: (string | undefined | null | false)[]) => {
@@ -23,8 +23,10 @@ interface CircularGalleryProps extends HTMLAttributes<HTMLDivElement> {
     items: GalleryItem[];
     /** Controls how far the items are from the center. */
     radius?: number;
-    /** Controls the speed of auto-rotation when not scrolling. */
+    /** Controls the speed of auto-rotation when not interacting. */
     autoRotateSpeed?: number;
+    /** Sensitivity of drag rotation (higher = faster rotation). */
+    dragSensitivity?: number;
 }
 
 // Detail Card Modal Component
@@ -123,75 +125,172 @@ const DetailCard = ({
 };
 
 const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
-    ({ items, className, radius = 600, autoRotateSpeed = 0.02, ...props }, ref) => {
+    ({ items, className, radius = 600, autoRotateSpeed = 0.02, dragSensitivity = 0.1, ...props }, ref) => {
         const [rotation, setRotation] = useState(0);
-        const [isScrolling, setIsScrolling] = useState(false);
+        const [isDragging, setIsDragging] = useState(false);
         const [selectedItem, setSelectedItem] = useState<GalleryItem | null>(null);
-        const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+        const [showHint, setShowHint] = useState(true);
+        const dragStartRef = useRef<{ x: number; rotation: number } | null>(null);
+        const containerRef = useRef<HTMLDivElement | null>(null);
         const animationFrameRef = useRef<number | null>(null);
+        const velocityRef = useRef(0);
+        const lastXRef = useRef(0);
+        const lastTimeRef = useRef(0);
 
-        // Effect to handle scroll-based rotation
+        // Hide hint after first interaction
+        const hideHint = useCallback(() => {
+            if (showHint) setShowHint(false);
+        }, [showHint]);
+
+        // Handle mouse down
+        const handleMouseDown = useCallback((e: React.MouseEvent) => {
+            if (selectedItem) return;
+            hideHint();
+            setIsDragging(true);
+            dragStartRef.current = { x: e.clientX, rotation };
+            lastXRef.current = e.clientX;
+            lastTimeRef.current = Date.now();
+            velocityRef.current = 0;
+        }, [rotation, selectedItem, hideHint]);
+
+        // Handle touch start
+        const handleTouchStart = useCallback((e: React.TouchEvent) => {
+            if (selectedItem) return;
+            hideHint();
+            const touch = e.touches[0];
+            setIsDragging(true);
+            dragStartRef.current = { x: touch.clientX, rotation };
+            lastXRef.current = touch.clientX;
+            lastTimeRef.current = Date.now();
+            velocityRef.current = 0;
+        }, [rotation, selectedItem, hideHint]);
+
+        // Handle mouse/touch move
         useEffect(() => {
-            const handleScroll = () => {
-                setIsScrolling(true);
-                if (scrollTimeoutRef.current) {
-                    clearTimeout(scrollTimeoutRef.current);
+            const handleMouseMove = (e: MouseEvent) => {
+                if (!isDragging || !dragStartRef.current) return;
+
+                const deltaX = e.clientX - dragStartRef.current.x;
+                const newRotation = dragStartRef.current.rotation + (deltaX * dragSensitivity);
+                setRotation(newRotation);
+
+                // Calculate velocity for momentum
+                const now = Date.now();
+                const dt = now - lastTimeRef.current;
+                if (dt > 0) {
+                    velocityRef.current = ((e.clientX - lastXRef.current) / dt) * dragSensitivity * 10;
                 }
-
-                const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
-                const scrollProgress = scrollableHeight > 0 ? window.scrollY / scrollableHeight : 0;
-                const scrollRotation = scrollProgress * 360;
-                setRotation(scrollRotation);
-
-                scrollTimeoutRef.current = setTimeout(() => {
-                    setIsScrolling(false);
-                }, 150);
+                lastXRef.current = e.clientX;
+                lastTimeRef.current = now;
             };
 
-            window.addEventListener('scroll', handleScroll, { passive: true });
+            const handleTouchMove = (e: TouchEvent) => {
+                if (!isDragging || !dragStartRef.current) return;
+
+                const touch = e.touches[0];
+                const deltaX = touch.clientX - dragStartRef.current.x;
+                const newRotation = dragStartRef.current.rotation + (deltaX * dragSensitivity);
+                setRotation(newRotation);
+
+                // Calculate velocity for momentum
+                const now = Date.now();
+                const dt = now - lastTimeRef.current;
+                if (dt > 0) {
+                    velocityRef.current = ((touch.clientX - lastXRef.current) / dt) * dragSensitivity * 10;
+                }
+                lastXRef.current = touch.clientX;
+                lastTimeRef.current = now;
+            };
+
+            const handleEnd = () => {
+                setIsDragging(false);
+                dragStartRef.current = null;
+            };
+
+            if (isDragging) {
+                window.addEventListener('mousemove', handleMouseMove);
+                window.addEventListener('mouseup', handleEnd);
+                window.addEventListener('touchmove', handleTouchMove, { passive: true });
+                window.addEventListener('touchend', handleEnd);
+            }
+
             return () => {
-                window.removeEventListener('scroll', handleScroll);
-                if (scrollTimeoutRef.current) {
-                    clearTimeout(scrollTimeoutRef.current);
-                }
+                window.removeEventListener('mousemove', handleMouseMove);
+                window.removeEventListener('mouseup', handleEnd);
+                window.removeEventListener('touchmove', handleTouchMove);
+                window.removeEventListener('touchend', handleEnd);
             };
-        }, []);
+        }, [isDragging, dragSensitivity]);
 
-        // Effect for auto-rotation when not scrolling
+        // Effect for auto-rotation with momentum when not dragging
         useEffect(() => {
             // Pause auto-rotation when detail card is open
             if (selectedItem) return;
 
-            const autoRotate = () => {
-                if (!isScrolling) {
-                    setRotation(prev => prev + autoRotateSpeed);
+            const animate = () => {
+                if (!isDragging) {
+                    // Apply momentum decay
+                    if (Math.abs(velocityRef.current) > 0.01) {
+                        setRotation(prev => prev + velocityRef.current);
+                        velocityRef.current *= 0.95; // Friction
+                    } else {
+                        // Slow auto-rotation when momentum stops
+                        setRotation(prev => prev + autoRotateSpeed);
+                    }
                 }
-                animationFrameRef.current = requestAnimationFrame(autoRotate);
+                animationFrameRef.current = requestAnimationFrame(animate);
             };
 
-            animationFrameRef.current = requestAnimationFrame(autoRotate);
+            animationFrameRef.current = requestAnimationFrame(animate);
 
             return () => {
                 if (animationFrameRef.current) {
                     cancelAnimationFrame(animationFrameRef.current);
                 }
             };
-        }, [isScrolling, autoRotateSpeed, selectedItem]);
+        }, [isDragging, autoRotateSpeed, selectedItem]);
+
+        // Handle wheel for rotation (alternative to drag)
+        const handleWheel = useCallback((e: React.WheelEvent) => {
+            if (selectedItem) return;
+            hideHint();
+            e.preventDefault();
+            setRotation(prev => prev + (e.deltaY * 0.03));
+            velocityRef.current = 0;
+        }, [selectedItem, hideHint]);
 
         const anglePerItem = 360 / items.length;
 
         return (
             <>
                 <div
-                    ref={ref}
+                    ref={(node) => {
+                        containerRef.current = node;
+                        if (typeof ref === 'function') ref(node);
+                        else if (ref) ref.current = node;
+                    }}
                     role="region"
                     aria-label="Circular 3D Gallery"
-                    className={cn("relative w-full h-full flex items-center justify-center", className)}
+                    className={cn(
+                        "relative w-full h-full flex items-center justify-center select-none",
+                        isDragging ? "cursor-grabbing" : "cursor-grab",
+                        className
+                    )}
                     style={{ perspective: '2000px' }}
+                    onMouseDown={handleMouseDown}
+                    onTouchStart={handleTouchStart}
+                    onWheel={handleWheel}
                     {...props}
                 >
+                    {/* Drag Hint */}
+                    {showHint && (
+                        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-3 px-5 py-3 bg-black/60 backdrop-blur-md rounded-full border border-white/10 animate-pulse">
+                            <Hand className="w-5 h-5 text-orange-400" />
+                            <span className="text-white/90 text-sm font-medium">Döndürmek için sürükleyin veya kaydırın</span>
+                        </div>
+                    )}
                     <div
-                        className="relative w-full h-full"
+                        className="relative w-full h-full pointer-events-none"
                         style={{
                             transform: `rotateY(${rotation}deg)`,
                             transformStyle: 'preserve-3d',
@@ -209,7 +308,7 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
                                     key={item.photo.url}
                                     role="group"
                                     aria-label={item.common}
-                                    className="absolute w-[220px] h-[300px] cursor-pointer"
+                                    className="absolute w-[220px] h-[300px] cursor-pointer pointer-events-auto"
                                     style={{
                                         transform: `rotateY(${itemAngle}deg) translateZ(${radius}px)`,
                                         left: '50%',

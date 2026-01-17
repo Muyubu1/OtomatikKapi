@@ -200,27 +200,23 @@ const galleryData: GalleryItem[] = [
 
 export default function GalleryPage() {
     return (
-        // This outer container provides the scrollable height
-        <div className="w-full bg-[#0a1628] text-white" style={{ height: '500vh' }}>
-            {/* This inner container sticks to the top while scrolling */}
-            <div className="w-full h-screen sticky top-0 flex flex-col items-center justify-center overflow-hidden">
-                {/* Back button */}
-                <Link
-                    href="/"
-                    className="absolute top-8 left-8 z-20 flex items-center gap-2 text-white/80 hover:text-orange-400 transition-colors"
-                >
-                    <ArrowLeft className="h-5 w-5" />
-                    <span>Ana Sayfa</span>
-                </Link>
+        <div className="w-full h-screen bg-[#0a1628] text-white overflow-hidden">
+            {/* Back button */}
+            <Link
+                href="/"
+                className="absolute top-8 left-8 z-20 flex items-center gap-2 text-white/80 hover:text-orange-400 transition-colors"
+            >
+                <ArrowLeft className="h-5 w-5" />
+                <span>Ana Sayfa</span>
+            </Link>
 
-                <div className="text-center mb-8 absolute top-16 z-10">
-                    <h1 className="text-4xl font-bold">Galeri</h1>
-                    <p className="text-white/60">Galeriyi döndürmek için kaydırın</p>
-                </div>
-                <div className="w-full h-full">
-                    <CircularGallery items={galleryData} radius={850} />
-                </div>
+            <div className="text-center pt-16 pb-4 z-10 relative">
+                <h1 className="text-4xl font-bold">Galeri</h1>
+            </div>
+            <div className="w-full h-[calc(100vh-120px)]">
+                <CircularGallery items={galleryData} radius={850} />
             </div>
         </div>
     );
 }
+
