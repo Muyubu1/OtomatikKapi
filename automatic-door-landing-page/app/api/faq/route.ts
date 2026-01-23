@@ -1,36 +1,45 @@
 import { NextRequest, NextResponse } from 'next/server'
-import fs from 'fs/promises'
-import path from 'path'
-
-const DATA_FILE = path.join(process.cwd(), 'data', 'faq.json')
+import { createServerClient } from '@/lib/supabase'
 
 export async function GET() {
     try {
-        const data = await fs.readFile(DATA_FILE, 'utf-8')
-        return NextResponse.json(JSON.parse(data))
-    } catch {
-        return NextResponse.json([], { status: 200 })
-    }
-}
+        const supabase = createServerClient()
+        const { data, error } = await supabase
+            .from('faq')
+            .select('*')
+            .order('sort_order', { ascending: true })
 
-export async function POST(request: NextRequest) {
-    try {
-        const newItem = await request.json()
-        const data = JSON.parse(await fs.readFile(DATA_FILE, 'utf-8'))
-        data.push(newItem)
-        await fs.writeFile(DATA_FILE, JSON.stringify(data, null, 2), 'utf-8')
-        return NextResponse.json({ success: true, data })
-    } catch {
-        return NextResponse.json({ error: 'Veri kaydedilemedi' }, { status: 500 })
+        if (error) throw error
+
+        return NextResponse.json(data || [])
+    } catch (error) {
+        console.error('FAQ GET error:', error)
+        return NextResponse.json([], { status: 200 })
     }
 }
 
 export async function PUT(request: NextRequest) {
     try {
-        const body = await request.json()
-        await fs.writeFile(DATA_FILE, JSON.stringify(body, null, 2), 'utf-8')
+        const supabase = createServerClient()
+        const faqs = await request.json()
+
+        // Delete all existing FAQs and insert new ones
+        await supabase.from('faq').delete().neq('id', 0)
+
+        // Insert with sort order
+        const insertData = faqs.map((faq: any, index: number) => ({
+            question: faq.question,
+            answer: faq.answer,
+            sort_order: index
+        }))
+
+        const { error } = await supabase.from('faq').insert(insertData)
+
+        if (error) throw error
+
         return NextResponse.json({ success: true })
-    } catch {
+    } catch (error) {
+        console.error('FAQ PUT error:', error)
         return NextResponse.json({ error: 'Veri kaydedilemedi' }, { status: 500 })
     }
 }

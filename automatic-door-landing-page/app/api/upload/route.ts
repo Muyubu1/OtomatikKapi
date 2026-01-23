@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
-import fs from 'fs/promises'
-import path from 'path'
+import { createServerClient } from '@/lib/supabase'
 
 export async function POST(request: NextRequest) {
     try {
+        const supabase = createServerClient()
         const formData = await request.formData()
         const file = formData.get('file') as File
         const section = formData.get('section') as string
@@ -16,26 +16,29 @@ export async function POST(request: NextRequest) {
         const ext = file.name.split('.').pop()
         const filename = `${section}-${Date.now()}.${ext}`
 
-        // Save to public/uploads folder
-        const uploadDir = path.join(process.cwd(), 'public', 'uploads')
-
-        // Create uploads directory if it doesn't exist
-        try {
-            await fs.access(uploadDir)
-        } catch {
-            await fs.mkdir(uploadDir, { recursive: true })
-        }
-
-        const filePath = path.join(uploadDir, filename)
+        // Convert file to buffer
         const bytes = await file.arrayBuffer()
         const buffer = Buffer.from(bytes)
 
-        await fs.writeFile(filePath, buffer)
+        // Upload to Supabase Storage
+        const { data, error } = await supabase.storage
+            .from('uploads')
+            .upload(filename, buffer, {
+                contentType: file.type,
+                upsert: true
+            })
 
-        // Return the public URL
-        const publicUrl = `/uploads/${filename}`
+        if (error) {
+            console.error('Upload error:', error)
+            throw error
+        }
 
-        return NextResponse.json({ success: true, url: publicUrl })
+        // Get public URL
+        const { data: urlData } = supabase.storage
+            .from('uploads')
+            .getPublicUrl(filename)
+
+        return NextResponse.json({ success: true, url: urlData.publicUrl })
     } catch (error) {
         console.error('Upload error:', error)
         return NextResponse.json({ error: 'Yükleme başarısız' }, { status: 500 })
