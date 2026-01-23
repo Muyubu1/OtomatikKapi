@@ -5,7 +5,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { ChevronDown, ChevronRight, Linkedin, Instagram, Mail } from "lucide-react"
-import logoCKS from "@/public/cksLogo.png"
+import logoCKS from "@/public/cksLogobr.png"
 
 // Mega menü kategorileri ve alt öğeleri
 const productCategories = [
