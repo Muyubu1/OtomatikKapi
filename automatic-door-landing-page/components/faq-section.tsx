@@ -6,13 +6,15 @@ import { motion } from "framer-motion"
 
 interface FAQSectionProps {
   faqs?: { question: string; answer: string }[]
+  image?: string
 }
 
-export default function FAQSection({ faqs: propFaqs }: FAQSectionProps) {
+export default function FAQSection({ faqs: propFaqs, image }: FAQSectionProps) {
   const faqs = propFaqs || [
     { question: "Otomatik Kapı Sistemlerinin Avantajları Nedir?", answer: "Otomatik kapı sistemleri, güvenlik, enerji tasarrufu, hijyen ve kullanım kolaylığı gibi birçok avantaj sağlar." },
     { question: "Otomatik Kapı Sistemlerinin Bakımı Nasıl Yapılır?", answer: "Otomatik kapı sistemlerinin düzenli bakımı önemlidir. Profesyonel servis desteği önerilir." },
   ]
+  const sectionImage = image || "/foto6.png"
 
   return (
     <section className="py-20 bg-white">
@@ -28,7 +30,7 @@ export default function FAQSection({ faqs: propFaqs }: FAQSectionProps) {
           >
             <div className="aspect-square rounded-lg overflow-hidden shadow-xl">
               <img
-                src={getAssetPath("/foto6.png")}
+                src={getAssetPath(sectionImage)}
                 alt="Endüstriyel otomatik kapı sistemleri"
                 className="w-full h-full object-cover"
               />

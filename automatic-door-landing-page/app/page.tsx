@@ -23,8 +23,8 @@ export default async function Home() {
       <ProductsSection />
       <FeaturesSection content={siteContent.features} />
       <WhyUsSection content={siteContent.whyUs} />
-      <ProjectSolutionsSection />
-      <FAQSection faqs={faqData} />
+      <ProjectSolutionsSection content={siteContent.projectSolutions} />
+      <FAQSection faqs={faqData} image={siteContent.faq?.image} />
       <Footer />
       <WhatsAppButton />
       <CallButton />

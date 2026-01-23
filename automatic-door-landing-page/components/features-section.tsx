@@ -7,6 +7,7 @@ import { motion } from "framer-motion"
 interface FeaturesSectionProps {
   content?: {
     title: string
+    image?: string
     items: string[]
   }
 }
@@ -19,6 +20,7 @@ export default function FeaturesSection({ content }: FeaturesSectionProps) {
     "Tek Bir Dokunuşla Açılan Kapılar!",
     "Otomatik Kapılar, Akıllı Yaşam Tarzı!",
   ]
+  const image = content?.image || "/foto3.png"
 
   return (
     <section className="py-20 bg-white">
@@ -33,7 +35,7 @@ export default function FeaturesSection({ content }: FeaturesSectionProps) {
             className="relative"
           >
             <div className="aspect-square rounded-lg overflow-hidden shadow-2xl">
-              <img src={getAssetPath("/foto3.png")} alt="Otomatik kapı sistemi" className="w-full h-full object-cover" />
+              <img src={getAssetPath(image)} alt="Otomatik kapı sistemi" className="w-full h-full object-cover" />
             </div>
           </motion.div>
 

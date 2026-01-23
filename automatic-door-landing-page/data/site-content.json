@@ -2,10 +2,11 @@
   "hero": {
     "title": "Endüstriyel Otomatik Kapı",
     "subtitle": "ve Yükleme Sistemleri",
-    "description": "Güvenli, hızlı ve kaliteli otomatik kapı çözümleri ile işletmenizi bir adım öne taşıyın. merhaba benim adım yusuf"
+    "description": "Güvenli, hızlı ve kaliteli otomatik kapı çözümleri ile işletmenizi bir adım öne taşıyın."
   },
   "features": {
     "title": "Bizimle Daha Güvenli Olursunuz",
+    "image": "/foto3.png",
     "items": [
       "Kapınızı Otomatikleştirin, Hayatınızı Kolaylaştırın!",
       "Otomatik Kapılar, Otomatik Çözümler!",
@@ -16,6 +17,7 @@
   },
   "whyUs": {
     "title": "NEDEN BİZ",
+    "image": "/foto5.png",
     "items": [
       {
         "title": "DENEYİM",
@@ -41,11 +43,15 @@
   },
   "projectSolutions": {
     "title": "PROJEYE ÖZEL ÇÖZÜMLER",
+    "image": "/foto1.png",
     "paragraphs": [
       "Otomatik kapılar, modern dünyanın vazgeçilmez bir parçasıdır. İster bir alışveriş merkezi, ister bir ofis binası, isterse bir konut kompleksi olsun, otomatik kapılar hem güvenlik hem de kolaylık sağlar.",
       "İşte burada otomatik kapı firmalarının lideri olan \"FY Otomatik Kapı ve Yükleme Sistemleri\" projeye uygun çözümler sunarak müşterilerimizin ihtiyaçlarına uygun çözümler üreterek uygulamaktadır.",
       "Projeye uygun çözümler sunan \"FY Otomatik Kapı\" her projenin kendine özgü ihtiyaçlarını ve zorluklarını anlar. Bu, projenin boyutunu, bütçesini, zaman çizelgesini ve hedeflerini dikkate almayı içerir.",
       "Sonuç olarak, projeye uygun çözümler sunan otomatik kapı firmamız, her projenin başarısını sağlamak için gereken esnekliği ve uzmanlığı sağlar."
     ]
+  },
+  "faq": {
+    "image": "/foto6.png"
   }
 }

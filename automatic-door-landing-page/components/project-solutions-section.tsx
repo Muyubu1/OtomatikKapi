@@ -5,7 +5,24 @@ import { MousePointer } from "lucide-react"
 import { getAssetPath } from "@/lib/utils"
 import { motion } from "framer-motion"
 
-export default function ProjectSolutionsSection() {
+interface ProjectSolutionsSectionProps {
+  content?: {
+    title: string
+    image?: string
+    paragraphs: string[]
+  }
+}
+
+export default function ProjectSolutionsSection({ content }: ProjectSolutionsSectionProps) {
+  const title = content?.title || "PROJEYE ÖZEL ÇÖZÜMLER"
+  const image = content?.image || "/foto1.png"
+  const paragraphs = content?.paragraphs || [
+    "Otomatik kapılar, modern dünyanın vazgeçilmez bir parçasıdır. İster bir alışveriş merkezi, ister bir ofis binası, isterse bir konut kompleksi olsun, otomatik kapılar hem güvenlik hem de kolaylık sağlar.",
+    "İşte burada otomatik kapı firmalarının lideri olan \"FY Otomatik Kapı ve Yükleme Sistemleri\" projeye uygun çözümler sunarak müşterilerimizin ihtiyaçlarına uygun çözümler üreterek uygulamaktadır.",
+    "Projeye uygun çözümler sunan \"FY Otomatik Kapı\" her projenin kendine özgü ihtiyaçlarını ve zorluklarını anlar. Bu, projenin boyutunu, bütçesini, zaman çizelgesini ve hedeflerini dikkate almayı içerir.",
+    "Sonuç olarak, projeye uygun çözümler sunan otomatik kapı firmamız, her projenin başarısını sağlamak için gereken esnekliği ve uzmanlığı sağlar."
+  ]
+
   return (
     <section className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
@@ -27,47 +44,19 @@ export default function ProjectSolutionsSection() {
             >
               <MousePointer className="h-8 w-8 text-[#ED1C24]" />
             </motion.div>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#414042] mb-6">PROJEYE ÖZEL ÇÖZÜMLER</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-[#414042] mb-6">{title}</h2>
             <div className="space-y-4 text-gray-600">
-              <motion.p
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-              >
-                Otomatik kapılar, modern dünyanın vazgeçilmez bir parçasıdır. İster bir alışveriş merkezi, ister bir
-                ofis binası, isterse bir konut kompleksi olsun, otomatik kapılar hem güvenlik hem de kolaylık sağlar.
-                Ancak her proje farklıdır ve her projenin kendine özgü ihtiyaçları vardır.
-              </motion.p>
-              <motion.p
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-              >
-                İşte burada otomatik kapı firmalarının lideri olan "FY Otomatik Kapı ve Yükleme Sistemleri" projeye
-                uygun çözümler sunarak müşterilerimizin ihtiyaçlarına uygun çözümler üreterek uygulamaktadır.
-              </motion.p>
-              <motion.p
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-              >
-                Projeye uygun çözümler sunan "FY Otomatik Kapı" her projenin kendine özgü ihtiyaçlarını ve zorluklarını
-                anlar. Bu, projenin boyutunu, bütçesini, zaman çizelgesini ve hedeflerini dikkate almayı içerir.
-                Ardından, bu ihtiyaçları karşılamak için en uygun otomatik kapı çözümünü tasarlar ve uygular.
-              </motion.p>
-              <motion.p
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.4 }}
-              >
-                Sonuç olarak, projeye uygun çözümler sunan otomatik kapı firmamız, her projenin başarısını sağlamak için
-                gereken esnekliği ve uzmanlığı sağlar. Bu, projenin her aşamasında mükemmel hizmet sunmayı ve müşteri
-                memnuniyetini en üst düzeye çıkarmayı garanti eder.
-              </motion.p>
+              {paragraphs.map((para, index) => (
+                <motion.p
+                  key={index}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.1 * (index + 1) }}
+                >
+                  {para}
+                </motion.p>
+              ))}
             </div>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -88,7 +77,7 @@ export default function ProjectSolutionsSection() {
             className="relative"
           >
             <div className="aspect-square rounded-lg overflow-hidden shadow-xl">
-              <img src={getAssetPath("/foto1.png")} alt="3D proje çözümü" className="w-full h-full object-cover" />
+              <img src={getAssetPath(image)} alt="3D proje çözümü" className="w-full h-full object-cover" />
             </div>
           </motion.div>
         </div>

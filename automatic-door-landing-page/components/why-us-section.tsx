@@ -15,12 +15,14 @@ const iconMap: Record<string, LucideIcon> = {
 interface WhyUsSectionProps {
   content?: {
     title: string
+    image?: string
     items: { title: string; description: string }[]
   }
 }
 
 export default function WhyUsSection({ content }: WhyUsSectionProps) {
   const title = content?.title || "NEDEN BİZ"
+  const image = content?.image || "/foto5.png"
   const items = content?.items || [
     { title: "DENEYİM", description: "Deneyimli ve Profesyonel Bir Ekibimiz Var" },
     { title: "FİYAT", description: "Uygun Fiyatlarla Üstün Hizmet Sunuyoruz" },
@@ -42,7 +44,7 @@ export default function WhyUsSection({ content }: WhyUsSectionProps) {
             className="relative order-2 md:order-1"
           >
             <div className="aspect-square rounded-lg overflow-hidden shadow-2xl">
-              <img src={getAssetPath("/foto5.png")} alt="Neden biz" className="w-full h-full object-cover" />
+              <img src={getAssetPath(image)} alt="Neden biz" className="w-full h-full object-cover" />
             </div>
           </motion.div>
 

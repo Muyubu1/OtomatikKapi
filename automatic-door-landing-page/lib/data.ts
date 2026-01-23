@@ -9,15 +9,21 @@ export interface SiteContent {
     }
     features: {
         title: string
+        image: string
         items: string[]
     }
     whyUs: {
         title: string
+        image: string
         items: { title: string; description: string }[]
     }
     projectSolutions: {
         title: string
+        image: string
         paragraphs: string[]
+    }
+    faq: {
+        image: string
     }
 }
 
