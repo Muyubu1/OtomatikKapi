@@ -38,35 +38,54 @@ export default function Footer() {
           <div>
             <h3 className="font-bold text-lg mb-4">Hızlı Linkler</h3>
             <ul className="space-y-2">
-              {["Anasayfa", "Hakkımızda", "Ürünlerimiz", "İletişim"].map((item) => (
-                <li key={item}>
-                  <Link href="#" className="text-gray-300 hover:text-[#ED1C24] transition-colors text-sm">
-                    {item}
-                  </Link>
-                </li>
-              ))}
+              <li>
+                <Link href="/" className="text-gray-300 hover:text-[#ED1C24] transition-colors text-sm">
+                  Anasayfa
+                </Link>
+              </li>
+              <li>
+                <Link href="/#about" className="text-gray-300 hover:text-[#ED1C24] transition-colors text-sm">
+                  Hakkımızda
+                </Link>
+              </li>
+              <li>
+                <Link href="/#products" className="text-gray-300 hover:text-[#ED1C24] transition-colors text-sm">
+                  Ürünlerimiz
+                </Link>
+              </li>
+              <li>
+                <Link href="/gallery" className="text-gray-300 hover:text-[#ED1C24] transition-colors text-sm">
+                  Galeri
+                </Link>
+              </li>
+              <li>
+                <Link href="/#contact" className="text-gray-300 hover:text-[#ED1C24] transition-colors text-sm">
+                  İletişim
+                </Link>
+              </li>
             </ul>
           </div>
 
-          {/* Products */}
+          {/* Products - Simplified */}
           <div>
             <h3 className="font-bold text-lg mb-4">Ürünlerimiz</h3>
-            <ul className="space-y-2">
-              {[
-                "Endüstriyel Kapılar",
-                "Yüksek Hızlı Kapılar",
-                "Yükleme Sistemleri",
-                "Hangar Kapısı",
-                "ATEX Kapılar",
-                "Konut Kapıları",
-              ].map((item) => (
-                <li key={item}>
-                  <Link href="#" className="text-gray-300 hover:text-[#ED1C24] transition-colors text-sm">
-                    {item}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <p className="text-gray-300 text-sm mb-4">
+              Endüstriyel kapılar, yüksek hızlı kapılar, yükleme sistemleri ve daha fazlası için ürün kataloğumuzu inceleyin.
+            </p>
+            <Link
+              href="/#products"
+              className="inline-flex items-center gap-2 text-[#ED1C24] hover:text-white transition-colors text-sm font-medium group"
+            >
+              Tüm Ürünleri Görüntüle
+              <svg
+                className="w-4 h-4 transform group-hover:translate-x-1 transition-transform"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
           </div>
 
           {/* Contact */}
