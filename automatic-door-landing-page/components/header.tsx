@@ -173,7 +173,7 @@ export default function Header() {
                 ),
               )}
               <Button
-                className="bg-[#414042] hover:bg-[#2d4a6f] text-white"
+                className="bg-[#ED1C24] hover:bg-[#c91920] text-white"
                 asChild
               >
                 <a
@@ -273,7 +273,7 @@ export default function Header() {
                 </div>
               ))}
               <Button
-                className="mt-4 w-full bg-[#414042] hover:bg-[#2d4a6f] text-white"
+                className="mt-4 w-full bg-[#ED1C24] hover:bg-[#c91920] text-white"
                 asChild
               >
                 <a

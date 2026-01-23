@@ -34,7 +34,7 @@ export default function ProjectSolutionsSection() {
                 memnuniyetini en üst düzeye çıkarmayı garanti eder.
               </p>
             </div>
-            <Button className="mt-6 bg-[#414042] hover:bg-[#2d4a6f] text-white">Referanslarımız</Button>
+            <Button className="mt-6 bg-[#ED1C24] hover:bg-[#c91920] text-white">Referanslarımız</Button>
           </div>
 
           {/* Image */}

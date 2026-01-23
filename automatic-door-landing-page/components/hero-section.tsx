@@ -24,7 +24,7 @@ export default function HeroSection() {
           <Button
             size="lg"
             variant="outline"
-            className="border-white text-white hover:bg-white/10 bg-transparent"
+            className="border-[#ED1C24] text-white hover:bg-[#ED1C24]/20 bg-transparent"
             asChild
           >
             <a
