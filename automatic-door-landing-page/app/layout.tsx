@@ -15,8 +15,8 @@ export const metadata: Metadata = {
   description: "Endüstriyel otomatik kapı ve yükleme sistemleri. Güvenli, hızlı ve kaliteli çözümler.",
   generator: 'v0.app',
   icons: {
-    icon: `${basePath}/fav_icon.png`,
-    apple: `${basePath}/fav_icon.png`,
+    icon: `${basePath}/faviconCKS.png`,
+    apple: `${basePath}/faviconCKS.png`,
   },
 }
 

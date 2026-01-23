@@ -1,7 +1,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import { Mail, Phone, MapPin, Linkedin, Instagram, Facebook, Twitter } from "lucide-react"
-import logoCKS from "@/public/logoCKS_br.png"
+import logoCKS from "@/public/cksLogo.png"
 
 export default function Footer() {
   return (

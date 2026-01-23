@@ -5,7 +5,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { ChevronDown, ChevronRight, Linkedin, Instagram, Mail } from "lucide-react"
-import logoCKS from "@/public/logoCKS_br.png"
+import logoCKS from "@/public/cksLogo.png"
 
 // Mega menü kategorileri ve alt öğeleri
 const productCategories = [
@@ -172,7 +172,7 @@ export default function Header() {
                   </Link>
                 ),
               )}
-              <Button 
+              <Button
                 className="bg-[#1e3a5f] hover:bg-[#2d4a6f] text-white"
                 asChild
               >
@@ -272,7 +272,7 @@ export default function Header() {
                   )}
                 </div>
               ))}
-              <Button 
+              <Button
                 className="mt-4 w-full bg-[#1e3a5f] hover:bg-[#2d4a6f] text-white"
                 asChild
               >
