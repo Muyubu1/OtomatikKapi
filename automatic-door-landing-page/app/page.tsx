@@ -9,22 +9,19 @@ import FAQSection from "@/components/faq-section"
 import Footer from "@/components/footer"
 import WhatsAppButton from "@/components/whatsapp-button"
 import CallButton from "@/components/call-button"
-import { HangarDoorReveal } from "@/components/ui/hangar-door-reveal"
 
 export default function Home() {
   return (
     <main className="min-h-screen">
-      <HangarDoorReveal>
-        <Header />
-        <HeroSection />
-        <ProductsSection />
-        <FeaturesSection />
-        <AboutSection />
-        <WhyUsSection />
-        <ProjectSolutionsSection />
-        <FAQSection />
-        <Footer />
-      </HangarDoorReveal>
+      <Header />
+      <HeroSection />
+      <ProductsSection />
+      <FeaturesSection />
+      <AboutSection />
+      <WhyUsSection />
+      <ProjectSolutionsSection />
+      <FAQSection />
+      <Footer />
       <WhatsAppButton />
       <CallButton />
     </main>
