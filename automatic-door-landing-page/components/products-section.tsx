@@ -1,31 +1,10 @@
 "use client"
 
+import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
 import { getAssetPath } from "@/lib/utils"
 import { motion } from "framer-motion"
-
-const products = [
-  {
-    name: "Endüstriyel Seksiyonel Kapı",
-    image: "/industrial-sectional-door-gray-metal.jpg",
-  },
-  {
-    name: "Endüstriyel Katlanır Kapı",
-    image: "/industrial-folding-door-white.jpg",
-  },
-  {
-    name: "Şerit Perde Kapı",
-    image: "/strip-curtain-door-transparent-pvc.jpg",
-  },
-  {
-    name: "Personel Yangın Kapısı",
-    image: "/fire-door-gray-personnel-door.jpg",
-  },
-  {
-    name: "Sarmal Yangın Kapısı",
-    image: "/spiral-fire-door-silver.jpg",
-  },
-]
+import { products } from "@/lib/products-data"
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -71,23 +50,25 @@ export default function ProductsSection() {
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6"
         >
           {products.map((product, index) => (
-            <motion.div key={index} variants={itemVariants}>
-              <Card className="group cursor-pointer overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                <CardContent className="p-0">
-                  <div className="aspect-square overflow-hidden">
-                    <img
-                      src={getAssetPath(product.image) || getAssetPath("/placeholder.svg")}
-                      alt={product.name}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                    />
-                  </div>
-                  <div className="p-4 text-center">
-                    <h3 className="font-medium text-[#414042] group-hover:text-[#ED1C24] transition-colors">
-                      {product.name}
-                    </h3>
-                  </div>
-                </CardContent>
-              </Card>
+            <motion.div key={product.slug} variants={itemVariants}>
+              <Link href={`/urunler/${product.slug}`}>
+                <Card className="group cursor-pointer overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                  <CardContent className="p-0">
+                    <div className="aspect-square overflow-hidden">
+                      <img
+                        src={getAssetPath(product.mainImage) || getAssetPath("/placeholder.svg")}
+                        alt={product.name}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      />
+                    </div>
+                    <div className="p-4 text-center">
+                      <h3 className="font-medium text-[#414042] group-hover:text-[#ED1C24] transition-colors">
+                        {product.name}
+                      </h3>
+                    </div>
+                  </CardContent>
+                </Card>
+              </Link>
             </motion.div>
           ))}
         </motion.div>
