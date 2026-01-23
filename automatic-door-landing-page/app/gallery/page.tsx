@@ -204,7 +204,7 @@ export default function GalleryPage() {
             {/* Back button */}
             <Link
                 href="/"
-                className="absolute top-8 left-8 z-20 flex items-center gap-2 text-white/80 hover:text-orange-400 transition-colors"
+                className="absolute top-8 left-8 z-20 flex items-center gap-2 text-white/80 hover:text-[#ED1C24] transition-colors"
             >
                 <ArrowLeft className="h-5 w-5" />
                 <span>Ana Sayfa</span>

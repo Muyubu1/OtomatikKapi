@@ -9,9 +9,9 @@ export default function AboutSection() {
           {/* Content */}
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <Menu className="h-6 w-6 text-[#1e3a5f]" />
+              <Menu className="h-6 w-6 text-[#414042]" />
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#1e3a5f] mb-6">OTOMATİK KAPILAR</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-[#414042] mb-6">OTOMATİK KAPILAR</h2>
             <div className="space-y-4 text-gray-600">
               <p>
                 Otomatik kapılar, teknolojinin hayatımızın her alanına nasıl sızdığını gösteren mükemmel bir örnektir.

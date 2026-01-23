@@ -23,13 +23,13 @@ export default function FeaturesSection() {
 
           {/* Content */}
           <div>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#1e3a5f] mb-8">
-              Bizimle Daha <span className="text-orange-500">Güvenli</span> Olursunuz
+            <h2 className="text-3xl md:text-4xl font-bold text-[#414042] mb-8">
+              Bizimle Daha <span className="text-[#ED1C24]">Güvenli</span> Olursunuz
             </h2>
             <div className="space-y-4">
               {features.map((feature, index) => (
                 <div key={index} className="flex items-center gap-4">
-                  <div className="flex-shrink-0 w-10 h-10 bg-[#1e3a5f] rounded-full flex items-center justify-center">
+                  <div className="flex-shrink-0 w-10 h-10 bg-[#414042] rounded-full flex items-center justify-center">
                     <Check className="h-5 w-5 text-white" />
                   </div>
                   <p className="text-gray-700">{feature}</p>

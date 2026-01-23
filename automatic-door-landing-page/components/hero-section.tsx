@@ -12,13 +12,13 @@ export default function HeroSection() {
       <div className="relative container mx-auto px-4 h-full flex flex-col justify-center items-center text-center">
         <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 text-balance">
           Endüstriyel Otomatik Kapı <br />
-          <span className="text-orange-400">ve Yükleme Sistemleri</span>
+          <span className="text-[#ED1C24]">ve Yükleme Sistemleri</span>
         </h1>
         <p className="text-xl text-white/90 max-w-2xl mb-8">
           Güvenli, hızlı ve kaliteli otomatik kapı çözümleri ile işletmenizi bir adım öne taşıyın.
         </p>
         <div className="flex flex-wrap gap-4 justify-center">
-          <Button size="lg" className="bg-orange-500 hover:bg-orange-600 text-white">
+          <Button size="lg" className="bg-[#ED1C24] hover:bg-[#c91920] text-white">
             Ürünlerimizi İnceleyin
           </Button>
           <Button

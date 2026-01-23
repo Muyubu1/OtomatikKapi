@@ -29,7 +29,7 @@ export default function ProductsSection() {
     <section id="products" className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#1e3a5f] mb-4">Ürünlerimiz</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-[#414042] mb-4">Ürünlerimiz</h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
             Endüstriyel ve ticari ihtiyaçlarınız için geniş ürün yelpazemizi keşfedin.
           </p>
@@ -47,7 +47,7 @@ export default function ProductsSection() {
                   />
                 </div>
                 <div className="p-4 text-center">
-                  <h3 className="font-medium text-[#1e3a5f] group-hover:text-orange-500 transition-colors">
+                  <h3 className="font-medium text-[#414042] group-hover:text-[#ED1C24] transition-colors">
                     {product.name}
                   </h3>
                 </div>

@@ -31,7 +31,7 @@ const reasons = [
 
 export default function WhyUsSection() {
   return (
-    <section className="py-20 bg-orange-500">
+    <section className="py-20 bg-[#ED1C24]">
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           {/* Image */}
@@ -52,7 +52,7 @@ export default function WhyUsSection() {
               {reasons.map((reason, index) => (
                 <div key={index} className="flex items-start gap-4">
                   <div className="flex-shrink-0 w-12 h-12 bg-white rounded-full flex items-center justify-center">
-                    <reason.icon className="h-6 w-6 text-orange-500" />
+                    <reason.icon className="h-6 w-6 text-[#ED1C24]" />
                   </div>
                   <div>
                     <h3 className="font-bold text-white">{reason.title}</h3>

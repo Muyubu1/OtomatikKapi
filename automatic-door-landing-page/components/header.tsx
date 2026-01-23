@@ -105,11 +105,11 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full">
       {/* Top bar */}
-      <div className="bg-[#1e3a5f] text-white py-2">
+      <div className="bg-[#414042] text-white py-2">
         <div className="container mx-auto px-4 flex justify-between items-center text-sm">
           <a
             href="mailto:info@cksotomatikkapi.com"
-            className="flex items-center gap-2 hover:text-orange-400 transition-colors"
+            className="flex items-center gap-2 hover:text-[#ED1C24] transition-colors"
           >
             <Mail className="h-4 w-4" />
             info@cksotomatikkapi.com
@@ -118,10 +118,10 @@ export default function Header() {
             <span className="hidden sm:inline">Hemen Teklif Al</span>
             <div className="flex items-center gap-2">
               <span className="text-xs">🇹🇷 TR</span>
-              <a href="#" className="hover:text-orange-400 transition-colors">
+              <a href="#" className="hover:text-[#ED1C24] transition-colors">
                 <Instagram className="h-4 w-4" />
               </a>
-              <a href="#" className="hover:text-orange-400 transition-colors">
+              <a href="#" className="hover:text-[#ED1C24] transition-colors">
                 <Linkedin className="h-4 w-4" />
               </a>
             </div>
@@ -157,7 +157,7 @@ export default function Header() {
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
                   >
-                    <button className="flex items-center gap-1 text-[#1e3a5f] hover:text-orange-500 transition-colors font-medium">
+                    <button className="flex items-center gap-1 text-[#414042] hover:text-[#ED1C24] transition-colors font-medium">
                       {item.name}
                       <ChevronDown className={`h-4 w-4 transition-transform ${megaMenuOpen ? 'rotate-180' : ''}`} />
                     </button>
@@ -166,14 +166,14 @@ export default function Header() {
                   <Link
                     key={item.name}
                     href={item.href}
-                    className="text-[#1e3a5f] hover:text-orange-500 transition-colors font-medium"
+                    className="text-[#414042] hover:text-[#ED1C24] transition-colors font-medium"
                   >
                     {item.name}
                   </Link>
                 ),
               )}
               <Button
-                className="bg-[#1e3a5f] hover:bg-[#2d4a6f] text-white"
+                className="bg-[#414042] hover:bg-[#2d4a6f] text-white"
                 asChild
               >
                 <a
@@ -201,7 +201,7 @@ export default function Header() {
               <div className="grid grid-cols-6 gap-8">
                 {productCategories.map((category) => (
                   <div key={category.name} className="space-y-3">
-                    <h3 className="font-bold text-[#1e3a5f] text-sm border-b border-gray-200 pb-2">
+                    <h3 className="font-bold text-[#414042] text-sm border-b border-gray-200 pb-2">
                       {category.name}
                     </h3>
                     <ul className="space-y-2">
@@ -209,9 +209,9 @@ export default function Header() {
                         <li key={item.name}>
                           <Link
                             href={item.href}
-                            className="flex items-center gap-1 text-gray-600 hover:text-orange-500 text-sm transition-colors group"
+                            className="flex items-center gap-1 text-gray-600 hover:text-[#ED1C24] text-sm transition-colors group"
                           >
-                            <ChevronRight className="h-3 w-3 text-orange-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <ChevronRight className="h-3 w-3 text-[#ED1C24] opacity-0 group-hover:opacity-100 transition-opacity" />
                             <span>{item.name}</span>
                           </Link>
                         </li>
@@ -233,7 +233,7 @@ export default function Header() {
                   {item.hasMegaMenu ? (
                     <>
                       <button
-                        className="w-full flex items-center justify-between py-2 text-[#1e3a5f] hover:text-orange-500 transition-colors font-medium"
+                        className="w-full flex items-center justify-between py-2 text-[#414042] hover:text-[#ED1C24] transition-colors font-medium"
                         onClick={() => setMobileProductsOpen(!mobileProductsOpen)}
                       >
                         {item.name}
@@ -243,13 +243,13 @@ export default function Header() {
                         <div className="pl-4 pb-2 space-y-3">
                           {productCategories.map((category) => (
                             <div key={category.name}>
-                              <h4 className="font-semibold text-[#1e3a5f] text-sm py-1">{category.name}</h4>
+                              <h4 className="font-semibold text-[#414042] text-sm py-1">{category.name}</h4>
                               <div className="pl-3 space-y-1">
                                 {category.items.map((subItem) => (
                                   <Link
                                     key={subItem.name}
                                     href={subItem.href}
-                                    className="block py-1 text-xs text-gray-600 hover:text-orange-500"
+                                    className="block py-1 text-xs text-gray-600 hover:text-[#ED1C24]"
                                     onClick={() => setMobileMenuOpen(false)}
                                   >
                                     {subItem.name}
@@ -264,7 +264,7 @@ export default function Header() {
                   ) : (
                     <Link
                       href={item.href}
-                      className="block py-2 text-[#1e3a5f] hover:text-orange-500 transition-colors font-medium"
+                      className="block py-2 text-[#414042] hover:text-[#ED1C24] transition-colors font-medium"
                       onClick={() => setMobileMenuOpen(false)}
                     >
                       {item.name}
@@ -273,7 +273,7 @@ export default function Header() {
                 </div>
               ))}
               <Button
-                className="mt-4 w-full bg-[#1e3a5f] hover:bg-[#2d4a6f] text-white"
+                className="mt-4 w-full bg-[#414042] hover:bg-[#2d4a6f] text-white"
                 asChild
               >
                 <a

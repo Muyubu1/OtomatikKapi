@@ -10,9 +10,9 @@ export default function ProjectSolutionsSection() {
           {/* Content */}
           <div className="text-center md:text-left">
             <div className="flex justify-center md:justify-start mb-4">
-              <MousePointer className="h-8 w-8 text-[#1e3a5f]" />
+              <MousePointer className="h-8 w-8 text-[#414042]" />
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#1e3a5f] mb-6">PROJEYE ÖZEL ÇÖZÜMLER</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-[#414042] mb-6">PROJEYE ÖZEL ÇÖZÜMLER</h2>
             <div className="space-y-4 text-gray-600">
               <p>
                 Otomatik kapılar, modern dünyanın vazgeçilmez bir parçasıdır. İster bir alışveriş merkezi, ister bir
@@ -34,7 +34,7 @@ export default function ProjectSolutionsSection() {
                 memnuniyetini en üst düzeye çıkarmayı garanti eder.
               </p>
             </div>
-            <Button className="mt-6 bg-[#1e3a5f] hover:bg-[#2d4a6f] text-white">Referanslarımız</Button>
+            <Button className="mt-6 bg-[#414042] hover:bg-[#2d4a6f] text-white">Referanslarımız</Button>
           </div>
 
           {/* Image */}

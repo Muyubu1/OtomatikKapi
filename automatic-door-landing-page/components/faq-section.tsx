@@ -64,7 +64,7 @@ export default function FAQSection() {
 
           {/* FAQ Accordion */}
           <div>
-            <h2 className="text-xl font-bold text-[#1e3a5f] mb-6">Endüstriyel Otomatik Kapı Sistemleri Nedir?</h2>
+            <h2 className="text-xl font-bold text-[#414042] mb-6">Endüstriyel Otomatik Kapı Sistemleri Nedir?</h2>
             <p className="text-gray-600 mb-6">
               Endüstriyel otomatik kapı sistemleri, genellikle fabrikalar, depolar ve diğer endüstriyel tesislerde
               kullanılan, genellikle uzaktan kumanda veya hareket sensörleri ile kontrol edilen kapılardır.
@@ -73,7 +73,7 @@ export default function FAQSection() {
             <Accordion type="single" collapsible className="w-full">
               {faqs.map((faq, index) => (
                 <AccordionItem key={index} value={`item-${index}`}>
-                  <AccordionTrigger className="text-left text-[#1e3a5f] hover:text-orange-500">
+                  <AccordionTrigger className="text-left text-[#414042] hover:text-[#ED1C24]">
                     {faq.question}
                   </AccordionTrigger>
                   <AccordionContent className="text-gray-600">{faq.answer}</AccordionContent>
