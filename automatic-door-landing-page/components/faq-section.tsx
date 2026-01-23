@@ -1,5 +1,8 @@
+"use client"
+
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { getAssetPath } from "@/lib/utils"
+import { motion } from "framer-motion"
 
 const faqs = [
   {
@@ -52,7 +55,13 @@ export default function FAQSection() {
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-12 items-start">
           {/* Image */}
-          <div className="relative">
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.7 }}
+            className="relative"
+          >
             <div className="aspect-square rounded-lg overflow-hidden shadow-xl">
               <img
                 src={getAssetPath("/foto6.png")}
@@ -60,27 +69,54 @@ export default function FAQSection() {
                 className="w-full h-full object-cover"
               />
             </div>
-          </div>
+          </motion.div>
 
           {/* FAQ Accordion */}
-          <div>
-            <h2 className="text-xl font-bold text-[#414042] mb-6">Endüstriyel Otomatik Kapı Sistemleri Nedir?</h2>
-            <p className="text-gray-600 mb-6">
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.7 }}
+          >
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="text-xl font-bold text-[#414042] mb-6"
+            >
+              Endüstriyel Otomatik Kapı Sistemleri Nedir?
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="text-gray-600 mb-6"
+            >
               Endüstriyel otomatik kapı sistemleri, genellikle fabrikalar, depolar ve diğer endüstriyel tesislerde
               kullanılan, genellikle uzaktan kumanda veya hareket sensörleri ile kontrol edilen kapılardır.
-            </p>
+            </motion.p>
 
             <Accordion type="single" collapsible className="w-full">
               {faqs.map((faq, index) => (
-                <AccordionItem key={index} value={`item-${index}`}>
-                  <AccordionTrigger className="text-left text-[#414042] hover:text-[#ED1C24]">
-                    {faq.question}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-gray-600">{faq.answer}</AccordionContent>
-                </AccordionItem>
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.3, delay: index * 0.05 }}
+                >
+                  <AccordionItem value={`item-${index}`}>
+                    <AccordionTrigger className="text-left text-[#414042] hover:text-[#ED1C24]">
+                      {faq.question}
+                    </AccordionTrigger>
+                    <AccordionContent className="text-gray-600">{faq.answer}</AccordionContent>
+                  </AccordionItem>
+                </motion.div>
               ))}
             </Accordion>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
