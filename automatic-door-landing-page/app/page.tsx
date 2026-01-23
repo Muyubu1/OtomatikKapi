@@ -8,6 +8,7 @@ import ProjectSolutionsSection from "@/components/project-solutions-section"
 import FAQSection from "@/components/faq-section"
 import Footer from "@/components/footer"
 import WhatsAppButton from "@/components/whatsapp-button"
+import CallButton from "@/components/call-button"
 import { HangarDoorReveal } from "@/components/ui/hangar-door-reveal"
 
 export default function Home() {
@@ -25,6 +26,7 @@ export default function Home() {
         <Footer />
       </HangarDoorReveal>
       <WhatsAppButton />
+      <CallButton />
     </main>
   )
 }
