@@ -85,7 +85,7 @@ const DetailCard = ({
                     {/* Title Section */}
                     <div className="space-y-1">
                         <h2 className="text-3xl font-bold text-white">{item.common}</h2>
-                        <p className="text-lg text-orange-400 italic">{item.binomial}</p>
+                        <p className="text-lg text-[#ED1C24] italic">{item.binomial}</p>
                     </div>
 
                     {/* Divider */}
@@ -99,7 +99,7 @@ const DetailCard = ({
                     {/* Footer */}
                     <div className="flex items-center justify-between pt-2">
                         <div className="flex items-center gap-2">
-                            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center text-white text-sm font-bold">
+                            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#ED1C24] to-[#c91920] flex items-center justify-center text-white text-sm font-bold">
                                 {item.photo.by.charAt(0)}
                             </div>
                             <div>
@@ -113,7 +113,7 @@ const DetailCard = ({
                             href={item.photo.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="px-4 py-2 rounded-lg bg-orange-500/20 hover:bg-orange-500/30 text-orange-400 hover:text-orange-300 text-sm font-medium transition-all duration-200 border border-orange-500/30"
+                            className="px-4 py-2 rounded-lg bg-[#ED1C24]/20 hover:bg-[#ED1C24]/30 text-[#ED1C24] hover:text-[#ff4d4d] text-sm font-medium transition-all duration-200 border border-[#ED1C24]/30"
                         >
                             Tam Boyut Görüntüle
                         </a>
@@ -285,7 +285,7 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
                     {/* Drag Hint */}
                     {showHint && (
                         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-3 px-5 py-3 bg-black/60 backdrop-blur-md rounded-full border border-white/10 animate-pulse">
-                            <Hand className="w-5 h-5 text-orange-400" />
+                            <Hand className="w-5 h-5 text-[#ED1C24]" />
                             <span className="text-white/90 text-sm font-medium">Döndürmek için sürükleyin veya kaydırın</span>
                         </div>
                     )}
@@ -320,7 +320,7 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
                                     }}
                                     onClick={() => setSelectedItem(item)}
                                 >
-                                    <div className="relative w-full h-full rounded-lg shadow-2xl overflow-hidden group border border-border bg-card/70 dark:bg-card/30 backdrop-blur-lg hover:scale-105 hover:shadow-orange-500/20 transition-all duration-300">
+                                    <div className="relative w-full h-full rounded-lg shadow-2xl overflow-hidden group border border-border bg-card/70 dark:bg-card/30 backdrop-blur-lg hover:scale-105 hover:shadow-[#ED1C24]/20 transition-all duration-300">
                                         <img
                                             src={item.photo.url}
                                             alt={item.photo.text}

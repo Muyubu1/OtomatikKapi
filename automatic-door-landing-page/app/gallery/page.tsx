@@ -200,7 +200,7 @@ const galleryData: GalleryItem[] = [
 
 export default function GalleryPage() {
     return (
-        <div className="w-full h-screen bg-[#0a1628] text-white overflow-hidden">
+        <div className="w-full h-screen bg-[#414042] text-white overflow-hidden">
             {/* Back button */}
             <Link
                 href="/"
