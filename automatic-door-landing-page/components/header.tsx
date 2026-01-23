@@ -1,79 +1,20 @@
 "use client"
 
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { ChevronDown, ChevronRight, Linkedin, Instagram, Mail } from "lucide-react"
 import logoCKS from "@/public/cksLogobr.png"
 
-// Mega menü kategorileri ve alt öğeleri
-const productCategories = [
-  {
-    name: "Endüstriyel Kapılar",
-    href: "#",
-    items: [
-      { name: "Seksiyonel Kapı", href: "#" },
-      { name: "Endüstriyel Kepenk", href: "#" },
-      { name: "Şerit Perde", href: "#" },
-      { name: "Personel Yangın Kapısı", href: "#" },
-      { name: "Sarmal Yangın Kapısı", href: "#" },
-    ],
-  },
-  {
-    name: "Yüksek Hızlı Kapılar",
-    href: "#",
-    items: [
-      { name: "PVC Sarmal Kapı", href: "#" },
-      { name: "PVC Katlanır Kapı", href: "#" },
-      { name: "Hibrit Kapı", href: "#" },
-      { name: "Yüksek Hızlı Garaj Kapısı", href: "#" },
-    ],
-  },
-  {
-    name: "Yükleme Sistemleri",
-    href: "#",
-    items: [
-      { name: "Menteşeli Rampa", href: "#" },
-      { name: "Dik Rampa", href: "#" },
-      { name: "Mini Rampa", href: "#" },
-      { name: "Mobil Rampa", href: "#" },
-      { name: "Teleskopik Rampa", href: "#" },
-      { name: "Yükleme Körüğü", href: "#" },
-    ],
-  },
-  {
-    name: "Hangar Kapısı",
-    href: "#",
-    items: [
-      { name: "Tersane Hangar Kapıları", href: "#" },
-      { name: "Havacılık Hangar Kapıları", href: "#" },
-    ],
-  },
-  {
-    name: "ATEX Kapılar",
-    href: "#",
-    items: [
-      { name: "Atex Sarmal Kapı", href: "#" },
-      { name: "Atex Katlanır Kapı", href: "#" },
-      { name: "Atex Seksiyonel Kapı", href: "#" },
-    ],
-  },
-  {
-    name: "Konut Kapıları",
-    href: "#",
-    items: [
-      { name: "Yüksek Hızlı Garaj Kapısı", href: "#" },
-      { name: "Panjur Garaj Kapısı", href: "#" },
-      { name: "Kepenk Garaj Kapısı", href: "#" },
-      { name: "Seksiyonel Garaj Kapısı", href: "#" },
-      { name: "Otomatik Cam Kapı", href: "#" },
-      { name: "Bariyer Kapı Sistemleri", href: "#" },
-      { name: "Yana Kayar Bahçe Kapısı", href: "#" },
-      { name: "Dairesel Bahçe Kapısı", href: "#" },
-    ],
-  },
-]
+interface NavigationItem {
+  id: number;
+  parent_id: number | null;
+  name: string;
+  product_slug: string | null;
+  sort_order: number;
+  children?: NavigationItem[];
+}
 
 const navItems = [
   { name: "Anasayfa", href: "#" },
@@ -86,8 +27,25 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [megaMenuOpen, setMegaMenuOpen] = useState(false)
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false)
+  const [productCategories, setProductCategories] = useState<NavigationItem[]>([])
   const megaMenuRef = useRef<HTMLDivElement>(null)
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+
+  // Fetch navigation items on mount
+  useEffect(() => {
+    const fetchNavigation = async () => {
+      try {
+        const res = await fetch('/api/navigation')
+        if (res.ok) {
+          const data = await res.json()
+          setProductCategories(data)
+        }
+      } catch (error) {
+        console.error('Error fetching navigation:', error)
+      }
+    }
+    fetchNavigation()
+  }, [])
 
   const handleMouseEnter = () => {
     if (timeoutRef.current) {
@@ -100,6 +58,14 @@ export default function Header() {
     timeoutRef.current = setTimeout(() => {
       setMegaMenuOpen(false)
     }, 150)
+  }
+
+  // Generate link for menu item
+  const getItemHref = (item: NavigationItem) => {
+    if (item.product_slug) {
+      return `/urunler/${item.product_slug}`
+    }
+    return '#'
   }
 
   return (
@@ -190,7 +156,7 @@ export default function Header() {
         </div>
 
         {/* Mega Menu - Desktop */}
-        {megaMenuOpen && (
+        {megaMenuOpen && productCategories.length > 0 && (
           <div
             ref={megaMenuRef}
             className="absolute left-0 w-full bg-white shadow-xl border-t border-gray-100 z-50"
@@ -200,23 +166,25 @@ export default function Header() {
             <div className="container mx-auto px-4 py-8">
               <div className="grid grid-cols-6 gap-8">
                 {productCategories.map((category) => (
-                  <div key={category.name} className="space-y-3">
+                  <div key={category.id} className="space-y-3">
                     <h3 className="font-bold text-[#414042] text-sm border-b border-gray-200 pb-2">
                       {category.name}
                     </h3>
-                    <ul className="space-y-2">
-                      {category.items.map((item) => (
-                        <li key={item.name}>
-                          <Link
-                            href={item.href}
-                            className="flex items-center gap-1 text-gray-600 hover:text-[#ED1C24] text-sm transition-colors group"
-                          >
-                            <ChevronRight className="h-3 w-3 text-[#ED1C24] opacity-0 group-hover:opacity-100 transition-opacity" />
-                            <span>{item.name}</span>
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
+                    {category.children && category.children.length > 0 && (
+                      <ul className="space-y-2">
+                        {category.children.map((item) => (
+                          <li key={item.id}>
+                            <Link
+                              href={getItemHref(item)}
+                              className="flex items-center gap-1 text-gray-600 hover:text-[#ED1C24] text-sm transition-colors group"
+                            >
+                              <ChevronRight className="h-3 w-3 text-[#ED1C24] opacity-0 group-hover:opacity-100 transition-opacity" />
+                              <span>{item.name}</span>
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
                 ))}
               </div>
@@ -239,23 +207,25 @@ export default function Header() {
                         {item.name}
                         <ChevronDown className={`h-4 w-4 transition-transform ${mobileProductsOpen ? 'rotate-180' : ''}`} />
                       </button>
-                      {mobileProductsOpen && (
+                      {mobileProductsOpen && productCategories.length > 0 && (
                         <div className="pl-4 pb-2 space-y-3">
                           {productCategories.map((category) => (
-                            <div key={category.name}>
+                            <div key={category.id}>
                               <h4 className="font-semibold text-[#414042] text-sm py-1">{category.name}</h4>
-                              <div className="pl-3 space-y-1">
-                                {category.items.map((subItem) => (
-                                  <Link
-                                    key={subItem.name}
-                                    href={subItem.href}
-                                    className="block py-1 text-xs text-gray-600 hover:text-[#ED1C24]"
-                                    onClick={() => setMobileMenuOpen(false)}
-                                  >
-                                    {subItem.name}
-                                  </Link>
-                                ))}
-                              </div>
+                              {category.children && category.children.length > 0 && (
+                                <div className="pl-3 space-y-1">
+                                  {category.children.map((subItem) => (
+                                    <Link
+                                      key={subItem.id}
+                                      href={getItemHref(subItem)}
+                                      className="block py-1 text-xs text-gray-600 hover:text-[#ED1C24]"
+                                      onClick={() => setMobileMenuOpen(false)}
+                                    >
+                                      {subItem.name}
+                                    </Link>
+                                  ))}
+                                </div>
+                              )}
                             </div>
                           ))}
                         </div>

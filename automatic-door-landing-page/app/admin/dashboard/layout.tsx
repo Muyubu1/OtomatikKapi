@@ -12,13 +12,15 @@ import {
     Image,
     LogOut,
     Menu,
-    X
+    X,
+    MenuSquare
 } from "lucide-react"
 
 const menuItems = [
     { icon: LayoutDashboard, label: "Dashboard", href: "/admin/dashboard" },
     { icon: FileText, label: "Site İçeriği", href: "/admin/dashboard/site-content" },
     { icon: Package, label: "Ürünler", href: "/admin/dashboard/products" },
+    { icon: MenuSquare, label: "Menü Yönetimi", href: "/admin/dashboard/menu" },
     { icon: HelpCircle, label: "SSS", href: "/admin/dashboard/faq" },
     { icon: Image, label: "Galeri", href: "/admin/dashboard/gallery" },
 ]
@@ -55,8 +57,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                                     <Link
                                         href={item.href}
                                         className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${isActive
-                                                ? "bg-[#ED1C24] text-white"
-                                                : "text-white/70 hover:bg-white/10 hover:text-white"
+                                            ? "bg-[#ED1C24] text-white"
+                                            : "text-white/70 hover:bg-white/10 hover:text-white"
                                             }`}
                                     >
                                         <item.icon className="w-5 h-5" />
@@ -109,8 +111,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                                                 href={item.href}
                                                 onClick={() => setSidebarOpen(false)}
                                                 className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${isActive
-                                                        ? "bg-[#ED1C24] text-white"
-                                                        : "text-white/70 hover:bg-white/10 hover:text-white"
+                                                    ? "bg-[#ED1C24] text-white"
+                                                    : "text-white/70 hover:bg-white/10 hover:text-white"
                                                     }`}
                                             >
                                                 <item.icon className="w-5 h-5" />
