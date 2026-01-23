@@ -1,51 +1,51 @@
 {
-    "hero": {
-        "title": "Endüstriyel Otomatik Kapı",
-        "subtitle": "ve Yükleme Sistemleri",
-        "description": "Güvenli, hızlı ve kaliteli otomatik kapı çözümleri ile işletmenizi bir adım öne taşıyın."
-    },
-    "features": {
-        "title": "Bizimle Daha Güvenli Olursunuz",
-        "items": [
-            "Kapınızı Otomatikleştirin, Hayatınızı Kolaylaştırın!",
-            "Otomatik Kapılar, Otomatik Çözümler!",
-            "Güvenli ve Rahat Geçiş İçin Otomatik Kapılar!",
-            "Tek Bir Dokunuşla Açılan Kapılar!",
-            "Otomatik Kapılar, Akıllı Yaşam Tarzı!"
-        ]
-    },
-    "whyUs": {
-        "title": "NEDEN BİZ",
-        "items": [
-            {
-                "title": "DENEYİM",
-                "description": "Deneyimli ve Profesyonel Bir Ekibimiz Var"
-            },
-            {
-                "title": "FİYAT",
-                "description": "Uygun Fiyatlarla Üstün Hizmet Sunuyoruz"
-            },
-            {
-                "title": "TEKNOLOJİ",
-                "description": "Sektördeki En Son Teknolojileri Kullanıyoruz"
-            },
-            {
-                "title": "ÖZEL ÇÖZÜMLER",
-                "description": "Projeye Özel Çözümler Sunuyoruz"
-            },
-            {
-                "title": "GÜVENİLİR VE SAYGIN",
-                "description": "Güvenilir ve Saygın Bir Firma Olmanın Gururunu Yaşıyoruz"
-            }
-        ]
-    },
-    "projectSolutions": {
-        "title": "PROJEYE ÖZEL ÇÖZÜMLER",
-        "paragraphs": [
-            "Otomatik kapılar, modern dünyanın vazgeçilmez bir parçasıdır. İster bir alışveriş merkezi, ister bir ofis binası, isterse bir konut kompleksi olsun, otomatik kapılar hem güvenlik hem de kolaylık sağlar.",
-            "İşte burada otomatik kapı firmalarının lideri olan \"FY Otomatik Kapı ve Yükleme Sistemleri\" projeye uygun çözümler sunarak müşterilerimizin ihtiyaçlarına uygun çözümler üreterek uygulamaktadır.",
-            "Projeye uygun çözümler sunan \"FY Otomatik Kapı\" her projenin kendine özgü ihtiyaçlarını ve zorluklarını anlar. Bu, projenin boyutunu, bütçesini, zaman çizelgesini ve hedeflerini dikkate almayı içerir.",
-            "Sonuç olarak, projeye uygun çözümler sunan otomatik kapı firmamız, her projenin başarısını sağlamak için gereken esnekliği ve uzmanlığı sağlar."
-        ]
-    }
+  "hero": {
+    "title": "Endüstriyel Otomatik Kapı",
+    "subtitle": "ve Yükleme Sistemleri",
+    "description": "Güvenli, hızlı ve kaliteli otomatik kapı çözümleri ile işletmenizi bir adım öne taşıyın. merhaba benim adım yusuf"
+  },
+  "features": {
+    "title": "Bizimle Daha Güvenli Olursunuz",
+    "items": [
+      "Kapınızı Otomatikleştirin, Hayatınızı Kolaylaştırın!",
+      "Otomatik Kapılar, Otomatik Çözümler!",
+      "Güvenli ve Rahat Geçiş İçin Otomatik Kapılar!",
+      "Tek Bir Dokunuşla Açılan Kapılar!",
+      "Otomatik Kapılar, Akıllı Yaşam Tarzı!"
+    ]
+  },
+  "whyUs": {
+    "title": "NEDEN BİZ",
+    "items": [
+      {
+        "title": "DENEYİM",
+        "description": "Deneyimli ve Profesyonel Bir Ekibimiz Var"
+      },
+      {
+        "title": "FİYAT",
+        "description": "Uygun Fiyatlarla Üstün Hizmet Sunuyoruz"
+      },
+      {
+        "title": "TEKNOLOJİ",
+        "description": "Sektördeki En Son Teknolojileri Kullanıyoruz"
+      },
+      {
+        "title": "ÖZEL ÇÖZÜMLER",
+        "description": "Projeye Özel Çözümler Sunuyoruz"
+      },
+      {
+        "title": "GÜVENİLİR VE SAYGIN",
+        "description": "Güvenilir ve Saygın Bir Firma Olmanın Gururunu Yaşıyoruz"
+      }
+    ]
+  },
+  "projectSolutions": {
+    "title": "PROJEYE ÖZEL ÇÖZÜMLER",
+    "paragraphs": [
+      "Otomatik kapılar, modern dünyanın vazgeçilmez bir parçasıdır. İster bir alışveriş merkezi, ister bir ofis binası, isterse bir konut kompleksi olsun, otomatik kapılar hem güvenlik hem de kolaylık sağlar.",
+      "İşte burada otomatik kapı firmalarının lideri olan \"FY Otomatik Kapı ve Yükleme Sistemleri\" projeye uygun çözümler sunarak müşterilerimizin ihtiyaçlarına uygun çözümler üreterek uygulamaktadır.",
+      "Projeye uygun çözümler sunan \"FY Otomatik Kapı\" her projenin kendine özgü ihtiyaçlarını ve zorluklarını anlar. Bu, projenin boyutunu, bütçesini, zaman çizelgesini ve hedeflerini dikkate almayı içerir.",
+      "Sonuç olarak, projeye uygun çözümler sunan otomatik kapı firmamız, her projenin başarısını sağlamak için gereken esnekliği ve uzmanlığı sağlar."
+    ]
+  }
 }

@@ -5,7 +5,19 @@ import { ChevronDown } from "lucide-react"
 import HeroVideoBackground from "@/components/hero-video-background"
 import { motion } from "framer-motion"
 
-export default function HeroSection() {
+interface HeroSectionProps {
+  content?: {
+    title: string
+    subtitle: string
+    description: string
+  }
+}
+
+export default function HeroSection({ content }: HeroSectionProps) {
+  const title = content?.title || "Endüstriyel Otomatik Kapı"
+  const subtitle = content?.subtitle || "ve Yükleme Sistemleri"
+  const description = content?.description || "Güvenli, hızlı ve kaliteli otomatik kapı çözümleri ile işletmenizi bir adım öne taşıyın."
+
   return (
     <section id="hero" className="relative w-full h-screen overflow-hidden">
       {/* Video Background */}
@@ -19,14 +31,14 @@ export default function HeroSection() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="text-4xl md:text-6xl font-bold text-white mb-6 text-balance"
         >
-          Endüstriyel Otomatik Kapı <br />
+          {title} <br />
           <motion.span
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.3 }}
             className="text-[#ED1C24]"
           >
-            ve Yükleme Sistemleri
+            {subtitle}
           </motion.span>
         </motion.h1>
         <motion.p
@@ -35,7 +47,7 @@ export default function HeroSection() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="text-xl text-white/90 max-w-2xl mb-8"
         >
-          Güvenli, hızlı ve kaliteli otomatik kapı çözümleri ile işletmenizi bir adım öne taşıyın.
+          {description}
         </motion.p>
         <motion.div
           initial={{ opacity: 0, y: 20 }}

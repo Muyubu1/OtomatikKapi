@@ -4,15 +4,22 @@ import { Check } from "lucide-react"
 import { getAssetPath } from "@/lib/utils"
 import { motion } from "framer-motion"
 
-const features = [
-  "Kapınızı Otomatikleştirin, Hayatınızı Kolaylaştırın!",
-  "Otomatik Kapılar, Otomatik Çözümler!",
-  "Güvenli ve Rahat Geçiş İçin Otomatik Kapılar!",
-  "Tek Bir Dokunuşla Açılan Kapılar!",
-  "Otomatik Kapılar, Akıllı Yaşam Tarzı!",
-]
+interface FeaturesSectionProps {
+  content?: {
+    title: string
+    items: string[]
+  }
+}
 
-export default function FeaturesSection() {
+export default function FeaturesSection({ content }: FeaturesSectionProps) {
+  const items = content?.items || [
+    "Kapınızı Otomatikleştirin, Hayatınızı Kolaylaştırın!",
+    "Otomatik Kapılar, Otomatik Çözümler!",
+    "Güvenli ve Rahat Geçiş İçin Otomatik Kapılar!",
+    "Tek Bir Dokunuşla Açılan Kapılar!",
+    "Otomatik Kapılar, Akıllı Yaşam Tarzı!",
+  ]
+
   return (
     <section className="py-20 bg-white">
       <div className="container mx-auto px-4">
@@ -41,7 +48,7 @@ export default function FeaturesSection() {
               Bizimle Daha <span className="text-[#ED1C24]">Güvenli</span> Olursunuz
             </h2>
             <div className="space-y-4">
-              {features.map((feature, index) => (
+              {items.map((feature, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, x: 20 }}

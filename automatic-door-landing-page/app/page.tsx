@@ -8,21 +8,26 @@ import FAQSection from "@/components/faq-section"
 import Footer from "@/components/footer"
 import WhatsAppButton from "@/components/whatsapp-button"
 import CallButton from "@/components/call-button"
+import { getSiteContent, getFAQ } from "@/lib/data"
 
-export default function Home() {
+export const revalidate = 0 // Always fetch fresh data
+
+export default async function Home() {
+  const siteContent = await getSiteContent()
+  const faqData = await getFAQ()
+
   return (
     <main className="min-h-screen">
       <Header />
-      <HeroSection />
+      <HeroSection content={siteContent.hero} />
       <ProductsSection />
-      <FeaturesSection />
-      <WhyUsSection />
+      <FeaturesSection content={siteContent.features} />
+      <WhyUsSection content={siteContent.whyUs} />
       <ProjectSolutionsSection />
-      <FAQSection />
+      <FAQSection faqs={faqData} />
       <Footer />
       <WhatsAppButton />
       <CallButton />
     </main>
   )
 }
-
