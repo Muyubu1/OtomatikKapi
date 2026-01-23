@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 
 interface Product {
+    id?: number
     slug: string
     name: string
     shortDescription: string
@@ -28,6 +29,7 @@ function ImageUploader({
     onUpload: (url: string) => void
 }) {
     const [uploading, setUploading] = useState(false)
+    const [error, setError] = useState<string | null>(null)
     const inputRef = useRef<HTMLInputElement>(null)
 
     const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,6 +37,7 @@ function ImageUploader({
         if (!file) return
 
         setUploading(true)
+        setError(null)
         const formData = new FormData()
         formData.append('file', file)
         formData.append('section', section)
@@ -47,9 +50,12 @@ function ImageUploader({
             const data = await res.json()
             if (data.success) {
                 onUpload(data.url)
+            } else {
+                setError(data.error || 'Yükleme başarısız')
             }
         } catch (error) {
             console.error('Upload error:', error)
+            setError('Yükleme hatası oluştu')
         } finally {
             setUploading(false)
         }
@@ -81,6 +87,7 @@ function ImageUploader({
                     </Button>
                 </div>
             </div>
+            {error && <p className="text-xs text-red-500">{error}</p>}
             <input
                 ref={inputRef}
                 type="file"
@@ -98,6 +105,7 @@ export default function ProductsPage() {
     const [saving, setSaving] = useState(false)
     const [saved, setSaved] = useState(false)
     const [editingIndex, setEditingIndex] = useState<number | null>(null)
+    const [error, setError] = useState<string | null>(null)
 
     useEffect(() => {
         fetchProducts()
@@ -110,25 +118,9 @@ export default function ProductsPage() {
             setProducts(data)
         } catch (error) {
             console.error("Veri yüklenemedi:", error)
+            setError("Ürünler yüklenemedi")
         } finally {
             setLoading(false)
-        }
-    }
-
-    const saveProducts = async () => {
-        setSaving(true)
-        try {
-            await fetch("/api/products", {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(products)
-            })
-            setSaved(true)
-            setTimeout(() => setSaved(false), 2000)
-        } catch (error) {
-            console.error("Kaydetme hatası:", error)
-        } finally {
-            setSaving(false)
         }
     }
 
@@ -146,7 +138,8 @@ export default function ProductsPage() {
             .replace(/^-|-$/g, "")
     }
 
-    const addProduct = () => {
+    // Add new product via POST
+    const addProduct = async () => {
         const newProduct: Product = {
             slug: `yeni-urun-${Date.now()}`,
             name: "Yeni Ürün",
@@ -157,14 +150,90 @@ export default function ProductsPage() {
             features: ["Özellik 1", "Özellik 2"],
             category: "Endüstriyel Kapılar"
         }
-        setProducts([...products, newProduct])
-        setEditingIndex(products.length)
+
+        setSaving(true)
+        setError(null)
+        try {
+            const res = await fetch("/api/products", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(newProduct)
+            })
+            const data = await res.json()
+
+            if (data.success && data.product) {
+                setProducts([...products, data.product])
+                setEditingIndex(products.length)
+                setSaved(true)
+                setTimeout(() => setSaved(false), 2000)
+            } else {
+                setError(data.error || "Ürün eklenemedi")
+            }
+        } catch (error) {
+            console.error("Ürün ekleme hatası:", error)
+            setError("Ürün eklenemedi")
+        } finally {
+            setSaving(false)
+        }
     }
 
-    const removeProduct = (index: number) => {
-        if (confirm("Bu ürünü silmek istediğinizden emin misiniz?")) {
-            setProducts(products.filter((_, i) => i !== index))
-            if (editingIndex === index) setEditingIndex(null)
+    // Update single product via PUT
+    const saveProduct = async (index: number) => {
+        const product = products[index]
+        setSaving(true)
+        setError(null)
+
+        try {
+            const res = await fetch("/api/products", {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(product)
+            })
+            const data = await res.json()
+
+            if (data.success) {
+                setSaved(true)
+                setTimeout(() => setSaved(false), 2000)
+                setEditingIndex(null)
+            } else {
+                setError(data.error || "Kaydetme başarısız")
+            }
+        } catch (error) {
+            console.error("Kaydetme hatası:", error)
+            setError("Kaydetme başarısız")
+        } finally {
+            setSaving(false)
+        }
+    }
+
+    // Delete single product via DELETE
+    const removeProduct = async (index: number) => {
+        const product = products[index]
+        if (!confirm("Bu ürünü silmek istediğinizden emin misiniz?")) {
+            return
+        }
+
+        setSaving(true)
+        setError(null)
+
+        try {
+            const params = product.id ? `id=${product.id}` : `slug=${product.slug}`
+            const res = await fetch(`/api/products?${params}`, {
+                method: "DELETE"
+            })
+            const data = await res.json()
+
+            if (data.success) {
+                setProducts(products.filter((_, i) => i !== index))
+                if (editingIndex === index) setEditingIndex(null)
+            } else {
+                setError(data.error || "Silme başarısız")
+            }
+        } catch (error) {
+            console.error("Silme hatası:", error)
+            setError("Silme başarısız")
+        } finally {
+            setSaving(false)
         }
     }
 
@@ -208,31 +277,27 @@ export default function ProductsPage() {
                     <p className="text-gray-600">Ürünleri ekleyin, düzenleyin veya silin</p>
                 </div>
                 <div className="flex gap-2">
-                    <Button variant="outline" onClick={addProduct}>
-                        <Plus className="w-4 h-4 mr-2" />
-                        Yeni Ürün
-                    </Button>
-                    <Button
-                        onClick={saveProducts}
-                        disabled={saving}
-                        className="bg-[#ED1C24] hover:bg-[#c91920]"
-                    >
+                    <Button variant="outline" onClick={addProduct} disabled={saving}>
                         {saving ? (
                             <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                        ) : saved ? (
-                            <Check className="w-4 h-4 mr-2" />
                         ) : (
-                            <Save className="w-4 h-4 mr-2" />
+                            <Plus className="w-4 h-4 mr-2" />
                         )}
-                        {saved ? "Kaydedildi!" : "Kaydet"}
+                        Yeni Ürün
                     </Button>
                 </div>
             </div>
 
+            {error && (
+                <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
+                    {error}
+                </div>
+            )}
+
             <div className="space-y-4">
                 {products.map((product, index) => (
                     <motion.div
-                        key={product.slug}
+                        key={product.id || product.slug}
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: index * 0.05 }}
@@ -243,13 +308,29 @@ export default function ProductsPage() {
                             <div className="p-6">
                                 <div className="flex items-center justify-between mb-6">
                                     <h3 className="font-semibold text-[#414042] text-lg">Ürün Düzenle</h3>
-                                    <Button
-                                        variant="ghost"
-                                        size="sm"
-                                        onClick={() => setEditingIndex(null)}
-                                    >
-                                        <X className="w-4 h-4" />
-                                    </Button>
+                                    <div className="flex gap-2">
+                                        <Button
+                                            onClick={() => saveProduct(index)}
+                                            disabled={saving}
+                                            className="bg-[#ED1C24] hover:bg-[#c91920]"
+                                        >
+                                            {saving ? (
+                                                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                                            ) : saved ? (
+                                                <Check className="w-4 h-4 mr-2" />
+                                            ) : (
+                                                <Save className="w-4 h-4 mr-2" />
+                                            )}
+                                            {saved ? "Kaydedildi!" : "Kaydet"}
+                                        </Button>
+                                        <Button
+                                            variant="ghost"
+                                            size="sm"
+                                            onClick={() => setEditingIndex(null)}
+                                        >
+                                            <X className="w-4 h-4" />
+                                        </Button>
+                                    </div>
                                 </div>
 
                                 <div className="grid md:grid-cols-2 gap-6">
