@@ -4,7 +4,13 @@ import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
 import { getAssetPath } from "@/lib/utils"
 import { motion } from "framer-motion"
-import { products } from "@/lib/products-data"
+import { useEffect, useState } from "react"
+
+interface Product {
+  slug: string
+  name: string
+  mainImage: string
+}
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -26,6 +32,15 @@ const itemVariants = {
 }
 
 export default function ProductsSection() {
+  const [products, setProducts] = useState<Product[]>([])
+
+  useEffect(() => {
+    fetch('/api/products')
+      .then(res => res.json())
+      .then(data => setProducts(data))
+      .catch(console.error)
+  }, [])
+
   return (
     <section id="products" className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
@@ -49,7 +64,7 @@ export default function ProductsSection() {
           viewport={{ once: true, margin: "-50px" }}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6"
         >
-          {products.map((product, index) => (
+          {products.map((product) => (
             <motion.div key={product.slug} variants={itemVariants}>
               <Link href={`/urunler/${product.slug}`}>
                 <Card className="group cursor-pointer overflow-hidden hover:shadow-xl transition-shadow duration-300">

@@ -2,16 +2,26 @@
 
 import { notFound } from "next/navigation"
 import Link from "next/link"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, Check, MessageCircle } from "lucide-react"
+import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, Check, MessageCircle, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { getProductBySlug, getAdjacentProducts, getOtherProducts, products } from "@/lib/products-data"
 import { getAssetPath } from "@/lib/utils"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
 import WhatsAppButton from "@/components/whatsapp-button"
 import CallButton from "@/components/call-button"
+
+interface Product {
+    slug: string
+    name: string
+    shortDescription: string
+    fullDescription: string
+    mainImage: string
+    gallery: string[]
+    features: string[]
+    category: string
+}
 
 interface ProductPageProps {
     params: Promise<{ slug: string }>
@@ -19,18 +29,44 @@ interface ProductPageProps {
 
 export default function ProductPage({ params }: ProductPageProps) {
     const { slug } = require("react").use(params)
-    const product = getProductBySlug(slug)
+    const [product, setProduct] = useState<Product | null>(null)
+    const [products, setProducts] = useState<Product[]>([])
+    const [loading, setLoading] = useState(true)
+    const [selectedImage, setSelectedImage] = useState(0)
+
+    useEffect(() => {
+        fetch('/api/products')
+            .then(res => res.json())
+            .then(data => {
+                setProducts(data)
+                const found = data.find((p: Product) => p.slug === slug)
+                setProduct(found || null)
+                setLoading(false)
+            })
+            .catch(() => setLoading(false))
+    }, [slug])
+
+    if (loading) {
+        return (
+            <main className="min-h-screen bg-white flex items-center justify-center">
+                <Loader2 className="w-8 h-8 animate-spin text-[#ED1C24]" />
+            </main>
+        )
+    }
 
     if (!product) {
         notFound()
     }
 
-    const [selectedImage, setSelectedImage] = useState(0)
-    const { prev, next } = getAdjacentProducts(slug)
-    const otherProducts = getOtherProducts(slug)
+    const currentIndex = products.findIndex(p => p.slug === slug)
+    const prev = currentIndex > 0 ? products[currentIndex - 1] : null
+    const next = currentIndex < products.length - 1 ? products[currentIndex + 1] : null
+    const otherProducts = products.filter(p => p.slug !== slug)
 
     const whatsappMessage = `Merhaba, ${product.name} hakkında bilgi almak istiyorum.`
     const whatsappUrl = `https://wa.me/905422408699?text=${encodeURIComponent(whatsappMessage)}`
+
+    const galleryImages = product.gallery.length > 0 ? product.gallery : [product.mainImage]
 
     return (
         <main className="min-h-screen bg-white">
@@ -73,7 +109,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                                 <AnimatePresence mode="wait">
                                     <motion.img
                                         key={selectedImage}
-                                        src={getAssetPath(product.gallery[selectedImage])}
+                                        src={getAssetPath(galleryImages[selectedImage])}
                                         alt={product.name}
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1 }}
@@ -84,16 +120,16 @@ export default function ProductPage({ params }: ProductPageProps) {
                                 </AnimatePresence>
 
                                 {/* Gallery Navigation */}
-                                {product.gallery.length > 1 && (
+                                {galleryImages.length > 1 && (
                                     <>
                                         <button
-                                            onClick={() => setSelectedImage(prev => prev === 0 ? product.gallery.length - 1 : prev - 1)}
+                                            onClick={() => setSelectedImage(prev => prev === 0 ? galleryImages.length - 1 : prev - 1)}
                                             className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg transition-all"
                                         >
                                             <ChevronLeft className="h-5 w-5 text-[#414042]" />
                                         </button>
                                         <button
-                                            onClick={() => setSelectedImage(prev => prev === product.gallery.length - 1 ? 0 : prev + 1)}
+                                            onClick={() => setSelectedImage(prev => prev === galleryImages.length - 1 ? 0 : prev + 1)}
                                             className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg transition-all"
                                         >
                                             <ChevronRight className="h-5 w-5 text-[#414042]" />
@@ -103,9 +139,9 @@ export default function ProductPage({ params }: ProductPageProps) {
                             </div>
 
                             {/* Thumbnails */}
-                            {product.gallery.length > 1 && (
+                            {galleryImages.length > 1 && (
                                 <div className="flex gap-3">
-                                    {product.gallery.map((img, idx) => (
+                                    {galleryImages.map((img, idx) => (
                                         <button
                                             key={idx}
                                             onClick={() => setSelectedImage(idx)}
@@ -228,34 +264,36 @@ export default function ProductPage({ params }: ProductPageProps) {
             </section>
 
             {/* Other Products */}
-            <section className="py-16">
-                <div className="container mx-auto px-4">
-                    <h2 className="text-2xl font-bold text-[#414042] mb-8 text-center">Diğer Ürünlerimiz</h2>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                        {otherProducts.map((item, idx) => (
-                            <motion.div
-                                key={item.slug}
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.4, delay: idx * 0.1 }}
-                            >
-                                <Link href={`/urunler/${item.slug}`} className="group block">
-                                    <div className="aspect-square rounded-lg overflow-hidden bg-gray-100 mb-3">
-                                        <img
-                                            src={getAssetPath(item.mainImage)}
-                                            alt={item.name}
-                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                        />
-                                    </div>
-                                    <h3 className="font-medium text-[#414042] group-hover:text-[#ED1C24] transition-colors text-center text-sm">
-                                        {item.name}
-                                    </h3>
-                                </Link>
-                            </motion.div>
-                        ))}
+            {otherProducts.length > 0 && (
+                <section className="py-16">
+                    <div className="container mx-auto px-4">
+                        <h2 className="text-2xl font-bold text-[#414042] mb-8 text-center">Diğer Ürünlerimiz</h2>
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                            {otherProducts.slice(0, 4).map((item, idx) => (
+                                <motion.div
+                                    key={item.slug}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.4, delay: idx * 0.1 }}
+                                >
+                                    <Link href={`/urunler/${item.slug}`} className="group block">
+                                        <div className="aspect-square rounded-lg overflow-hidden bg-gray-100 mb-3">
+                                            <img
+                                                src={getAssetPath(item.mainImage)}
+                                                alt={item.name}
+                                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                            />
+                                        </div>
+                                        <h3 className="font-medium text-[#414042] group-hover:text-[#ED1C24] transition-colors text-center text-sm">
+                                            {item.name}
+                                        </h3>
+                                    </Link>
+                                </motion.div>
+                            ))}
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            )}
 
             <Footer />
             <WhatsAppButton />
