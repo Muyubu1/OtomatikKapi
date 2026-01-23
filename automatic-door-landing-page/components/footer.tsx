@@ -1,6 +1,6 @@
 import Link from "next/link"
 import Image from "next/image"
-import { Mail, Phone, MapPin, Linkedin, Instagram, Facebook, Twitter } from "lucide-react"
+import { Mail, Phone, MapPin, Linkedin, Instagram } from "lucide-react"
 import logoCKS from "@/public/cksLogobr.png"
 
 export default function Footer() {
@@ -25,12 +25,6 @@ export default function Footer() {
               Endüstriyel otomatik kapı ve yükleme sistemlerinde lider firma. Güvenli, hızlı ve kaliteli çözümler.
             </p>
             <div className="flex gap-4">
-              <a href="#" className="hover:text-[#ED1C24] transition-colors">
-                <Facebook className="h-5 w-5" />
-              </a>
-              <a href="#" className="hover:text-[#ED1C24] transition-colors">
-                <Twitter className="h-5 w-5" />
-              </a>
               <a href="#" className="hover:text-[#ED1C24] transition-colors">
                 <Instagram className="h-5 w-5" />
               </a>
@@ -107,7 +101,7 @@ export default function Footer() {
       <div className="border-t border-white/10">
         <div className="container mx-auto px-4 py-4">
           <div className="flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
-            <p>© 2026 FY Otomatik Kapı. Tüm hakları saklıdır.</p>
+            <p>© 2026 CKS. Tüm hakları saklıdır.</p>
             <div className="flex gap-4 mt-2 md:mt-0">
               <Link href="#" className="hover:text-[#ED1C24] transition-colors">
                 Gizlilik Politikası

@@ -1,92 +1,92 @@
 [
-    {
-        "slug": "endustriyel-seksiyonel-kapi",
-        "name": "Endüstriyel Seksiyonel Kapı",
-        "shortDescription": "Sanayi tipi dayanıklı panel kapı sistemi",
-        "fullDescription": "Endüstriyel seksiyonel kapılar, fabrikalar, depolar ve üretim tesisleri için özel olarak tasarlanmış yüksek performanslı kapı sistemleridir. Çelik veya alüminyum panellerden oluşan bu kapılar, mükemmel ısı yalıtımı ve dayanıklılık sunar.",
-        "mainImage": "/industrial-sectional-door-gray-metal.jpg",
-        "gallery": [
-            "/industrial-sectional-door-gray-metal.jpg",
-            "/assets/gallery/Endustriyel-Seksiyonel-Kapi.jpg"
-        ],
-        "features": [
-            "Yüksek ısı yalıtımı",
-            "Galvanizli çelik panel",
-            "Motorlu/manuel kullanım",
-            "Uzun ömürlü dayanıklılık"
-        ],
-        "category": "Endüstriyel Kapılar"
-    },
-    {
-        "slug": "endustriyel-katlanir-kapi",
-        "name": "Endüstriyel Katlanır Kapı",
-        "shortDescription": "Geniş açıklıklar için esnek katlanır sistem",
-        "fullDescription": "Endüstriyel katlanır kapılar, büyük açıklıklar için ideal çözümler sunar. Hangar, depo ve üretim alanlarında kullanılan bu kapılar, hızlı açılıp kapanma özelliğiyle zaman tasarrufu sağlar.",
-        "mainImage": "/industrial-folding-door-white.jpg",
-        "gallery": [
-            "/industrial-folding-door-white.jpg",
-            "/assets/gallery/PVC-Katlanir-Kapi-2-1.jpg"
-        ],
-        "features": [
-            "Geniş açıklıklara uygun",
-            "Hızlı açılma/kapanma",
-            "Hafif konstrüksiyon",
-            "Özel ölçü üretim"
-        ],
-        "category": "Endüstriyel Kapılar"
-    },
-    {
-        "slug": "serit-perde-kapi",
-        "name": "Şerit Perde Kapı",
-        "shortDescription": "PVC şerit perde sistemleri",
-        "fullDescription": "Şerit perde kapılar, soğuk hava depoları, gıda tesisleri ve endüstriyel alanlarda yaygın olarak kullanılır. Şeffaf PVC şeritler sayesinde görüş alanı korunurken, ısı ve toz izolasyonu sağlanır.",
-        "mainImage": "/strip-curtain-door-transparent-pvc.jpg",
-        "gallery": [
-            "/strip-curtain-door-transparent-pvc.jpg",
-            "/assets/gallery/Endustriyel-Serit-Perde-1.jpeg"
-        ],
-        "features": [
-            "Isı izolasyonu",
-            "Toz ve böcek bariyeri",
-            "Şeffaf görünüm",
-            "Kolay montaj"
-        ],
-        "category": "Yüksek Hızlı Kapılar"
-    },
-    {
-        "slug": "personel-yangin-kapisi",
-        "name": "Personel Yangın Kapısı",
-        "shortDescription": "Yangın güvenliği için çelik kapı sistemleri",
-        "fullDescription": "Personel yangın kapıları, yangın durumlarında güvenli tahliye ve yangın yayılımını önleme amacıyla kullanılır. Yangın dayanıklılık sınıfına göre 60-120 dakika koruma sağlar.",
-        "mainImage": "/fire-door-gray-personnel-door.jpg",
-        "gallery": [
-            "/fire-door-gray-personnel-door.jpg",
-            "/assets/gallery/Personel-Yangin-Kapisi-1-772x1030.jpg"
-        ],
-        "features": [
-            "60-120 dakika yangın dayanımı",
-            "Panik bar sistemi",
-            "Otomatik kapanma",
-            "CE sertifikalı"
-        ],
-        "category": "Yangın Kapıları"
-    },
-    {
-        "slug": "sarmal-yangin-kapisi",
-        "name": "Sarmal Yangın Kapısı",
-        "shortDescription": "Yüksek hızlı spiral yangın kapı sistemi",
-        "fullDescription": "Sarmal yangın kapıları, yangın durumlarında otomatik olarak kapanan ve yüksek hızlı açılıp kapanabilen modern kapı sistemleridir. Özellikle yoğun trafikli alanlarda hem yangın güvenliği hem de verimlilik sağlar.",
-        "mainImage": "/spiral-fire-door-silver.jpg",
-        "gallery": [
-            "/spiral-fire-door-silver.jpg",
-            "/assets/gallery/Yangin-Sarmal-Kapi-5.jpg"
-        ],
-        "features": [
-            "Yüksek hızlı çalışma",
-            "Otomatik yangın kapanması",
-            "Kompakt tasarım",
-            "Sensörlü güvenlik"
-        ],
-        "category": "Yangın Kapıları"
-    }
+  {
+    "slug": "endustriyel-seksiyonel-kapi",
+    "name": "Endüstriyel Seksiyonel Kapı",
+    "shortDescription": "Sanayi tipi dayanıklı panel kapı sistemi",
+    "fullDescription": "Endüstriyel seksiyonel kapılar, fabrikalar, depolar ve üretim tesisleri için özel olarak tasarlanmış yüksek performanslı kapı sistemleridir. Çelik veya alüminyum panellerden oluşan bu kapılar, mükemmel ısı yalıtımı ve dayanıklılık sunar.",
+    "mainImage": "/industrial-sectional-door-gray-metal.jpg",
+    "gallery": [
+      "/industrial-sectional-door-gray-metal.jpg",
+      "/assets/gallery/Endustriyel-Seksiyonel-Kapi.jpg"
+    ],
+    "features": [
+      "Yüksek ısı yalıtımı",
+      "Galvanizli çelik panel",
+      "Motorlu/manuel kullanım",
+      "Uzun ömürlü dayanıklılık"
+    ],
+    "category": "Endüstriyel Kapılar"
+  },
+  {
+    "slug": "endustriyel-katlanir-kapi",
+    "name": "Endüstriyel Katlanır Kapı",
+    "shortDescription": "Geniş açıklıklar için esnek katlanır sistem",
+    "fullDescription": "Endüstriyel katlanır kapılar, büyük açıklıklar için ideal çözümler sunar. Hangar, depo ve üretim alanlarında kullanılan bu kapılar, hızlı açılıp kapanma özelliğiyle zaman tasarrufu sağlar.",
+    "mainImage": "/industrial-folding-door-white.jpg",
+    "gallery": [
+      "/industrial-folding-door-white.jpg",
+      "/assets/gallery/PVC-Katlanir-Kapi-2-1.jpg"
+    ],
+    "features": [
+      "Geniş açıklıklara uygun",
+      "Hızlı açılma/kapanma",
+      "Hafif konstrüksiyon",
+      "Özel ölçü üretim"
+    ],
+    "category": "Endüstriyel Kapılar"
+  },
+  {
+    "slug": "serit-perde-kapi",
+    "name": "Şerit Perde Kapı",
+    "shortDescription": "PVC şerit perde sistemleri",
+    "fullDescription": "Şerit perde kapılar, soğuk hava depoları, gıda tesisleri ve endüstriyel alanlarda yaygın olarak kullanılır. Şeffaf PVC şeritler sayesinde görüş alanı korunurken, ısı ve toz izolasyonu sağlanır.",
+    "mainImage": "/strip-curtain-door-transparent-pvc.jpg",
+    "gallery": [
+      "/strip-curtain-door-transparent-pvc.jpg",
+      "/assets/gallery/Endustriyel-Serit-Perde-1.jpeg"
+    ],
+    "features": [
+      "Isı izolasyonu",
+      "Toz ve böcek bariyeri",
+      "Şeffaf görünüm",
+      "Kolay montaj"
+    ],
+    "category": "Yüksek Hızlı Kapılar"
+  },
+  {
+    "slug": "personel-yangin-kapisi",
+    "name": "Personel Yangın Kapısı",
+    "shortDescription": "Yangın güvenliği için çelik kapı sistemleri",
+    "fullDescription": "Personel yangın kapıları, yangın durumlarında güvenli tahliye ve yangın yayılımını önleme amacıyla kullanılır. Yangın dayanıklılık sınıfına göre 60-120 dakika koruma sağlar.",
+    "mainImage": "/fire-door-gray-personnel-door.jpg",
+    "gallery": [
+      "/fire-door-gray-personnel-door.jpg",
+      "/assets/gallery/Personel-Yangin-Kapisi-1-772x1030.jpg"
+    ],
+    "features": [
+      "60-120 dakika yangın dayanımı",
+      "Panik bar sistemi",
+      "Otomatik kapanma",
+      "CE sertifikalı"
+    ],
+    "category": "Yangın Kapıları"
+  },
+  {
+    "slug": "sarmal-yangin-kapisi",
+    "name": "Sarmal Yangın Kapısı",
+    "shortDescription": "Yüksek hızlı spiral yangın kapı sistemi",
+    "fullDescription": "Sarmal yangın kapıları, yangın durumlarında otomatik olarak kapanan ve yüksek hızlı açılıp kapanabilen modern kapı sistemleridir. Özellikle yoğun trafikli alanlarda hem yangın güvenliği hem de verimlilik sağlar.",
+    "mainImage": "/spiral-fire-door-silver.jpg",
+    "gallery": [
+      "/spiral-fire-door-silver.jpg",
+      "/assets/gallery/Yangin-Sarmal-Kapi-5.jpg"
+    ],
+    "features": [
+      "Yüksek hızlı çalışma",
+      "Otomatik yangın kapanması",
+      "Kompakt tasarım",
+      "Sensörlü güvenlik"
+    ],
+    "category": "Yangın Kapıları"
+  }
 ]

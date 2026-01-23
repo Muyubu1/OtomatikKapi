@@ -146,8 +146,8 @@ export default function ProductPage({ params }: ProductPageProps) {
                                             key={idx}
                                             onClick={() => setSelectedImage(idx)}
                                             className={`relative w-20 h-20 rounded-lg overflow-hidden transition-all ${selectedImage === idx
-                                                    ? 'ring-2 ring-[#ED1C24] ring-offset-2'
-                                                    : 'opacity-70 hover:opacity-100'
+                                                ? 'ring-2 ring-[#ED1C24] ring-offset-2'
+                                                : 'opacity-70 hover:opacity-100'
                                                 }`}
                                         >
                                             <img
@@ -268,8 +268,8 @@ export default function ProductPage({ params }: ProductPageProps) {
                 <section className="py-16">
                     <div className="container mx-auto px-4">
                         <h2 className="text-2xl font-bold text-[#414042] mb-8 text-center">Diğer Ürünlerimiz</h2>
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                            {otherProducts.slice(0, 4).map((item, idx) => (
+                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                            {otherProducts.map((item, idx) => (
                                 <motion.div
                                     key={item.slug}
                                     initial={{ opacity: 0, y: 20 }}
