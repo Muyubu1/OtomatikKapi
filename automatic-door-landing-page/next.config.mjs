@@ -23,7 +23,21 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    unoptimized: true,
+    // Enable image optimization for local and Supabase images
+    unoptimized: isGitHubPages, // Only unoptimized for static export
+    formats: ['image/webp', 'image/avif'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '*.supabase.co',
+        pathname: '/storage/v1/object/public/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'roykuxvbtjqfqqjvhxmz.supabase.co',
+        pathname: '/storage/v1/object/public/**',
+      },
+    ],
   },
 }
 
