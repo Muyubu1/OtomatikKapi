@@ -51,10 +51,12 @@ const sectionLabels = {
 function ImageUploader({
     currentImage,
     onUpload,
+    onDelete,
     section
 }: {
     currentImage?: string
     onUpload: (url: string) => void
+    onDelete: () => void
     section: string
 }) {
     const [uploading, setUploading] = useState(false)
@@ -85,35 +87,54 @@ function ImageUploader({
         }
     }
 
+    const handleDelete = (e: React.MouseEvent) => {
+        e.stopPropagation()
+        onDelete()
+    }
+
     return (
-        <div
-            className="relative h-24 bg-gray-100 rounded-lg overflow-hidden border-2 border-dashed border-gray-200 cursor-pointer group"
-            onClick={() => inputRef.current?.click()}
-        >
-            {currentImage ? (
-                <img src={currentImage} alt="Önizleme" className="w-full h-full object-cover" />
-            ) : (
-                <div className="flex items-center justify-center h-full text-gray-400">
-                    <ImageIcon className="w-8 h-8" />
-                </div>
-            )}
-            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                {uploading ? (
-                    <Loader2 className="w-6 h-6 text-white animate-spin" />
+        <div className="relative">
+            <div
+                className="relative h-24 bg-gray-100 rounded-lg overflow-hidden border-2 border-dashed border-gray-200 cursor-pointer group"
+                onClick={() => inputRef.current?.click()}
+            >
+                {currentImage ? (
+                    <img src={currentImage} alt="Önizleme" className="w-full h-full object-cover" />
                 ) : (
-                    <Upload className="w-6 h-6 text-white" />
+                    <div className="flex items-center justify-center h-full text-gray-400">
+                        <ImageIcon className="w-8 h-8" />
+                    </div>
                 )}
+                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    {uploading ? (
+                        <Loader2 className="w-6 h-6 text-white animate-spin" />
+                    ) : (
+                        <Upload className="w-6 h-6 text-white" />
+                    )}
+                </div>
+                <input
+                    ref={inputRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={handleUpload}
+                    className="hidden"
+                />
             </div>
-            <input
-                ref={inputRef}
-                type="file"
-                accept="image/*"
-                onChange={handleUpload}
-                className="hidden"
-            />
+            {currentImage && (
+                <button
+                    onClick={handleDelete}
+                    className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center shadow-lg transition-colors z-10"
+                    title="Görseli Sil"
+                >
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            )}
         </div>
     )
 }
+
 
 export default function AboutAdminPage() {
     const [content, setContent] = useState<AboutContent>(defaultContent)
@@ -318,6 +339,7 @@ export default function AboutAdminPage() {
                                         <ImageUploader
                                             currentImage={section.image_url}
                                             onUpload={(url) => updateSection(sectionKey, 'image_url', url)}
+                                            onDelete={() => updateSection(sectionKey, 'image_url', '')}
                                             section={sectionKey}
                                         />
                                     </div>
