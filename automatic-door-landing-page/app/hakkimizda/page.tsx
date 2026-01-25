@@ -4,6 +4,9 @@ import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { ArrowLeft, Users, Eye, Target } from 'lucide-react'
+import WhatsAppButton from '@/components/whatsapp-button'
+import CallButton from '@/components/call-button'
+import Footer from '@/components/footer'
 
 interface AboutContent {
     hakkimizda: {
@@ -92,6 +95,10 @@ export default function AboutPage() {
                 <span>Ana Sayfa</span>
             </Link>
 
+            {/* Call & WhatsApp Buttons */}
+            <CallButton />
+            <WhatsAppButton />
+
             {/* Main Section with Background */}
             <div className="relative min-h-screen flex items-center">
                 {/* Background Image */}
@@ -171,6 +178,9 @@ export default function AboutPage() {
                     </div>
                 </motion.div>
             </div>
+
+            {/* Footer */}
+            <Footer />
         </div>
     )
 }
