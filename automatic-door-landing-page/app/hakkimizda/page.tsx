@@ -81,7 +81,19 @@ export default function AboutPage() {
                 variants={stagger}
                 className="relative pt-32 pb-20 px-6"
             >
-                <div className="max-w-6xl mx-auto text-center">
+                {/* Hero Background Image */}
+                {content.hero?.image_url && (
+                    <div className="absolute inset-0 z-0">
+                        <img
+                            src={content.hero.image_url}
+                            alt="Hero"
+                            className="w-full h-full object-cover opacity-20"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-b from-[#414042] via-[#414042]/80 to-gray-900" />
+                    </div>
+                )}
+
+                <div className="max-w-6xl mx-auto text-center relative z-10">
                     <motion.div variants={fadeInUp}>
                         <span className="inline-block px-4 py-2 bg-[#ED1C24]/20 text-[#ED1C24] rounded-full text-sm font-medium mb-6">
                             2010'dan Beri Hizmetinizde
@@ -120,10 +132,19 @@ export default function AboutPage() {
                     {/* Mission Card */}
                     <motion.div
                         variants={fadeInUp}
-                        className="group relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-3xl p-8 border border-white/10 hover:border-[#ED1C24]/50 transition-all duration-500"
+                        className="group relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-3xl overflow-hidden border border-white/10 hover:border-[#ED1C24]/50 transition-all duration-500"
                     >
+                        {content.mission?.image_url && (
+                            <div className="h-48 overflow-hidden">
+                                <img
+                                    src={content.mission.image_url}
+                                    alt="Misyon"
+                                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                />
+                            </div>
+                        )}
                         <div className="absolute inset-0 bg-gradient-to-br from-[#ED1C24]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl" />
-                        <div className="relative">
+                        <div className="relative p-8">
                             <div className="w-16 h-16 bg-[#ED1C24]/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                                 <Target className="w-8 h-8 text-[#ED1C24]" />
                             </div>
@@ -139,10 +160,19 @@ export default function AboutPage() {
                     {/* Vision Card */}
                     <motion.div
                         variants={fadeInUp}
-                        className="group relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-3xl p-8 border border-white/10 hover:border-[#ED1C24]/50 transition-all duration-500"
+                        className="group relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-3xl overflow-hidden border border-white/10 hover:border-[#ED1C24]/50 transition-all duration-500"
                     >
+                        {content.vision?.image_url && (
+                            <div className="h-48 overflow-hidden">
+                                <img
+                                    src={content.vision.image_url}
+                                    alt="Vizyon"
+                                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                />
+                            </div>
+                        )}
                         <div className="absolute inset-0 bg-gradient-to-br from-[#ED1C24]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl" />
-                        <div className="relative">
+                        <div className="relative p-8">
                             <div className="w-16 h-16 bg-[#ED1C24]/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                                 <Eye className="w-8 h-8 text-[#ED1C24]" />
                             </div>
@@ -206,9 +236,19 @@ export default function AboutPage() {
             >
                 <div className="max-w-6xl mx-auto">
                     <motion.div variants={fadeInUp} className="text-center mb-12">
-                        <div className="w-20 h-20 bg-[#ED1C24]/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                            <Users className="w-10 h-10 text-[#ED1C24]" />
-                        </div>
+                        {content.team?.image_url ? (
+                            <div className="w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden border-4 border-[#ED1C24]/30">
+                                <img
+                                    src={content.team.image_url}
+                                    alt="Ekip"
+                                    className="w-full h-full object-cover"
+                                />
+                            </div>
+                        ) : (
+                            <div className="w-20 h-20 bg-[#ED1C24]/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                                <Users className="w-10 h-10 text-[#ED1C24]" />
+                            </div>
+                        )}
                         <h2 className="text-3xl md:text-4xl font-bold mb-4">
                             {content.team?.title || 'Ekibimiz'}
                         </h2>
