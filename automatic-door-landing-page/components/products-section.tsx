@@ -40,14 +40,14 @@ export default function ProductsSection() {
           </p>
         </div>
 
-        {/* Products Grid */}
+        {/* Products Grid - Show max 5 on homepage */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
-          {products.map((product, index) => (
+          {products.slice(0, 5).map((product, index) => (
             <div
               key={product.slug}
               className={`transition-all duration-500 ease-out ${isLoaded
-                  ? 'opacity-100 translate-y-0 scale-100'
-                  : 'opacity-0 translate-y-12 scale-95'
+                ? 'opacity-100 translate-y-0 scale-100'
+                : 'opacity-0 translate-y-12 scale-95'
                 }`}
               style={{
                 transitionDelay: isLoaded ? `${index * 100}ms` : '0ms'
@@ -78,6 +78,23 @@ export default function ProductsSection() {
             </div>
           ))}
         </div>
+
+        {/* View All Products Button */}
+        {products.length > 5 && (
+          <div className={`text-center mt-10 transition-all duration-700 ease-out ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+            style={{ transitionDelay: isLoaded ? '600ms' : '0ms' }}
+          >
+            <Link
+              href="/urunler"
+              className="inline-flex items-center gap-2 px-8 py-3 bg-[#ED1C24] hover:bg-[#c91920] text-white font-semibold rounded-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+            >
+              Tüm Ürünleri Görüntüle
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
+          </div>
+        )}
       </div>
 
       {/* CSS for additional animations */}
