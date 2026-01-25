@@ -104,19 +104,27 @@ export default function ProductPage({ params }: ProductPageProps) {
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.6 }}
                         >
-                            {/* Main Image */}
-                            <div className="relative aspect-[4/3] rounded-xl overflow-hidden bg-gray-100 mb-4">
+                            {/* Main Image Container */}
+                            <div className="relative aspect-square rounded-2xl overflow-hidden mb-4 border border-gray-200 shadow-sm">
+                                {/* Gradient Background for consistent look */}
+                                <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50" />
+
                                 <AnimatePresence mode="wait">
-                                    <motion.img
+                                    <motion.div
                                         key={selectedImage}
-                                        src={getAssetPath(galleryImages[selectedImage])}
-                                        alt={product.name}
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1 }}
-                                        exit={{ opacity: 0 }}
-                                        transition={{ duration: 0.3 }}
-                                        className="w-full h-full object-cover"
-                                    />
+                                        initial={{ opacity: 0, scale: 0.98 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        exit={{ opacity: 0, scale: 0.98 }}
+                                        transition={{ duration: 0.3, ease: "easeOut" }}
+                                        className="absolute inset-0 flex items-center justify-center p-6"
+                                    >
+                                        <img
+                                            src={getAssetPath(galleryImages[selectedImage])}
+                                            alt={product.name}
+                                            className="max-w-full max-h-full w-auto h-auto object-contain drop-shadow-lg"
+                                            style={{ maxHeight: 'calc(100% - 48px)', maxWidth: 'calc(100% - 48px)' }}
+                                        />
+                                    </motion.div>
                                 </AnimatePresence>
 
                                 {/* Gallery Navigation */}
@@ -124,37 +132,52 @@ export default function ProductPage({ params }: ProductPageProps) {
                                     <>
                                         <button
                                             onClick={() => setSelectedImage(prev => prev === 0 ? galleryImages.length - 1 : prev - 1)}
-                                            className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg transition-all"
+                                            className="absolute left-3 top-1/2 -translate-y-1/2 w-11 h-11 bg-white hover:bg-gray-50 rounded-full flex items-center justify-center shadow-md border border-gray-100 transition-all hover:scale-105 z-10"
                                         >
                                             <ChevronLeft className="h-5 w-5 text-[#414042]" />
                                         </button>
                                         <button
                                             onClick={() => setSelectedImage(prev => prev === galleryImages.length - 1 ? 0 : prev + 1)}
-                                            className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg transition-all"
+                                            className="absolute right-3 top-1/2 -translate-y-1/2 w-11 h-11 bg-white hover:bg-gray-50 rounded-full flex items-center justify-center shadow-md border border-gray-100 transition-all hover:scale-105 z-10"
                                         >
                                             <ChevronRight className="h-5 w-5 text-[#414042]" />
                                         </button>
                                     </>
                                 )}
+
+                                {/* Image Counter Badge */}
+                                {galleryImages.length > 1 && (
+                                    <div className="absolute bottom-3 right-3 px-3 py-1.5 bg-black/60 backdrop-blur-sm rounded-full text-white text-xs font-medium z-10">
+                                        {selectedImage + 1} / {galleryImages.length}
+                                    </div>
+                                )}
                             </div>
 
                             {/* Thumbnails */}
                             {galleryImages.length > 1 && (
-                                <div className="flex gap-3">
+                                <div className="flex gap-3 overflow-x-auto pb-2">
                                     {galleryImages.map((img, idx) => (
                                         <button
                                             key={idx}
                                             onClick={() => setSelectedImage(idx)}
-                                            className={`relative w-20 h-20 rounded-lg overflow-hidden transition-all ${selectedImage === idx
-                                                ? 'ring-2 ring-[#ED1C24] ring-offset-2'
-                                                : 'opacity-70 hover:opacity-100'
+                                            className={`relative flex-shrink-0 w-24 h-24 rounded-xl overflow-hidden transition-all duration-200 border-2 ${selectedImage === idx
+                                                ? 'border-[#ED1C24] shadow-lg scale-105'
+                                                : 'border-gray-200 hover:border-gray-300 hover:shadow-md'
                                                 }`}
                                         >
-                                            <img
-                                                src={getAssetPath(img)}
-                                                alt={`${product.name} ${idx + 1}`}
-                                                className="w-full h-full object-cover"
-                                            />
+                                            {/* Thumbnail Background */}
+                                            <div className="absolute inset-0 bg-gradient-to-br from-gray-50 to-gray-100" />
+                                            <div className="absolute inset-0 flex items-center justify-center p-2">
+                                                <img
+                                                    src={getAssetPath(img)}
+                                                    alt={`${product.name} ${idx + 1}`}
+                                                    className="max-w-full max-h-full w-auto h-auto object-contain"
+                                                />
+                                            </div>
+                                            {/* Selected Overlay */}
+                                            {selectedImage === idx && (
+                                                <div className="absolute inset-0 bg-[#ED1C24]/5 pointer-events-none" />
+                                            )}
                                         </button>
                                     ))}
                                 </div>
