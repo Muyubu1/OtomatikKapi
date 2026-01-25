@@ -73,7 +73,7 @@ export default function Footer() {
               Endüstriyel kapılar, yüksek hızlı kapılar, yükleme sistemleri ve daha fazlası için ürün kataloğumuzu inceleyin.
             </p>
             <Link
-              href="/#products"
+              href="/urunler"
               className="inline-flex items-center gap-2 text-[#ED1C24] hover:text-white transition-colors text-sm font-medium group"
             >
               Tüm Ürünleri Görüntüle
