@@ -1,62 +1,93 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createServerClient } from '@/lib/supabase'
+import { promises as fs } from 'fs'
+import path from 'path'
 
-// GET - Fetch all about content
+const DATA_FILE = path.join(process.cwd(), 'data', 'about.json')
+
+interface AboutSection {
+    title: string
+    content: string
+}
+
+interface AboutContent {
+    hakkimizda: AboutSection
+    vizyon: AboutSection
+    misyon: AboutSection
+    background_image?: string
+}
+
+const defaultContent: AboutContent = {
+    hakkimizda: {
+        title: 'HAKKIMIZDA',
+        content: 'Biz, CKS Otomatik Kapı ve Yükleme Sistemleri, endüstriyel otomatik kapı sektöründe lider bir firmayız. Yılların verdiği tecrübe ve bilgi birikimi ile müşterilerimize en iyi hizmeti sunmayı hedefliyoruz. Ürünlerimiz, en son teknoloji ve mükemmeliyetçilik anlayışı ile tasarlanmıştır. Güvenlik, dayanıklılık ve kullanım kolaylığı, ürünlerimizin temel özellikleridir.'
+    },
+    vizyon: {
+        title: 'VİZYONUMUZ',
+        content: 'Vizyonumuz, endüstriyel otomatik kapı sektöründe dünya çapında bir marka olmaktır. Müşteri memnuniyetini en üst düzeyde tutarak, kaliteli ve yenilikçi ürünler sunmayı hedefliyoruz. Sektördeki gelişmeleri yakından takip ederek, teknoloji ve tasarımda öncü olmayı sürdürmeyi planlıyoruz.'
+    },
+    misyon: {
+        title: 'MİSYONUMUZ',
+        content: 'Misyonumuz, müşterilerimize en yüksek kalitede ürün ve hizmetler sunmaktır. Güvenli, dayanıklı ve kullanıcı dostu endüstriyel otomatik kapılar tasarlayarak, müşterilerimizin işlerini kolaylaştırmayı amaçlıyoruz. Sürdürülebilir bir büyüme ile sektördeki liderliğimizi pekiştirmeyi hedefliyoruz.'
+    }
+}
+
+async function ensureDataDir() {
+    const dataDir = path.dirname(DATA_FILE)
+    try {
+        await fs.access(dataDir)
+    } catch {
+        await fs.mkdir(dataDir, { recursive: true })
+    }
+}
+
+async function readData(): Promise<AboutContent> {
+    try {
+        await ensureDataDir()
+        const data = await fs.readFile(DATA_FILE, 'utf-8')
+        return JSON.parse(data)
+    } catch {
+        return defaultContent
+    }
+}
+
+async function writeData(data: AboutContent): Promise<void> {
+    await ensureDataDir()
+    await fs.writeFile(DATA_FILE, JSON.stringify(data, null, 2), 'utf-8')
+}
+
+// GET - Fetch about content
 export async function GET() {
     try {
-        const supabase = createServerClient()
-        const { data, error } = await supabase
-            .from('about_content')
-            .select('*')
-            .order('id', { ascending: true })
-
-        if (error) {
-            console.error('About GET error:', error)
-            throw error
-        }
-
-        // Transform to key-value format for easier access
-        const content: Record<string, any> = {}
-        for (const item of data || []) {
-            content[item.section] = {
-                id: item.id,
-                title: item.title,
-                content: item.content,
-                image_url: item.image_url
-            }
-        }
-
+        const content = await readData()
         return NextResponse.json(content)
     } catch (error) {
         console.error('About GET error:', error)
-        return NextResponse.json({}, { status: 200 })
+        return NextResponse.json(defaultContent)
     }
 }
 
 // PUT - Update about content
 export async function PUT(request: NextRequest) {
     try {
-        const supabase = createServerClient()
         const body = await request.json()
 
-        // body is { section: { title, content, image_url } }
-        const updates = []
-        for (const [section, data] of Object.entries(body)) {
-            const updateData = data as any
-            updates.push(
-                supabase
-                    .from('about_content')
-                    .upsert({
-                        section,
-                        title: updateData.title,
-                        content: updateData.content,
-                        image_url: updateData.image_url,
-                        updated_at: new Date().toISOString()
-                    }, { onConflict: 'section' })
-            )
+        const content: AboutContent = {
+            hakkimizda: {
+                title: body.hakkimizda?.title || defaultContent.hakkimizda.title,
+                content: body.hakkimizda?.content || defaultContent.hakkimizda.content
+            },
+            vizyon: {
+                title: body.vizyon?.title || defaultContent.vizyon.title,
+                content: body.vizyon?.content || defaultContent.vizyon.content
+            },
+            misyon: {
+                title: body.misyon?.title || defaultContent.misyon.title,
+                content: body.misyon?.content || defaultContent.misyon.content
+            },
+            background_image: body.background_image || undefined
         }
 
-        await Promise.all(updates)
+        await writeData(content)
 
         return NextResponse.json({ success: true })
     } catch (error) {
