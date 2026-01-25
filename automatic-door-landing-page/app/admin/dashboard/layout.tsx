@@ -13,7 +13,8 @@ import {
     LogOut,
     Menu,
     X,
-    MenuSquare
+    MenuSquare,
+    Info
 } from "lucide-react"
 
 const menuItems = [
@@ -21,6 +22,7 @@ const menuItems = [
     { icon: FileText, label: "Site İçeriği", href: "/admin/dashboard/site-content" },
     { icon: Package, label: "Ürünler", href: "/admin/dashboard/products" },
     { icon: MenuSquare, label: "Menü Yönetimi", href: "/admin/dashboard/menu" },
+    { icon: Info, label: "Hakkımızda", href: "/admin/dashboard/about" },
     { icon: HelpCircle, label: "SSS", href: "/admin/dashboard/faq" },
     { icon: Image, label: "Galeri", href: "/admin/dashboard/gallery" },
 ]

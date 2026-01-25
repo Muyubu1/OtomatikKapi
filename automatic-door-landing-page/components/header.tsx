@@ -17,8 +17,8 @@ interface NavigationItem {
 }
 
 const navItems = [
-  { name: "Anasayfa", href: "#" },
-  { name: "Hakkımızda", href: "#about" },
+  { name: "Anasayfa", href: "/" },
+  { name: "Hakkımızda", href: "/hakkimizda" },
   { name: "Ürünlerimiz", href: "#products", hasMegaMenu: true },
   { name: "Galeri", href: "/gallery" },
 ]
