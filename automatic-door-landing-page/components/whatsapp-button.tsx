@@ -2,10 +2,12 @@
 
 import { MessageCircle } from "lucide-react"
 import { motion } from "framer-motion"
+import { useLanguage } from "@/lib/i18n"
 
 export default function WhatsAppButton() {
+  const { t } = useLanguage()
   const phoneNumber = "905422408699"
-  const defaultMessage = "Merhaba, otomatik kapılar hakkında fiyat bilgisi almak istiyorum."
+  const defaultMessage = t("button.whatsappMessage")
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(defaultMessage)}`
 
   return (
@@ -28,7 +30,7 @@ export default function WhatsAppButton() {
       >
         <MessageCircle className="h-5 w-5" />
       </motion.div>
-      <span className="font-medium">WhatsApp Hattı</span>
+      <span className="font-medium">{t("button.whatsapp")}</span>
     </motion.a>
   )
 }

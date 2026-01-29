@@ -14,7 +14,8 @@ import {
     Menu,
     X,
     MenuSquare,
-    Info
+    Info,
+    Settings
 } from "lucide-react"
 
 const menuItems = [
@@ -25,6 +26,7 @@ const menuItems = [
     { icon: Info, label: "Hakkımızda", href: "/admin/dashboard/about" },
     { icon: HelpCircle, label: "SSS", href: "/admin/dashboard/faq" },
     { icon: Image, label: "Galeri", href: "/admin/dashboard/gallery" },
+    { icon: Settings, label: "Ayarlar", href: "/admin/dashboard/settings" },
 ]
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {

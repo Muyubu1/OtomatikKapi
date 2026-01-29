@@ -2,8 +2,10 @@
 
 import { Phone } from "lucide-react"
 import { motion } from "framer-motion"
+import { useLanguage } from "@/lib/i18n"
 
 export default function CallButton() {
+  const { t } = useLanguage()
   const phoneNumber = "905422408699"
 
   return (
@@ -23,7 +25,8 @@ export default function CallButton() {
       >
         <Phone className="h-5 w-5" />
       </motion.div>
-      <span className="font-medium">Hemen Ara</span>
+      <span className="font-medium">{t("button.callNow")}</span>
     </motion.a>
   )
 }
+

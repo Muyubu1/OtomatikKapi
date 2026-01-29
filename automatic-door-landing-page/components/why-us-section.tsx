@@ -3,33 +3,60 @@
 import { Award, CircleDollarSign, Cpu, Wrench, Shield, LucideIcon } from "lucide-react"
 import { getAssetPath } from "@/lib/utils"
 import { motion } from "framer-motion"
+import { useLanguage } from "@/lib/i18n"
 
+// Icon mapping for both TR and EN titles
 const iconMap: Record<string, LucideIcon> = {
   "DENEYİM": Award,
+  "EXPERIENCE": Award,
   "FİYAT": CircleDollarSign,
+  "PRICE": CircleDollarSign,
   "TEKNOLOJİ": Cpu,
+  "TECHNOLOGY": Cpu,
   "ÖZEL ÇÖZÜMLER": Wrench,
+  "CUSTOM SOLUTIONS": Wrench,
   "GÜVENİLİR VE SAYGIN": Shield,
+  "RELIABLE AND REPUTABLE": Shield,
 }
 
 interface WhyUsSectionProps {
   content?: {
     title: string
+    title_en?: string
     image?: string
     items: { title: string; description: string }[]
+    items_en?: { title: string; description: string }[]
   }
 }
 
 export default function WhyUsSection({ content }: WhyUsSectionProps) {
-  const title = content?.title || "NEDEN BİZ"
-  const image = content?.image || "/foto5.png"
-  const items = content?.items || [
+  const { language, t } = useLanguage()
+
+  const defaultItemsTr = [
     { title: "DENEYİM", description: "Deneyimli ve Profesyonel Bir Ekibimiz Var" },
     { title: "FİYAT", description: "Uygun Fiyatlarla Üstün Hizmet Sunuyoruz" },
     { title: "TEKNOLOJİ", description: "Sektördeki En Son Teknolojileri Kullanıyoruz" },
     { title: "ÖZEL ÇÖZÜMLER", description: "Projeye Özel Çözümler Sunuyoruz" },
     { title: "GÜVENİLİR VE SAYGIN", description: "Güvenilir ve Saygın Bir Firma Olmanın Gururunu Yaşıyoruz" },
   ]
+
+  const defaultItemsEn = [
+    { title: "EXPERIENCE", description: "We Have an Experienced and Professional Team" },
+    { title: "PRICE", description: "We Offer Superior Service at Affordable Prices" },
+    { title: "TECHNOLOGY", description: "We Use the Latest Technologies in the Industry" },
+    { title: "CUSTOM SOLUTIONS", description: "We Provide Project-Specific Solutions" },
+    { title: "RELIABLE AND REPUTABLE", description: "We Take Pride in Being a Reliable and Reputable Company" },
+  ]
+
+  const title = language === 'en'
+    ? (content?.title_en || t("whyUs.title"))
+    : (content?.title || "NEDEN BİZ")
+
+  const image = content?.image || "/foto5.png"
+
+  const items = language === 'en'
+    ? (content?.items_en && content.items_en.length > 0 ? content.items_en : defaultItemsEn)
+    : (content?.items || defaultItemsTr)
 
   return (
     <section className="py-20 bg-[#ED1C24]">
@@ -44,7 +71,7 @@ export default function WhyUsSection({ content }: WhyUsSectionProps) {
             className="relative order-2 md:order-1"
           >
             <div className="aspect-square rounded-lg overflow-hidden shadow-2xl">
-              <img src={getAssetPath(image)} alt="Neden biz" className="w-full h-full object-cover" />
+              <img src={getAssetPath(image)} alt={language === 'en' ? 'Why us' : 'Neden biz'} className="w-full h-full object-cover" />
             </div>
           </motion.div>
 

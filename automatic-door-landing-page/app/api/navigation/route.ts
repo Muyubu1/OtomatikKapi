@@ -5,6 +5,7 @@ export interface NavigationItem {
     id: number;
     parent_id: number | null;
     name: string;
+    name_en?: string;
     product_slug: string | null;
     sort_order: number;
     children?: NavigationItem[];
@@ -50,13 +51,14 @@ export async function GET() {
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
-        const { name, parent_id, product_slug, sort_order } = body;
+        const { name, name_en, parent_id, product_slug, sort_order } = body;
 
         const supabase = createServerClient();
         const { data, error } = await supabase
             .from('navigation_items')
             .insert({
                 name,
+                name_en: name_en || '',
                 parent_id: parent_id || null,
                 product_slug: product_slug || null,
                 sort_order: sort_order || 0
@@ -77,13 +79,14 @@ export async function POST(request: NextRequest) {
 export async function PUT(request: NextRequest) {
     try {
         const body = await request.json();
-        const { id, name, parent_id, product_slug, sort_order } = body;
+        const { id, name, name_en, parent_id, product_slug, sort_order } = body;
 
         const supabase = createServerClient();
         const { data, error } = await supabase
             .from('navigation_items')
             .update({
                 name,
+                name_en: name_en || '',
                 parent_id: parent_id || null,
                 product_slug: product_slug || null,
                 sort_order: sort_order || 0

@@ -1,14 +1,37 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { getAssetPath } from "@/lib/utils"
 
 interface HeroVideoBackgroundProps {
   className?: string
 }
 
+interface Settings {
+  heroVideoUrl?: string
+}
+
 export default function HeroVideoBackground({ className = "" }: HeroVideoBackgroundProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
+  const [videoUrl, setVideoUrl] = useState("/videos/hero-bg.webm")
+
+  useEffect(() => {
+    // Fetch video URL from settings
+    const fetchSettings = async () => {
+      try {
+        const res = await fetch('/api/settings')
+        if (res.ok) {
+          const data: Settings = await res.json()
+          if (data.heroVideoUrl) {
+            setVideoUrl(data.heroVideoUrl)
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching settings:', error)
+      }
+    }
+    fetchSettings()
+  }, [])
 
   useEffect(() => {
     // Ensure video plays on mount
@@ -17,7 +40,7 @@ export default function HeroVideoBackground({ className = "" }: HeroVideoBackgro
         // Autoplay may be blocked by browser, silent fail
       })
     }
-  }, [])
+  }, [videoUrl])
 
   return (
     <div className={`absolute inset-0 overflow-hidden ${className}`}>
@@ -30,8 +53,9 @@ export default function HeroVideoBackground({ className = "" }: HeroVideoBackgro
         loop
         playsInline
         preload="auto"
+        key={videoUrl}
       >
-        <source src={getAssetPath("/videos/hero-bg.webm")} type="video/webm" />
+        <source src={getAssetPath(videoUrl)} type="video/webm" />
         <source src={getAssetPath("/videos/hero-bg.mp4")} type="video/mp4" />
         {/* Fallback for browsers that don't support video */}
         Tarayıcınız video etiketini desteklemiyor.
@@ -42,4 +66,3 @@ export default function HeroVideoBackground({ className = "" }: HeroVideoBackgro
     </div>
   )
 }
-

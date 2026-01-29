@@ -3,17 +3,31 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { getAssetPath } from "@/lib/utils"
 import { motion } from "framer-motion"
+import { useLanguage } from "@/lib/i18n"
 
 interface FAQSectionProps {
   faqs?: { question: string; answer: string }[]
+  faqs_en?: { question: string; answer: string }[]
   image?: string
 }
 
-export default function FAQSection({ faqs: propFaqs, image }: FAQSectionProps) {
-  const faqs = propFaqs || [
+export default function FAQSection({ faqs: propFaqs, faqs_en: propFaqsEn, image }: FAQSectionProps) {
+  const { language, t } = useLanguage()
+
+  const defaultFaqsTr = [
     { question: "Otomatik Kapı Sistemlerinin Avantajları Nedir?", answer: "Otomatik kapı sistemleri, güvenlik, enerji tasarrufu, hijyen ve kullanım kolaylığı gibi birçok avantaj sağlar." },
     { question: "Otomatik Kapı Sistemlerinin Bakımı Nasıl Yapılır?", answer: "Otomatik kapı sistemlerinin düzenli bakımı önemlidir. Profesyonel servis desteği önerilir." },
   ]
+
+  const defaultFaqsEn = [
+    { question: "What are the Advantages of Automatic Door Systems?", answer: "Automatic door systems provide many advantages such as security, energy savings, hygiene and ease of use." },
+    { question: "How to Maintain Automatic Door Systems?", answer: "Regular maintenance of automatic door systems is important. Professional service support is recommended." },
+  ]
+
+  const faqs = language === 'en'
+    ? (propFaqsEn || defaultFaqsEn)
+    : (propFaqs || defaultFaqsTr)
+
   const sectionImage = image || "/foto6.png"
 
   return (
@@ -31,7 +45,7 @@ export default function FAQSection({ faqs: propFaqs, image }: FAQSectionProps) {
             <div className="aspect-square rounded-lg overflow-hidden shadow-xl">
               <img
                 src={getAssetPath(sectionImage)}
-                alt="Endüstriyel otomatik kapı sistemleri"
+                alt={language === 'en' ? "Industrial automatic door systems" : "Endüstriyel otomatik kapı sistemleri"}
                 className="w-full h-full object-cover"
               />
             </div>
@@ -51,7 +65,7 @@ export default function FAQSection({ faqs: propFaqs, image }: FAQSectionProps) {
               transition={{ duration: 0.5 }}
               className="text-xl font-bold text-[#414042] mb-6"
             >
-              Endüstriyel Otomatik Kapı Sistemleri Nedir?
+              {t("faq.title")}
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -60,8 +74,7 @@ export default function FAQSection({ faqs: propFaqs, image }: FAQSectionProps) {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="text-gray-600 mb-6"
             >
-              Endüstriyel otomatik kapı sistemleri, genellikle fabrikalar, depolar ve diğer endüstriyel tesislerde
-              kullanılan, genellikle uzaktan kumanda veya hareket sensörleri ile kontrol edilen kapılardır.
+              {t("faq.description")}
             </motion.p>
 
             <Accordion type="single" collapsible className="w-full">

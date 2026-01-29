@@ -4,19 +4,37 @@ import { Button } from "@/components/ui/button"
 import { ChevronDown } from "lucide-react"
 import HeroVideoBackground from "@/components/hero-video-background"
 import { motion } from "framer-motion"
+import { useLanguage } from "@/lib/i18n"
 
 interface HeroSectionProps {
   content?: {
     title: string
+    title_en?: string
     subtitle: string
+    subtitle_en?: string
     description: string
+    description_en?: string
   }
 }
 
 export default function HeroSection({ content }: HeroSectionProps) {
-  const title = content?.title || "Endüstriyel Otomatik Kapı"
-  const subtitle = content?.subtitle || "ve Yükleme Sistemleri"
-  const description = content?.description || "Güvenli, hızlı ve kaliteli otomatik kapı çözümleri ile işletmenizi bir adım öne taşıyın."
+  const { language, t } = useLanguage()
+
+  const title = language === 'en' && content?.title_en
+    ? content.title_en
+    : (content?.title || t("hero.title"))
+  const subtitle = language === 'en' && content?.subtitle_en
+    ? content.subtitle_en
+    : (content?.subtitle || t("hero.subtitle"))
+  const description = language === 'en' && content?.description_en
+    ? content.description_en
+    : (content?.description || t("hero.description"))
+
+  const buttonText = language === 'en' ? 'Explore Our Products' : 'Ürünlerimizi İnceleyin'
+  const quoteText = language === 'en' ? 'Get Quote' : 'Teklif Alın'
+  const whatsappMessage = language === 'en'
+    ? "Hello, I would like to get price information about automatic doors."
+    : "Merhaba, otomatik kapılar hakkında fiyat bilgisi almak istiyorum."
 
   return (
     <section id="hero" className="relative w-full h-screen overflow-hidden">
@@ -56,7 +74,7 @@ export default function HeroSection({ content }: HeroSectionProps) {
           className="flex flex-wrap gap-4 justify-center"
         >
           <Button size="lg" className="bg-[#ED1C24] hover:bg-[#c91920] text-white">
-            Ürünlerimizi İnceleyin
+            {buttonText}
           </Button>
           <Button
             size="lg"
@@ -65,11 +83,11 @@ export default function HeroSection({ content }: HeroSectionProps) {
             asChild
           >
             <a
-              href={`https://wa.me/905422408699?text=${encodeURIComponent("Merhaba, otomatik kapılar hakkında fiyat bilgisi almak istiyorum.")}`}
+              href={`https://wa.me/905422408699?text=${encodeURIComponent(whatsappMessage)}`}
               target="_blank"
               rel="noopener noreferrer"
             >
-              Teklif Alın
+              {quoteText}
             </a>
           </Button>
         </motion.div>

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react"
 import { motion } from "framer-motion"
-import { Save, Loader2, Check, Plus, Trash2, Edit, X, Image as ImageIcon, Upload } from "lucide-react"
+import { Save, Loader2, Check, Plus, Trash2, Edit, X, Image as ImageIcon, Upload, Globe } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -11,12 +11,137 @@ interface Product {
     id?: number
     slug: string
     name: string
+    nameEn: string
     shortDescription: string
+    shortDescriptionEn: string
     fullDescription: string
+    fullDescriptionEn: string
     mainImage: string
     gallery: string[]
     features: string[]
+    featuresEn: string[]
     category: string
+    categoryEn: string
+}
+
+// Language Tab Switcher Component
+function LanguageTabs({
+    activeTab,
+    onTabChange
+}: {
+    activeTab: 'tr' | 'en'
+    onTabChange: (tab: 'tr' | 'en') => void
+}) {
+    return (
+        <div className="flex gap-1 mb-2">
+            <button
+                onClick={() => onTabChange('tr')}
+                className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors flex items-center gap-1 ${activeTab === 'tr'
+                        ? 'bg-[#ED1C24] text-white'
+                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    }`}
+            >
+                🇹🇷 TR
+            </button>
+            <button
+                onClick={() => onTabChange('en')}
+                className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors flex items-center gap-1 ${activeTab === 'en'
+                        ? 'bg-blue-600 text-white'
+                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    }`}
+            >
+                🇬🇧 EN
+            </button>
+        </div>
+    )
+}
+
+// Bilingual Input Component
+function BilingualInput({
+    label,
+    valueTr,
+    valueEn,
+    onChangeTr,
+    onChangeEn,
+    placeholder
+}: {
+    label: string
+    valueTr: string
+    valueEn: string
+    onChangeTr: (value: string) => void
+    onChangeEn: (value: string) => void
+    placeholder?: string
+}) {
+    const [activeTab, setActiveTab] = useState<'tr' | 'en'>('tr')
+
+    return (
+        <div>
+            <div className="flex items-center justify-between mb-1">
+                <label className="block text-sm font-medium text-gray-700">{label}</label>
+                <LanguageTabs activeTab={activeTab} onTabChange={setActiveTab} />
+            </div>
+            {activeTab === 'tr' ? (
+                <Input
+                    value={valueTr}
+                    onChange={(e) => onChangeTr(e.target.value)}
+                    placeholder={placeholder || `${label} (Türkçe)`}
+                />
+            ) : (
+                <Input
+                    value={valueEn}
+                    onChange={(e) => onChangeEn(e.target.value)}
+                    placeholder={placeholder || `${label} (English)`}
+                    className="border-blue-200 focus:border-blue-500"
+                />
+            )}
+        </div>
+    )
+}
+
+// Bilingual Textarea Component
+function BilingualTextarea({
+    label,
+    valueTr,
+    valueEn,
+    onChangeTr,
+    onChangeEn,
+    rows = 4,
+    placeholder
+}: {
+    label: string
+    valueTr: string
+    valueEn: string
+    onChangeTr: (value: string) => void
+    onChangeEn: (value: string) => void
+    rows?: number
+    placeholder?: string
+}) {
+    const [activeTab, setActiveTab] = useState<'tr' | 'en'>('tr')
+
+    return (
+        <div>
+            <div className="flex items-center justify-between mb-1">
+                <label className="block text-sm font-medium text-gray-700">{label}</label>
+                <LanguageTabs activeTab={activeTab} onTabChange={setActiveTab} />
+            </div>
+            {activeTab === 'tr' ? (
+                <Textarea
+                    value={valueTr}
+                    onChange={(e) => onChangeTr(e.target.value)}
+                    rows={rows}
+                    placeholder={placeholder || `${label} (Türkçe)`}
+                />
+            ) : (
+                <Textarea
+                    value={valueEn}
+                    onChange={(e) => onChangeEn(e.target.value)}
+                    rows={rows}
+                    placeholder={placeholder || `${label} (English)`}
+                    className="border-blue-200 focus:border-blue-500"
+                />
+            )}
+        </div>
+    )
 }
 
 function ImageUploader({
@@ -115,7 +240,24 @@ export default function ProductsPage() {
         try {
             const res = await fetch("/api/products")
             const data = await res.json()
-            setProducts(data)
+            // Transform API response to match our interface
+            const transformedProducts = data.map((p: any) => ({
+                id: p.id,
+                slug: p.slug,
+                name: p.name || '',
+                nameEn: p.nameEn || p.name_en || '',
+                shortDescription: p.shortDescription || '',
+                shortDescriptionEn: p.shortDescriptionEn || p.shortDescription_en || '',
+                fullDescription: p.fullDescription || '',
+                fullDescriptionEn: p.fullDescriptionEn || p.fullDescription_en || '',
+                mainImage: p.mainImage || '',
+                gallery: p.gallery || [],
+                features: p.features || [],
+                featuresEn: p.featuresEn || p.features_en || [],
+                category: p.category || '',
+                categoryEn: p.categoryEn || p.category_en || ''
+            }))
+            setProducts(transformedProducts)
         } catch (error) {
             console.error("Veri yüklenemedi:", error)
             setError("Ürünler yüklenemedi")
@@ -138,17 +280,21 @@ export default function ProductsPage() {
             .replace(/^-|-$/g, "")
     }
 
-    // Add new product via POST
     const addProduct = async () => {
         const newProduct: Product = {
             slug: `yeni-urun-${Date.now()}`,
             name: "Yeni Ürün",
+            nameEn: "New Product",
             shortDescription: "Ürün açıklaması",
+            shortDescriptionEn: "Product description",
             fullDescription: "Detaylı ürün açıklaması buraya yazılacak.",
+            fullDescriptionEn: "Detailed product description goes here.",
             mainImage: "",
             gallery: [],
             features: ["Özellik 1", "Özellik 2"],
-            category: "Endüstriyel Kapılar"
+            featuresEn: ["Feature 1", "Feature 2"],
+            category: "Endüstriyel Kapılar",
+            categoryEn: "Industrial Doors"
         }
 
         setSaving(true)
@@ -162,7 +308,7 @@ export default function ProductsPage() {
             const data = await res.json()
 
             if (data.success && data.product) {
-                setProducts([...products, data.product])
+                await fetchProducts()
                 setEditingIndex(products.length)
                 setSaved(true)
                 setTimeout(() => setSaved(false), 2000)
@@ -177,7 +323,6 @@ export default function ProductsPage() {
         }
     }
 
-    // Update single product via PUT
     const saveProduct = async (index: number) => {
         const product = products[index]
         setSaving(true)
@@ -206,7 +351,6 @@ export default function ProductsPage() {
         }
     }
 
-    // Delete single product via DELETE
     const removeProduct = async (index: number) => {
         const product = products[index]
         if (!confirm("Bu ürünü silmek istediğinizden emin misiniz?")) {
@@ -241,7 +385,6 @@ export default function ProductsPage() {
         const newProducts = [...products]
         newProducts[index] = { ...newProducts[index], [field]: value }
 
-        // Auto-generate slug when name changes
         if (field === "name") {
             newProducts[index].slug = generateSlug(value)
         }
@@ -294,6 +437,17 @@ export default function ProductsPage() {
                 </div>
             )}
 
+            {/* Info Banner */}
+            <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-xl flex items-start gap-3">
+                <Globe className="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" />
+                <div className="text-sm text-blue-700">
+                    <p className="font-medium">Çoklu Dil Desteği</p>
+                    <p className="mt-1 text-blue-600">
+                        Her alan için 🇹🇷 TR ve 🇬🇧 EN sekmelerini kullanarak içerikleri her iki dilde düzenleyebilirsiniz.
+                    </p>
+                </div>
+            </div>
+
             <div className="space-y-4">
                 {products.map((product, index) => (
                     <motion.div
@@ -336,28 +490,31 @@ export default function ProductsPage() {
                                 <div className="grid md:grid-cols-2 gap-6">
                                     {/* Left Column */}
                                     <div className="space-y-4">
-                                        <div>
-                                            <label className="block text-sm font-medium text-gray-700 mb-1">Ürün Adı</label>
-                                            <Input
-                                                value={product.name}
-                                                onChange={(e) => updateProduct(index, "name", e.target.value)}
-                                            />
-                                            <p className="text-xs text-gray-500 mt-1">URL: /urunler/{product.slug}</p>
-                                        </div>
-                                        <div>
-                                            <label className="block text-sm font-medium text-gray-700 mb-1">Kısa Açıklama</label>
-                                            <Input
-                                                value={product.shortDescription}
-                                                onChange={(e) => updateProduct(index, "shortDescription", e.target.value)}
-                                            />
-                                        </div>
-                                        <div>
-                                            <label className="block text-sm font-medium text-gray-700 mb-1">Kategori</label>
-                                            <Input
-                                                value={product.category}
-                                                onChange={(e) => updateProduct(index, "category", e.target.value)}
-                                            />
-                                        </div>
+                                        <BilingualInput
+                                            label="Ürün Adı"
+                                            valueTr={product.name}
+                                            valueEn={product.nameEn}
+                                            onChangeTr={(v) => updateProduct(index, "name", v)}
+                                            onChangeEn={(v) => updateProduct(index, "nameEn", v)}
+                                        />
+                                        <p className="text-xs text-gray-500 -mt-2">URL: /urunler/{product.slug}</p>
+
+                                        <BilingualInput
+                                            label="Kısa Açıklama"
+                                            valueTr={product.shortDescription}
+                                            valueEn={product.shortDescriptionEn}
+                                            onChangeTr={(v) => updateProduct(index, "shortDescription", v)}
+                                            onChangeEn={(v) => updateProduct(index, "shortDescriptionEn", v)}
+                                        />
+
+                                        <BilingualInput
+                                            label="Kategori"
+                                            valueTr={product.category}
+                                            valueEn={product.categoryEn}
+                                            onChangeTr={(v) => updateProduct(index, "category", v)}
+                                            onChangeEn={(v) => updateProduct(index, "categoryEn", v)}
+                                        />
+
                                         <div>
                                             <label className="block text-sm font-medium text-gray-700 mb-1">Ana Görsel</label>
                                             <ImageUploader
@@ -370,24 +527,23 @@ export default function ProductsPage() {
 
                                     {/* Right Column */}
                                     <div className="space-y-4">
-                                        <div>
-                                            <label className="block text-sm font-medium text-gray-700 mb-1">Detaylı Açıklama</label>
-                                            <Textarea
-                                                value={product.fullDescription}
-                                                onChange={(e) => updateProduct(index, "fullDescription", e.target.value)}
-                                                rows={4}
-                                            />
-                                        </div>
-                                        <div>
-                                            <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                Özellikler (her satıra bir özellik)
-                                            </label>
-                                            <Textarea
-                                                value={product.features.join("\n")}
-                                                onChange={(e) => updateProduct(index, "features", e.target.value.split("\n").filter(f => f.trim()))}
-                                                rows={4}
-                                            />
-                                        </div>
+                                        <BilingualTextarea
+                                            label="Detaylı Açıklama"
+                                            valueTr={product.fullDescription}
+                                            valueEn={product.fullDescriptionEn}
+                                            onChangeTr={(v) => updateProduct(index, "fullDescription", v)}
+                                            onChangeEn={(v) => updateProduct(index, "fullDescriptionEn", v)}
+                                            rows={4}
+                                        />
+
+                                        <BilingualTextarea
+                                            label="Özellikler (her satıra bir özellik)"
+                                            valueTr={product.features.join("\n")}
+                                            valueEn={product.featuresEn.join("\n")}
+                                            onChangeTr={(v) => updateProduct(index, "features", v.split("\n").filter(f => f.trim()))}
+                                            onChangeEn={(v) => updateProduct(index, "featuresEn", v.split("\n").filter(f => f.trim()))}
+                                            rows={4}
+                                        />
 
                                         {/* Gallery */}
                                         <div>
@@ -434,6 +590,9 @@ export default function ProductsPage() {
                                 </div>
                                 <div className="flex-1 min-w-0">
                                     <h3 className="font-semibold text-[#414042] truncate">{product.name}</h3>
+                                    {product.nameEn && (
+                                        <p className="text-xs text-blue-600 truncate">🇬🇧 {product.nameEn}</p>
+                                    )}
                                     <p className="text-sm text-gray-500 truncate">{product.shortDescription}</p>
                                     <span className="inline-block mt-1 px-2 py-0.5 bg-gray-100 text-gray-600 text-xs rounded">
                                         {product.category}

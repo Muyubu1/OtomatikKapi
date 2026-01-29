@@ -15,17 +15,22 @@ export async function GET() {
             throw error
         }
 
-        // Transform snake_case to camelCase
+        // Transform snake_case to camelCase, including English fields
         const products = (data || []).map(p => ({
             id: p.id,
             slug: p.slug,
             name: p.name,
+            name_en: p.name_en,
             shortDescription: p.short_description,
+            shortDescription_en: p.short_description_en,
             fullDescription: p.full_description,
+            fullDescription_en: p.full_description_en,
             mainImage: p.main_image,
             gallery: p.gallery || [],
             features: p.features || [],
-            category: p.category
+            features_en: p.features_en || [],
+            category: p.category,
+            category_en: p.category_en
         }))
 
         return NextResponse.json(products)
@@ -44,12 +49,17 @@ export async function POST(request: NextRequest) {
         const insertData = {
             slug: product.slug,
             name: product.name,
+            name_en: product.nameEn || product.name_en || '',
             short_description: product.shortDescription || '',
+            short_description_en: product.shortDescriptionEn || product.shortDescription_en || '',
             full_description: product.fullDescription || '',
+            full_description_en: product.fullDescriptionEn || product.fullDescription_en || '',
             main_image: product.mainImage || '',
             gallery: product.gallery || [],
             features: product.features || [],
-            category: product.category || 'Endüstriyel Kapılar'
+            features_en: product.featuresEn || product.features_en || [],
+            category: product.category || 'Endüstriyel Kapılar',
+            category_en: product.categoryEn || product.category_en || ''
         }
 
         const { data, error } = await supabase
@@ -68,12 +78,17 @@ export async function POST(request: NextRequest) {
             id: data.id,
             slug: data.slug,
             name: data.name,
+            nameEn: data.name_en,
             shortDescription: data.short_description,
+            shortDescriptionEn: data.short_description_en,
             fullDescription: data.full_description,
+            fullDescriptionEn: data.full_description_en,
             mainImage: data.main_image,
             gallery: data.gallery || [],
             features: data.features || [],
-            category: data.category
+            featuresEn: data.features_en || [],
+            category: data.category,
+            categoryEn: data.category_en
         }
 
         return NextResponse.json({ success: true, product: result })
@@ -96,12 +111,17 @@ export async function PUT(request: NextRequest) {
         const updateData = {
             slug: product.slug,
             name: product.name,
+            name_en: product.nameEn || product.name_en || '',
             short_description: product.shortDescription || '',
+            short_description_en: product.shortDescriptionEn || product.shortDescription_en || '',
             full_description: product.fullDescription || '',
+            full_description_en: product.fullDescriptionEn || product.fullDescription_en || '',
             main_image: product.mainImage || '',
             gallery: product.gallery || [],
             features: product.features || [],
-            category: product.category || ''
+            features_en: product.featuresEn || product.features_en || [],
+            category: product.category || '',
+            category_en: product.categoryEn || product.category_en || ''
         }
 
         let query = supabase.from('products').update(updateData)

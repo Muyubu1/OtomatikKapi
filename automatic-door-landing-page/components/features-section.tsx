@@ -3,24 +3,46 @@
 import { Check } from "lucide-react"
 import { getAssetPath } from "@/lib/utils"
 import { motion } from "framer-motion"
+import { useLanguage } from "@/lib/i18n"
 
 interface FeaturesSectionProps {
   content?: {
     title: string
+    title_en?: string
     image?: string
     items: string[]
+    items_en?: string[]
   }
 }
 
 export default function FeaturesSection({ content }: FeaturesSectionProps) {
-  const items = content?.items || [
+  const { language, t } = useLanguage()
+
+  const defaultItemsTr = [
     "Kapınızı Otomatikleştirin, Hayatınızı Kolaylaştırın!",
     "Otomatik Kapılar, Otomatik Çözümler!",
     "Güvenli ve Rahat Geçiş İçin Otomatik Kapılar!",
     "Tek Bir Dokunuşla Açılan Kapılar!",
     "Otomatik Kapılar, Akıllı Yaşam Tarzı!",
   ]
+
+  const defaultItemsEn = [
+    "Automate Your Door, Simplify Your Life!",
+    "Automatic Doors, Automatic Solutions!",
+    "Automatic Doors for Safe and Comfortable Access!",
+    "Doors That Open with a Single Touch!",
+    "Automatic Doors, Smart Lifestyle!",
+  ]
+
+  const items = language === 'en'
+    ? (content?.items_en && content.items_en.length > 0 ? content.items_en : defaultItemsEn)
+    : (content?.items || defaultItemsTr)
+
   const image = content?.image || "/foto3.png"
+
+  const titleParts = language === 'en'
+    ? { before: "You Are ", highlight: "Safer", after: " With Us" }
+    : { before: "Bizimle Daha ", highlight: "Güvenli", after: " Olursunuz" }
 
   return (
     <section className="py-20 bg-white">
@@ -35,7 +57,7 @@ export default function FeaturesSection({ content }: FeaturesSectionProps) {
             className="relative"
           >
             <div className="aspect-square rounded-lg overflow-hidden shadow-2xl">
-              <img src={getAssetPath(image)} alt="Otomatik kapı sistemi" className="w-full h-full object-cover" />
+              <img src={getAssetPath(image)} alt={language === 'en' ? 'Automatic door system' : 'Otomatik kapı sistemi'} className="w-full h-full object-cover" />
             </div>
           </motion.div>
 
@@ -47,7 +69,7 @@ export default function FeaturesSection({ content }: FeaturesSectionProps) {
             transition={{ duration: 0.7 }}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-[#414042] mb-8">
-              Bizimle Daha <span className="text-[#ED1C24]">Güvenli</span> Olursunuz
+              {titleParts.before}<span className="text-[#ED1C24]">{titleParts.highlight}</span>{titleParts.after}
             </h2>
             <div className="space-y-4">
               {items.map((feature, index) => (

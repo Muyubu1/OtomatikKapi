@@ -4,14 +4,17 @@ import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
 import { getAssetPath } from "@/lib/utils"
 import { useEffect, useState } from "react"
+import { useLanguage } from "@/lib/i18n"
 
 interface Product {
   slug: string
   name: string
+  name_en?: string
   mainImage: string
 }
 
 export default function ProductsSection() {
+  const { t, language } = useLanguage()
   const [products, setProducts] = useState<Product[]>([])
   const [isLoaded, setIsLoaded] = useState(false)
 
@@ -26,6 +29,13 @@ export default function ProductsSection() {
       .catch(console.error)
   }, [])
 
+  const getProductName = (product: Product) => {
+    if (language === 'en' && product.name_en) {
+      return product.name_en
+    }
+    return product.name
+  }
+
   return (
     <section id="products" className="py-20 bg-gray-50 overflow-hidden">
       <div className="container mx-auto px-4">
@@ -34,9 +44,9 @@ export default function ProductsSection() {
           className={`text-center mb-12 transition-all duration-700 ease-out ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-[#414042] mb-4">Ürünlerimiz</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-[#414042] mb-4">{t("products.title")}</h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Endüstriyel ve ticari ihtiyaçlarınız için geniş ürün yelpazemizi keşfedin.
+            {t("products.description")}
           </p>
         </div>
 
@@ -69,7 +79,7 @@ export default function ProductsSection() {
                       {/* Animated underline */}
                       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-[#ED1C24] group-hover:w-3/4 transition-all duration-500" />
                       <h3 className="font-medium text-[#414042] group-hover:text-[#ED1C24] transition-colors duration-300">
-                        {product.name}
+                        {getProductName(product)}
                       </h3>
                     </div>
                   </CardContent>
@@ -88,7 +98,7 @@ export default function ProductsSection() {
               href="/urunler"
               className="inline-flex items-center gap-2 px-8 py-3 bg-[#ED1C24] hover:bg-[#c91920] text-white font-semibold rounded-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
             >
-              Tüm Ürünleri Görüntüle
+              {t("products.viewAll")}
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>

@@ -1,9 +1,36 @@
+"use client"
+
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { Mail, Phone, MapPin, Linkedin, Instagram } from "lucide-react"
+import { useLanguage } from "@/lib/i18n"
 import logoCKS from "@/public/cksLogobr.png"
 
+interface Settings {
+  instagramUrl: string;
+  linkedinUrl: string;
+}
+
 export default function Footer() {
+  const { t, language } = useLanguage()
+  const [settings, setSettings] = useState<Settings>({ instagramUrl: '', linkedinUrl: '' })
+
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const res = await fetch('/api/settings')
+        if (res.ok) {
+          const data = await res.json()
+          setSettings(data)
+        }
+      } catch (error) {
+        console.error('Error fetching settings:', error)
+      }
+    }
+    fetchSettings()
+  }, [])
+
   return (
     <footer className="bg-[#414042] text-white">
       <div className="container mx-auto px-4 py-16">
@@ -22,45 +49,67 @@ export default function Footer() {
               </div>
             </div>
             <p className="text-gray-300 text-sm mb-4">
-              Endüstriyel otomatik kapı ve yükleme sistemlerinde lider firma. Güvenli, hızlı ve kaliteli çözümler.
+              {t("footer.description")}
             </p>
             <div className="flex gap-4">
-              <a href="#" className="hover:text-[#ED1C24] transition-colors">
-                <Instagram className="h-5 w-5" />
-              </a>
-              <a href="#" className="hover:text-[#ED1C24] transition-colors">
-                <Linkedin className="h-5 w-5" />
-              </a>
+              {settings.instagramUrl ? (
+                <a
+                  href={settings.instagramUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[#ED1C24] transition-colors"
+                >
+                  <Instagram className="h-5 w-5" />
+                </a>
+              ) : (
+                <a href="#" className="hover:text-[#ED1C24] transition-colors">
+                  <Instagram className="h-5 w-5" />
+                </a>
+              )}
+              {settings.linkedinUrl ? (
+                <a
+                  href={settings.linkedinUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[#ED1C24] transition-colors"
+                >
+                  <Linkedin className="h-5 w-5" />
+                </a>
+              ) : (
+                <a href="#" className="hover:text-[#ED1C24] transition-colors">
+                  <Linkedin className="h-5 w-5" />
+                </a>
+              )}
             </div>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="font-bold text-lg mb-4">Hızlı Linkler</h3>
+            <h3 className="font-bold text-lg mb-4">{t("footer.quickLinks")}</h3>
             <ul className="space-y-2">
               <li>
                 <Link href="/" className="text-gray-300 hover:text-[#ED1C24] transition-colors text-sm">
-                  Anasayfa
+                  {t("nav.home")}
                 </Link>
               </li>
               <li>
                 <Link href="/#about" className="text-gray-300 hover:text-[#ED1C24] transition-colors text-sm">
-                  Hakkımızda
+                  {t("nav.about")}
                 </Link>
               </li>
               <li>
                 <Link href="/#products" className="text-gray-300 hover:text-[#ED1C24] transition-colors text-sm">
-                  Ürünlerimiz
+                  {t("nav.products")}
                 </Link>
               </li>
               <li>
                 <Link href="/gallery" className="text-gray-300 hover:text-[#ED1C24] transition-colors text-sm">
-                  Galeri
+                  {t("nav.gallery")}
                 </Link>
               </li>
               <li>
                 <Link href="/#contact" className="text-gray-300 hover:text-[#ED1C24] transition-colors text-sm">
-                  İletişim
+                  {t("nav.contact")}
                 </Link>
               </li>
             </ul>
@@ -68,15 +117,15 @@ export default function Footer() {
 
           {/* Products - Simplified */}
           <div>
-            <h3 className="font-bold text-lg mb-4">Ürünlerimiz</h3>
+            <h3 className="font-bold text-lg mb-4">{t("footer.ourProducts")}</h3>
             <p className="text-gray-300 text-sm mb-4">
-              Endüstriyel kapılar, yüksek hızlı kapılar, yükleme sistemleri ve daha fazlası için ürün kataloğumuzu inceleyin.
+              {t("footer.productsDesc")}
             </p>
             <Link
               href="/urunler"
               className="inline-flex items-center gap-2 text-[#ED1C24] hover:text-white transition-colors text-sm font-medium group"
             >
-              Tüm Ürünleri Görüntüle
+              {t("footer.viewAll")}
               <svg
                 className="w-4 h-4 transform group-hover:translate-x-1 transition-transform"
                 fill="none"
@@ -90,11 +139,11 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h3 className="font-bold text-lg mb-4">İletişim</h3>
+            <h3 className="font-bold text-lg mb-4">{t("footer.contact")}</h3>
             <ul className="space-y-3">
               <li className="flex items-start gap-3">
                 <MapPin className="h-5 w-5 flex-shrink-0 text-[#ED1C24]" />
-                <span className="text-gray-300 text-sm">İstanbul, Türkiye</span>
+                <span className="text-gray-300 text-sm">{language === 'en' ? 'Istanbul, Turkey' : 'İstanbul, Türkiye'}</span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="h-5 w-5 flex-shrink-0 text-[#ED1C24]" />
@@ -120,13 +169,13 @@ export default function Footer() {
       <div className="border-t border-white/10">
         <div className="container mx-auto px-4 py-4">
           <div className="flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
-            <p>© 2026 CKS. Tüm hakları saklıdır.</p>
+            <p>© 2026 CKS Otomatik Kapı. {t("footer.rights")}.</p>
             <div className="flex gap-4 mt-2 md:mt-0">
               <Link href="#" className="hover:text-[#ED1C24] transition-colors">
-                Gizlilik Politikası
+                {t("footer.privacy")}
               </Link>
               <Link href="#" className="hover:text-[#ED1C24] transition-colors">
-                Kullanım Şartları
+                {t("footer.terms")}
               </Link>
             </div>
           </div>

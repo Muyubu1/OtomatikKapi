@@ -1,27 +1,39 @@
 "use client"
 
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { MousePointer } from "lucide-react"
 import { getAssetPath } from "@/lib/utils"
 import { motion } from "framer-motion"
+import { useLanguage } from "@/lib/i18n"
 
 interface ProjectSolutionsSectionProps {
   content?: {
     title: string
+    title_en?: string
     image?: string
     paragraphs: string[]
+    paragraphs_en?: string[]
   }
 }
 
 export default function ProjectSolutionsSection({ content }: ProjectSolutionsSectionProps) {
-  const title = content?.title || "PROJEYE ÖZEL ÇÖZÜMLER"
+  const { t, language } = useLanguage()
+
+  const title = language === 'en' && content?.title_en
+    ? content.title_en
+    : (content?.title || t("projectSolutions.title"))
   const image = content?.image || "/foto1.png"
-  const paragraphs = content?.paragraphs || [
-    "Otomatik kapılar, modern dünyanın vazgeçilmez bir parçasıdır. İster bir alışveriş merkezi, ister bir ofis binası, isterse bir konut kompleksi olsun, otomatik kapılar hem güvenlik hem de kolaylık sağlar.",
-    "İşte burada otomatik kapı firmalarının lideri olan \"FY Otomatik Kapı ve Yükleme Sistemleri\" projeye uygun çözümler sunarak müşterilerimizin ihtiyaçlarına uygun çözümler üreterek uygulamaktadır.",
-    "Projeye uygun çözümler sunan \"FY Otomatik Kapı\" her projenin kendine özgü ihtiyaçlarını ve zorluklarını anlar. Bu, projenin boyutunu, bütçesini, zaman çizelgesini ve hedeflerini dikkate almayı içerir.",
-    "Sonuç olarak, projeye uygun çözümler sunan otomatik kapı firmamız, her projenin başarısını sağlamak için gereken esnekliği ve uzmanlığı sağlar."
-  ]
+  const paragraphs = language === 'en' && content?.paragraphs_en && content.paragraphs_en.length > 0
+    ? content.paragraphs_en
+    : (content?.paragraphs || [
+      language === 'en'
+        ? "Automatic doors are an indispensable part of the modern world. Whether it's a shopping center, office building, or residential complex, automatic doors provide both safety and convenience."
+        : "Otomatik kapılar, modern dünyanın vazgeçilmez bir parçasıdır. İster bir alışveriş merkezi, ister bir ofis binası, isterse bir konut kompleksi olsun, otomatik kapılar hem güvenlik hem de kolaylık sağlar.",
+      language === 'en'
+        ? "Here, \"FY Automatic Door and Loading Systems\", the leader in automatic door companies, provides project-specific solutions by producing solutions suitable for our customers' needs."
+        : "İşte burada otomatik kapı firmalarının lideri olan \"FY Otomatik Kapı ve Yükleme Sistemleri\" projeye uygun çözümler sunarak müşterilerimizin ihtiyaçlarına uygun çözümler üreterek uygulamaktadır."
+    ])
 
   return (
     <section className="py-20 bg-gray-50">
@@ -64,7 +76,9 @@ export default function ProjectSolutionsSection({ content }: ProjectSolutionsSec
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.5 }}
             >
-              <Button className="mt-6 bg-[#ED1C24] hover:bg-[#c91920] text-white">Referanslarımız</Button>
+              <Link href="/gallery">
+                <Button className="mt-6 bg-[#ED1C24] hover:bg-[#c91920] text-white">{t("projectSolutions.button")}</Button>
+              </Link>
             </motion.div>
           </motion.div>
 

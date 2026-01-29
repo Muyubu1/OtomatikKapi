@@ -14,6 +14,7 @@ interface NavigationItem {
     id: number;
     parent_id: number | null;
     name: string;
+    name_en?: string;
     product_slug: string | null;
     sort_order: number;
     children?: NavigationItem[];
@@ -37,6 +38,7 @@ export default function MenuPage() {
     const [saving, setSaving] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
+        name_en: '',
         parent_id: null as number | null,
         product_slug: '',
         sort_order: 0
@@ -91,6 +93,7 @@ export default function MenuPage() {
         setEditingItem(null);
         setFormData({
             name: '',
+            name_en: '',
             parent_id: parentId,
             product_slug: '',
             sort_order: menuItems.length
@@ -102,6 +105,7 @@ export default function MenuPage() {
         setEditingItem(item);
         setFormData({
             name: item.name,
+            name_en: item.name_en || '',
             parent_id: item.parent_id,
             product_slug: item.product_slug || '',
             sort_order: item.sort_order
@@ -371,13 +375,25 @@ export default function MenuPage() {
                             <div className="p-6 space-y-5">
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                                        İsim *
+                                        🇹🇷 İsim (Türkçe) *
                                     </label>
                                     <Input
                                         value={formData.name}
                                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                                         placeholder="Örn: Seksiyonel Kapı"
                                         className="w-full"
+                                    />
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                                        🇬🇧 İsim (English)
+                                    </label>
+                                    <Input
+                                        value={formData.name_en}
+                                        onChange={(e) => setFormData({ ...formData, name_en: e.target.value })}
+                                        placeholder="Ex: Sectional Door"
+                                        className="w-full border-blue-200 focus:border-blue-500"
                                     />
                                 </div>
 
