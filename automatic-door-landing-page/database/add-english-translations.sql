@@ -245,3 +245,46 @@ WHERE key = 'about';
 -- SELECT key, value FROM site_content;
 -- SELECT id, name, name_en FROM navigation_items;
 -- SELECT slug, name, name_en, category, category_en FROM products;
+
+-- ============================================
+-- BÖLÜM 11: FAQ TABLOSUNA İNGİLİZCE SÜTUNLAR
+-- ============================================
+
+-- FAQ tablosuna İngilizce sütunlar ekleme
+ALTER TABLE faq ADD COLUMN IF NOT EXISTS question_en TEXT;
+ALTER TABLE faq ADD COLUMN IF NOT EXISTS answer_en TEXT;
+
+-- Mevcut FAQ'ları İngilizce çevirileriyle güncelleme
+UPDATE faq SET 
+    question_en = 'What are the Advantages of Automatic Door Systems?',
+    answer_en = 'Automatic door systems provide many advantages such as safety, security, energy savings, hygiene, and ease of use. They also offer ideal solutions for disabled access.'
+WHERE question LIKE '%Otomatik Kapı Sistemlerinin Avantajları%';
+
+UPDATE faq SET 
+    question_en = 'How to Maintain Automatic Door Systems?',
+    answer_en = 'Regular maintenance of automatic door systems is important. Periodic checks, lubrication procedures, and sensor cleaning should be performed. Professional service support is recommended.'
+WHERE question LIKE '%Bakımı Nasıl Yapılır%';
+
+UPDATE faq SET 
+    question_en = 'What is the Cost of Automatic Door Systems?',
+    answer_en = 'The cost varies depending on the door type, size, and features. Please contact us for detailed information.'
+WHERE question LIKE '%Maliyeti Nedir%';
+
+UPDATE faq SET 
+    question_en = 'What is the Warranty Period for Automatic Door Systems?',
+    answer_en = 'Our automatic door systems come with a 2-year warranty. Extended warranty options are also available upon request.'
+WHERE question LIKE '%Garanti Süresi Nedir%';
+
+UPDATE faq SET 
+    question_en = 'Which Sectors Use Automatic Doors?',
+    answer_en = 'Automatic doors are used in a wide range of sectors including industrial facilities, warehouses, hospitals, shopping centers, hotels, airports, and residential buildings.'
+WHERE question LIKE '%Hangi Sektörlerde%';
+
+UPDATE faq SET 
+    question_en = 'How Does Installation Take Place?',
+    answer_en = 'Our expert team performs on-site measurements and prepares a customized project. Installation is completed by our professional technicians within the agreed timeframe.'
+WHERE question LIKE '%Kurulum Nasıl%';
+
+-- Doğrulama sorgusu
+-- SELECT question, question_en, answer, answer_en FROM faq;
+
