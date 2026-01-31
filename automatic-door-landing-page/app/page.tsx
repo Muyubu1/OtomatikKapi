@@ -24,7 +24,11 @@ export default async function Home() {
       <FeaturesSection content={siteContent.features} />
       <WhyUsSection content={siteContent.whyUs} />
       <ProjectSolutionsSection content={siteContent.projectSolutions} />
-      <FAQSection faqs={faqData} image={siteContent.faq?.image} />
+      <FAQSection
+        faqs={faqData.faqs}
+        faqs_en={faqData.faqsEn}
+        image={siteContent.faq?.image}
+      />
       <Footer />
       <WhatsAppButton />
       <CallButton />

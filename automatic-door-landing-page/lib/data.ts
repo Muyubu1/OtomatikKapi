@@ -31,6 +31,11 @@ export interface FAQ {
     answer: string
 }
 
+export interface FAQData {
+    faqs: FAQ[]
+    faqsEn: FAQ[]
+}
+
 export interface Product {
     slug: string
     name: string
@@ -113,21 +118,31 @@ export async function getSiteContent(): Promise<SiteContent> {
     }
 }
 
-export async function getFAQ(): Promise<FAQ[]> {
+export async function getFAQ(): Promise<FAQData> {
     try {
         const supabase = createServerClient()
         const { data, error } = await supabase
             .from('faq')
-            .select('question, answer')
+            .select('question, answer, question_en, answer_en')
             .order('sort_order', { ascending: true })
 
-        if (error || !data) {
-            return []
+        if (error || !data || data.length === 0) {
+            return { faqs: [], faqsEn: [] }
         }
 
-        return data
+        const faqs: FAQ[] = data.map(item => ({
+            question: item.question,
+            answer: item.answer
+        }))
+
+        const faqsEn: FAQ[] = data.map(item => ({
+            question: item.question_en || item.question,
+            answer: item.answer_en || item.answer
+        }))
+
+        return { faqs, faqsEn }
     } catch {
-        return []
+        return { faqs: [], faqsEn: [] }
     }
 }
 
