@@ -7,35 +7,40 @@ import { ArrowLeft, Users, Eye, Target } from 'lucide-react'
 import WhatsAppButton from '@/components/whatsapp-button'
 import CallButton from '@/components/call-button'
 import Footer from '@/components/footer'
+import { useLanguage } from '@/lib/i18n'
+
+interface AboutSection {
+    title: string
+    titleEn: string
+    content: string
+    contentEn: string
+}
 
 interface AboutContent {
-    hakkimizda: {
-        title: string
-        content: string
-    }
-    vizyon: {
-        title: string
-        content: string
-    }
-    misyon: {
-        title: string
-        content: string
-    }
+    hakkimizda: AboutSection
+    vizyon: AboutSection
+    misyon: AboutSection
     background_image?: string
 }
 
 const defaultContent: AboutContent = {
     hakkimizda: {
         title: 'HAKKIMIZDA',
-        content: 'Biz, CKS Otomatik Kapı ve Yükleme Sistemleri, endüstriyel otomatik kapı sektöründe lider bir firmayız. Yılların verdiği tecrübe ve bilgi birikimi ile müşterilerimize en iyi hizmeti sunmayı hedefliyoruz. Ürünlerimiz, en son teknoloji ve mükemmeliyetçilik anlayışı ile tasarlanmıştır. Güvenlik, dayanıklılık ve kullanım kolaylığı, ürünlerimizin temel özellikleridir.'
+        titleEn: 'ABOUT US',
+        content: 'Biz, CKS Otomatik Kapı ve Yükleme Sistemleri, endüstriyel otomatik kapı sektöründe lider bir firmayız.',
+        contentEn: 'We, CKS Automatic Door and Loading Systems, are a leading company in the industrial automatic door sector.'
     },
     vizyon: {
         title: 'VİZYONUMUZ',
-        content: 'Vizyonumuz, endüstriyel otomatik kapı sektöründe dünya çapında bir marka olmaktır. Müşteri memnuniyetini en üst düzeyde tutarak, kaliteli ve yenilikçi ürünler sunmayı hedefliyoruz. Sektördeki gelişmeleri yakından takip ederek, teknoloji ve tasarımda öncü olmayı sürdürmeyi planlıyoruz.'
+        titleEn: 'OUR VISION',
+        content: 'Vizyonumuz, endüstriyel otomatik kapı sektöründe dünya çapında bir marka olmaktır.',
+        contentEn: 'Our vision is to become a worldwide brand in the industrial automatic door sector.'
     },
     misyon: {
         title: 'MİSYONUMUZ',
-        content: 'Misyonumuz, müşterilerimize en yüksek kalitede ürün ve hizmetler sunmaktır. Güvenli, dayanıklı ve kullanıcı dostu endüstriyel otomatik kapılar tasarlayarak, müşterilerimizin işlerini kolaylaştırmayı amaçlıyoruz. Sürdürülebilir bir büyüme ile sektördeki liderliğimizi pekiştirmeyi hedefliyoruz.'
+        titleEn: 'OUR MISSION',
+        content: 'Misyonumuz, müşterilerimize en yüksek kalitede ürün ve hizmetler sunmaktır.',
+        contentEn: 'Our mission is to provide our customers with the highest quality products and services.'
     }
 }
 
@@ -50,6 +55,7 @@ const stagger = {
 }
 
 export default function AboutPage() {
+    const { language } = useLanguage()
     const [content, setContent] = useState<AboutContent>(defaultContent)
     const [loading, setLoading] = useState(true)
 
@@ -63,9 +69,24 @@ export default function AboutPage() {
             const data = await res.json()
             if (data.hakkimizda || data.vizyon || data.misyon) {
                 setContent({
-                    hakkimizda: data.hakkimizda || defaultContent.hakkimizda,
-                    vizyon: data.vizyon || defaultContent.vizyon,
-                    misyon: data.misyon || defaultContent.misyon,
+                    hakkimizda: {
+                        title: data.hakkimizda?.title || defaultContent.hakkimizda.title,
+                        titleEn: data.hakkimizda?.titleEn || defaultContent.hakkimizda.titleEn,
+                        content: data.hakkimizda?.content || defaultContent.hakkimizda.content,
+                        contentEn: data.hakkimizda?.contentEn || defaultContent.hakkimizda.contentEn
+                    },
+                    vizyon: {
+                        title: data.vizyon?.title || defaultContent.vizyon.title,
+                        titleEn: data.vizyon?.titleEn || defaultContent.vizyon.titleEn,
+                        content: data.vizyon?.content || defaultContent.vizyon.content,
+                        contentEn: data.vizyon?.contentEn || defaultContent.vizyon.contentEn
+                    },
+                    misyon: {
+                        title: data.misyon?.title || defaultContent.misyon.title,
+                        titleEn: data.misyon?.titleEn || defaultContent.misyon.titleEn,
+                        content: data.misyon?.content || defaultContent.misyon.content,
+                        contentEn: data.misyon?.contentEn || defaultContent.misyon.contentEn
+                    },
                     background_image: data.background_image
                 })
             }
@@ -75,6 +96,10 @@ export default function AboutPage() {
             setLoading(false)
         }
     }
+
+    // Helper function to get content based on language
+    const getTitle = (section: AboutSection) => language === 'en' ? section.titleEn : section.title
+    const getContent = (section: AboutSection) => language === 'en' ? section.contentEn : section.content
 
     if (loading) {
         return (
@@ -92,7 +117,7 @@ export default function AboutPage() {
                 className="fixed top-6 left-6 z-50 flex items-center gap-2 text-white/70 hover:text-[#ED1C24] transition-colors bg-black/30 backdrop-blur-sm px-4 py-2 rounded-full"
             >
                 <ArrowLeft className="h-5 w-5" />
-                <span>Ana Sayfa</span>
+                <span>{language === 'en' ? 'Home' : 'Ana Sayfa'}</span>
             </Link>
 
             {/* Call & WhatsApp Buttons */}
@@ -121,7 +146,7 @@ export default function AboutPage() {
                 >
                     <div className="max-w-7xl mx-auto px-6">
                         <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
-                            {/* Hakkımızda */}
+                            {/* Hakkımızda / About Us */}
                             <motion.div
                                 variants={fadeInUp}
                                 className="text-center"
@@ -132,14 +157,14 @@ export default function AboutPage() {
                                     </div>
                                 </div>
                                 <h2 className="text-xl md:text-2xl font-bold tracking-wider mb-6">
-                                    {content.hakkimizda.title}
+                                    {getTitle(content.hakkimizda)}
                                 </h2>
                                 <p className="text-white/80 leading-relaxed text-sm md:text-base">
-                                    {content.hakkimizda.content}
+                                    {getContent(content.hakkimizda)}
                                 </p>
                             </motion.div>
 
-                            {/* Vizyon */}
+                            {/* Vizyon / Vision */}
                             <motion.div
                                 variants={fadeInUp}
                                 className="text-center"
@@ -150,14 +175,14 @@ export default function AboutPage() {
                                     </div>
                                 </div>
                                 <h2 className="text-xl md:text-2xl font-bold tracking-wider mb-6">
-                                    {content.vizyon.title}
+                                    {getTitle(content.vizyon)}
                                 </h2>
                                 <p className="text-white/80 leading-relaxed text-sm md:text-base">
-                                    {content.vizyon.content}
+                                    {getContent(content.vizyon)}
                                 </p>
                             </motion.div>
 
-                            {/* Misyon */}
+                            {/* Misyon / Mission */}
                             <motion.div
                                 variants={fadeInUp}
                                 className="text-center"
@@ -168,10 +193,10 @@ export default function AboutPage() {
                                     </div>
                                 </div>
                                 <h2 className="text-xl md:text-2xl font-bold tracking-wider mb-6">
-                                    {content.misyon.title}
+                                    {getTitle(content.misyon)}
                                 </h2>
                                 <p className="text-white/80 leading-relaxed text-sm md:text-base">
-                                    {content.misyon.content}
+                                    {getContent(content.misyon)}
                                 </p>
                             </motion.div>
                         </div>

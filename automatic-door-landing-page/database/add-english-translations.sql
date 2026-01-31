@@ -17,6 +17,24 @@ ALTER TABLE products ADD COLUMN IF NOT EXISTS category_en VARCHAR(255);
 -- NAVIGATION_ITEMS tablosuna İngilizce sütun
 ALTER TABLE navigation_items ADD COLUMN IF NOT EXISTS name_en VARCHAR(255);
 
+-- ABOUT_SIMPLE tablosuna İngilizce sütunlar
+ALTER TABLE about_simple ADD COLUMN IF NOT EXISTS hakkimizda_title_en VARCHAR(255) DEFAULT 'ABOUT US';
+ALTER TABLE about_simple ADD COLUMN IF NOT EXISTS hakkimizda_content_en TEXT;
+ALTER TABLE about_simple ADD COLUMN IF NOT EXISTS vizyon_title_en VARCHAR(255) DEFAULT 'OUR VISION';
+ALTER TABLE about_simple ADD COLUMN IF NOT EXISTS vizyon_content_en TEXT;
+ALTER TABLE about_simple ADD COLUMN IF NOT EXISTS misyon_title_en VARCHAR(255) DEFAULT 'OUR MISSION';
+ALTER TABLE about_simple ADD COLUMN IF NOT EXISTS misyon_content_en TEXT;
+
+-- ABOUT_SIMPLE tablosunu İngilizce içerikle güncelle
+UPDATE about_simple SET
+    hakkimizda_title_en = 'ABOUT US',
+    hakkimizda_content_en = 'CKS Automatic Door and Loading Systems has been serving in the industrial door and loading systems sector for many years. Our company, which has completed thousands of successful projects in Turkey and many European countries, continues to add new customers with its reliability and quality understanding. We offer special solutions to our customers with our expert team and latest technology equipment. We take pride in being a pioneer in customer satisfaction with our professional approach in every project.',
+    vizyon_title_en = 'OUR VISION',
+    vizyon_content_en = 'To be the leading and most trusted brand in the industrial automatic door and loading systems sector. To increase customer satisfaction, improve product quality, and provide environmentally friendly and sustainable solutions.',
+    misyon_title_en = 'OUR MISSION',
+    misyon_content_en = 'To provide the highest quality products and services to our customers while continuously innovating and improving our processes. To create value for our employees, customers, and society while maintaining our commitment to excellence.'
+WHERE id = 1;
+
 -- ============================================
 -- BÖLÜM 2: SETTINGS (Instagram, LinkedIn, Video URL)
 -- ============================================

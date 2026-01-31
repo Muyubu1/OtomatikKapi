@@ -4,14 +4,16 @@ import { useState, useEffect, useRef } from "react"
 import { motion } from "framer-motion"
 import {
     Save, Loader2, Check, Upload, Image as ImageIcon,
-    Target, Eye, Users, AlertCircle
+    Target, Eye, Users, Globe
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 
 interface AboutSection {
     title: string
+    titleEn: string
     content: string
+    contentEn: string
 }
 
 interface AboutContent {
@@ -24,15 +26,21 @@ interface AboutContent {
 const defaultContent: AboutContent = {
     hakkimizda: {
         title: 'HAKKIMIZDA',
-        content: 'Biz, CKS Otomatik Kapı ve Yükleme Sistemleri, endüstriyel otomatik kapı sektöründe lider bir firmayız. Yılların verdiği tecrübe ve bilgi birikimi ile müşterilerimize en iyi hizmeti sunmayı hedefliyoruz.'
+        titleEn: 'ABOUT US',
+        content: 'Biz, CKS Otomatik Kapı ve Yükleme Sistemleri, endüstriyel otomatik kapı sektöründe lider bir firmayız.',
+        contentEn: 'We, CKS Automatic Door and Loading Systems, are a leading company in the industrial automatic door sector.'
     },
     vizyon: {
         title: 'VİZYONUMUZ',
-        content: 'Vizyonumuz, endüstriyel otomatik kapı sektöründe dünya çapında bir marka olmaktır. Müşteri memnuniyetini en üst düzeyde tutarak, kaliteli ve yenilikçi ürünler sunmayı hedefliyoruz.'
+        titleEn: 'OUR VISION',
+        content: 'Vizyonumuz, endüstriyel otomatik kapı sektöründe dünya çapında bir marka olmaktır.',
+        contentEn: 'Our vision is to become a worldwide brand in the industrial automatic door sector.'
     },
     misyon: {
         title: 'MİSYONUMUZ',
-        content: 'Misyonumuz, müşterilerimize en yüksek kalitede ürün ve hizmetler sunmaktır. Güvenli, dayanıklı ve kullanıcı dostu endüstriyel otomatik kapılar tasarlayarak, müşterilerimizin işlerini kolaylaştırmayı amaçlıyoruz.'
+        titleEn: 'OUR MISSION',
+        content: 'Misyonumuz, müşterilerimize en yüksek kalitede ürün ve hizmetler sunmaktır.',
+        contentEn: 'Our mission is to provide our customers with the highest quality products and services.'
     }
 }
 
@@ -43,9 +51,41 @@ const sectionIcons = {
 }
 
 const sectionLabels = {
-    hakkimizda: 'Hakkımızda',
-    vizyon: 'Vizyonumuz',
-    misyon: 'Misyonumuz'
+    hakkimizda: { tr: 'Hakkımızda', en: 'About Us' },
+    vizyon: { tr: 'Vizyonumuz', en: 'Our Vision' },
+    misyon: { tr: 'Misyonumuz', en: 'Our Mission' }
+}
+
+// Language Tab Switcher Component
+function LanguageTabs({
+    activeTab,
+    onTabChange
+}: {
+    activeTab: 'tr' | 'en'
+    onTabChange: (tab: 'tr' | 'en') => void
+}) {
+    return (
+        <div className="flex gap-1">
+            <button
+                onClick={() => onTabChange('tr')}
+                className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors flex items-center gap-1 ${activeTab === 'tr'
+                        ? 'bg-[#ED1C24] text-white'
+                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    }`}
+            >
+                🇹🇷 TR
+            </button>
+            <button
+                onClick={() => onTabChange('en')}
+                className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors flex items-center gap-1 ${activeTab === 'en'
+                        ? 'bg-blue-600 text-white'
+                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    }`}
+            >
+                🇬🇧 EN
+            </button>
+        </div>
+    )
 }
 
 function BackgroundImageUploader({
@@ -124,6 +164,7 @@ export default function AboutAdminPage() {
     const [saving, setSaving] = useState(false)
     const [saved, setSaved] = useState(false)
     const [error, setError] = useState<string | null>(null)
+    const [activeLang, setActiveLang] = useState<'tr' | 'en'>('tr')
 
     useEffect(() => {
         fetchContent()
@@ -135,9 +176,24 @@ export default function AboutAdminPage() {
             const data = await res.json()
             if (data.hakkimizda || data.vizyon || data.misyon) {
                 setContent({
-                    hakkimizda: data.hakkimizda || defaultContent.hakkimizda,
-                    vizyon: data.vizyon || defaultContent.vizyon,
-                    misyon: data.misyon || defaultContent.misyon
+                    hakkimizda: {
+                        title: data.hakkimizda?.title || defaultContent.hakkimizda.title,
+                        titleEn: data.hakkimizda?.titleEn || defaultContent.hakkimizda.titleEn,
+                        content: data.hakkimizda?.content || defaultContent.hakkimizda.content,
+                        contentEn: data.hakkimizda?.contentEn || defaultContent.hakkimizda.contentEn
+                    },
+                    vizyon: {
+                        title: data.vizyon?.title || defaultContent.vizyon.title,
+                        titleEn: data.vizyon?.titleEn || defaultContent.vizyon.titleEn,
+                        content: data.vizyon?.content || defaultContent.vizyon.content,
+                        contentEn: data.vizyon?.contentEn || defaultContent.vizyon.contentEn
+                    },
+                    misyon: {
+                        title: data.misyon?.title || defaultContent.misyon.title,
+                        titleEn: data.misyon?.titleEn || defaultContent.misyon.titleEn,
+                        content: data.misyon?.content || defaultContent.misyon.content,
+                        contentEn: data.misyon?.contentEn || defaultContent.misyon.contentEn
+                    }
                 })
                 if (data.background_image) {
                     setBackgroundImage(data.background_image)
@@ -205,30 +261,32 @@ export default function AboutAdminPage() {
                     <h1 className="text-2xl font-bold text-[#414042]">Hakkımızda Sayfası</h1>
                     <p className="text-gray-500 mt-1">Basit ve sade hakkımızda sayfası içeriğini düzenleyin</p>
                 </div>
-                <Button
-                    onClick={saveContent}
-                    disabled={saving}
-                    className="bg-[#ED1C24] hover:bg-[#c91920] text-white"
-                >
-                    {saving ? (
-                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    ) : saved ? (
-                        <Check className="w-4 h-4 mr-2" />
-                    ) : (
-                        <Save className="w-4 h-4 mr-2" />
-                    )}
-                    {saved ? "Kaydedildi!" : "Kaydet"}
-                </Button>
+                <div className="flex items-center gap-3">
+                    <LanguageTabs activeTab={activeLang} onTabChange={setActiveLang} />
+                    <Button
+                        onClick={saveContent}
+                        disabled={saving}
+                        className="bg-[#ED1C24] hover:bg-[#c91920] text-white"
+                    >
+                        {saving ? (
+                            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                        ) : saved ? (
+                            <Check className="w-4 h-4 mr-2" />
+                        ) : (
+                            <Save className="w-4 h-4 mr-2" />
+                        )}
+                        {saved ? "Kaydedildi!" : "Kaydet"}
+                    </Button>
+                </div>
             </div>
 
             {/* Info Banner */}
             <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-xl flex items-start gap-3">
-                <AlertCircle className="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" />
+                <Globe className="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" />
                 <div className="text-sm text-blue-700">
-                    <p className="font-medium">Sayfa Yapısı</p>
+                    <p className="font-medium">Çoklu Dil Desteği</p>
                     <p className="mt-1 text-blue-600">
-                        Sayfa 3 sütundan oluşur: Hakkımızda, Vizyonumuz ve Misyonumuz.
-                        Her bölüm için başlık ve içerik düzenleyebilirsiniz.
+                        Sağ üstteki 🇹🇷 TR / 🇬🇧 EN butonlarını kullanarak içerikleri her iki dilde düzenleyebilirsiniz.
                     </p>
                 </div>
             </div>
@@ -260,7 +318,7 @@ export default function AboutAdminPage() {
                 {(['hakkimizda', 'vizyon', 'misyon'] as const).map((sectionKey) => {
                     const section = content[sectionKey]
                     const Icon = sectionIcons[sectionKey]
-                    const label = sectionLabels[sectionKey]
+                    const labels = sectionLabels[sectionKey]
 
                     return (
                         <motion.div
@@ -274,23 +332,29 @@ export default function AboutAdminPage() {
                                 <div className="w-10 h-10 bg-[#ED1C24]/10 rounded-lg flex items-center justify-center">
                                     <Icon className="w-5 h-5 text-[#ED1C24]" />
                                 </div>
-                                <h3 className="font-semibold text-[#414042]">{label}</h3>
+                                <h3 className="font-semibold text-[#414042]">
+                                    {activeLang === 'tr' ? `🇹🇷 ${labels.tr}` : `🇬🇧 ${labels.en}`}
+                                </h3>
                             </div>
 
                             {/* Content */}
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    İçerik
+                                    {activeLang === 'tr' ? 'İçerik' : 'Content'}
                                 </label>
                                 <Textarea
-                                    value={section.content}
-                                    onChange={(e) => updateSection(sectionKey, 'content', e.target.value)}
-                                    placeholder={`${label} içeriği...`}
+                                    value={activeLang === 'tr' ? section.content : section.contentEn}
+                                    onChange={(e) => updateSection(
+                                        sectionKey,
+                                        activeLang === 'tr' ? 'content' : 'contentEn',
+                                        e.target.value
+                                    )}
+                                    placeholder={activeLang === 'tr' ? `${labels.tr} içeriği...` : `${labels.en} content...`}
                                     rows={5}
-                                    className="resize-none"
+                                    className={`resize-none ${activeLang === 'en' ? 'border-blue-200' : ''}`}
                                 />
                                 <p className="text-xs text-gray-400 mt-1">
-                                    {section.content.length} karakter
+                                    {(activeLang === 'tr' ? section.content : section.contentEn).length} karakter
                                 </p>
                             </div>
                         </motion.div>
