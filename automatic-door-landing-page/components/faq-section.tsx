@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { getAssetPath } from "@/lib/utils"
 import { motion } from "framer-motion"
@@ -42,11 +43,14 @@ export default function FAQSection({ faqs: propFaqs, faqs_en: propFaqsEn, image 
             transition={{ duration: 0.7 }}
             className="relative"
           >
-            <div className="aspect-square rounded-lg overflow-hidden shadow-xl">
-              <img
+            <div className="aspect-square rounded-lg overflow-hidden shadow-xl relative">
+              <Image
                 src={getAssetPath(sectionImage)}
                 alt={language === 'en' ? "Industrial automatic door systems" : "Endüstriyel otomatik kapı sistemleri"}
-                className="w-full h-full object-cover"
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover"
+                loading="lazy"
               />
             </div>
           </motion.div>

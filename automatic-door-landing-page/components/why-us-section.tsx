@@ -1,6 +1,7 @@
 "use client"
 
 import { Award, CircleDollarSign, Cpu, Wrench, Shield, LucideIcon } from "lucide-react"
+import Image from "next/image"
 import { getAssetPath } from "@/lib/utils"
 import { motion } from "framer-motion"
 import { useLanguage } from "@/lib/i18n"
@@ -70,8 +71,15 @@ export default function WhyUsSection({ content }: WhyUsSectionProps) {
             transition={{ duration: 0.7 }}
             className="relative order-2 md:order-1"
           >
-            <div className="aspect-square rounded-lg overflow-hidden shadow-2xl">
-              <img src={getAssetPath(image)} alt={language === 'en' ? 'Why us' : 'Neden biz'} className="w-full h-full object-cover" />
+            <div className="aspect-square rounded-lg overflow-hidden shadow-2xl relative">
+              <Image
+                src={getAssetPath(image)}
+                alt={language === 'en' ? 'Why us' : 'Neden biz'}
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover"
+                loading="lazy"
+              />
             </div>
           </motion.div>
 

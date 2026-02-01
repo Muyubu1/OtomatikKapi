@@ -1,37 +1,16 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef } from "react"
 import { getAssetPath } from "@/lib/utils"
 
 interface HeroVideoBackgroundProps {
   className?: string
+  videoUrl?: string
 }
 
-interface Settings {
-  heroVideoUrl?: string
-}
-
-export default function HeroVideoBackground({ className = "" }: HeroVideoBackgroundProps) {
+export default function HeroVideoBackground({ className = "", videoUrl }: HeroVideoBackgroundProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
-  const [videoUrl, setVideoUrl] = useState("/videos/hero-bg.webm")
-
-  useEffect(() => {
-    // Fetch video URL from settings
-    const fetchSettings = async () => {
-      try {
-        const res = await fetch('/api/settings')
-        if (res.ok) {
-          const data: Settings = await res.json()
-          if (data.heroVideoUrl) {
-            setVideoUrl(data.heroVideoUrl)
-          }
-        }
-      } catch (error) {
-        console.error('Error fetching settings:', error)
-      }
-    }
-    fetchSettings()
-  }, [])
+  const effectiveVideoUrl = videoUrl || "/videos/hero-bg.webm"
 
   useEffect(() => {
     // Ensure video plays on mount
@@ -40,7 +19,7 @@ export default function HeroVideoBackground({ className = "" }: HeroVideoBackgro
         // Autoplay may be blocked by browser, silent fail
       })
     }
-  }, [videoUrl])
+  }, [effectiveVideoUrl])
 
   return (
     <div className={`absolute inset-0 overflow-hidden ${className}`}>
@@ -52,10 +31,11 @@ export default function HeroVideoBackground({ className = "" }: HeroVideoBackgro
         muted
         loop
         playsInline
-        preload="auto"
-        key={videoUrl}
+        preload="metadata"
+        poster="/images/hero-poster.jpg"
+        key={effectiveVideoUrl}
       >
-        <source src={getAssetPath(videoUrl)} type="video/webm" />
+        <source src={getAssetPath(effectiveVideoUrl)} type="video/webm" />
         <source src={getAssetPath("/videos/hero-bg.mp4")} type="video/mp4" />
         {/* Fallback for browsers that don't support video */}
         Tarayıcınız video etiketini desteklemiyor.
@@ -66,3 +46,4 @@ export default function HeroVideoBackground({ className = "" }: HeroVideoBackgro
     </div>
   )
 }
+

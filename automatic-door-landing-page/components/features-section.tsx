@@ -1,6 +1,7 @@
 "use client"
 
 import { Check } from "lucide-react"
+import Image from "next/image"
 import { getAssetPath } from "@/lib/utils"
 import { motion } from "framer-motion"
 import { useLanguage } from "@/lib/i18n"
@@ -56,8 +57,15 @@ export default function FeaturesSection({ content }: FeaturesSectionProps) {
             transition={{ duration: 0.7 }}
             className="relative"
           >
-            <div className="aspect-square rounded-lg overflow-hidden shadow-2xl">
-              <img src={getAssetPath(image)} alt={language === 'en' ? 'Automatic door system' : 'Otomatik kapı sistemi'} className="w-full h-full object-cover" />
+            <div className="aspect-square rounded-lg overflow-hidden shadow-2xl relative">
+              <Image
+                src={getAssetPath(image)}
+                alt={language === 'en' ? 'Automatic door system' : 'Otomatik kapı sistemi'}
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover"
+                loading="lazy"
+              />
             </div>
           </motion.div>
 

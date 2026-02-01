@@ -1,6 +1,5 @@
 "use client"
 
-import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { Mail, Phone, MapPin, Linkedin, Instagram } from "lucide-react"
@@ -10,26 +9,15 @@ import logoCKS from "@/public/cksLogobr.png"
 interface Settings {
   instagramUrl: string;
   linkedinUrl: string;
+  heroVideoUrl?: string;
 }
 
-export default function Footer() {
-  const { t, language } = useLanguage()
-  const [settings, setSettings] = useState<Settings>({ instagramUrl: '', linkedinUrl: '' })
+interface FooterProps {
+  settings?: Settings;
+}
 
-  useEffect(() => {
-    const fetchSettings = async () => {
-      try {
-        const res = await fetch('/api/settings')
-        if (res.ok) {
-          const data = await res.json()
-          setSettings(data)
-        }
-      } catch (error) {
-        console.error('Error fetching settings:', error)
-      }
-    }
-    fetchSettings()
-  }, [])
+export default function Footer({ settings = { instagramUrl: '', linkedinUrl: '' } }: FooterProps) {
+  const { t, language } = useLanguage()
 
   return (
     <footer className="bg-[#414042] text-white">

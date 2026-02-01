@@ -1,9 +1,10 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
 import { getAssetPath } from "@/lib/utils"
-import { useEffect, useState } from "react"
+import { useState, useEffect } from "react"
 import { useLanguage } from "@/lib/i18n"
 
 interface Product {
@@ -13,20 +14,18 @@ interface Product {
   mainImage: string
 }
 
-export default function ProductsSection() {
+interface ProductsSectionProps {
+  products?: Product[]
+}
+
+export default function ProductsSection({ products = [] }: ProductsSectionProps) {
   const { t, language } = useLanguage()
-  const [products, setProducts] = useState<Product[]>([])
   const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
-    fetch('/api/products')
-      .then(res => res.json())
-      .then(data => {
-        setProducts(data)
-        // Small delay for smooth animation start
-        setTimeout(() => setIsLoaded(true), 100)
-      })
-      .catch(console.error)
+    // Small delay for smooth animation start
+    const timer = setTimeout(() => setIsLoaded(true), 100)
+    return () => clearTimeout(timer)
   }, [])
 
   const getProductName = (product: Product) => {
@@ -69,10 +68,13 @@ export default function ProductsSection() {
                     <div className="aspect-square overflow-hidden relative">
                       {/* Gradient overlay on hover */}
                       <div className="absolute inset-0 bg-gradient-to-t from-[#ED1C24]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
-                      <img
+                      <Image
                         src={getAssetPath(product.mainImage) || getAssetPath("/placeholder.svg")}
                         alt={product.name}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
+                        className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                        loading="lazy"
                       />
                     </div>
                     <div className="p-4 text-center relative overflow-hidden">
@@ -106,14 +108,7 @@ export default function ProductsSection() {
           </div>
         )}
       </div>
-
-      {/* CSS for additional animations */}
-      <style jsx>{`
-        @keyframes shimmer {
-          0% { background-position: -200% 0; }
-          100% { background-position: 200% 0; }
-        }
-      `}</style>
     </section>
   )
 }
+

@@ -188,3 +188,133 @@ export function getAdjacentProducts(products: Product[], currentSlug: string): {
         next: currentIndex < products.length - 1 ? products[currentIndex + 1] : null
     }
 }
+
+// Settings interface and server-side fetch
+export interface Settings {
+    instagramUrl: string
+    linkedinUrl: string
+    heroVideoUrl: string
+}
+
+const defaultSettings: Settings = {
+    instagramUrl: '',
+    linkedinUrl: '',
+    heroVideoUrl: '/videos/hero-bg.webm'
+}
+
+export async function getSettings(): Promise<Settings> {
+    try {
+        const supabase = createServerClient()
+        const { data, error } = await supabase
+            .from('site_content')
+            .select('*')
+            .eq('key', 'settings')
+            .single()
+
+        if (error && error.code !== 'PGRST116') {
+            console.error('Settings fetch error:', error)
+            return defaultSettings
+        }
+
+        return data?.value || defaultSettings
+    } catch {
+        return defaultSettings
+    }
+}
+
+// Navigation interface and server-side fetch
+export interface NavigationItem {
+    id: number
+    parent_id: number | null
+    name: string
+    name_en?: string
+    product_slug: string | null
+    sort_order: number
+    children?: NavigationItem[]
+}
+
+export async function getNavigation(): Promise<NavigationItem[]> {
+    try {
+        const supabase = createServerClient()
+        const { data, error } = await supabase
+            .from('navigation_items')
+            .select('*')
+            .order('sort_order', { ascending: true })
+
+        if (error) {
+            console.error('Navigation fetch error:', error)
+            return []
+        }
+
+        // Build tree structure
+        const items = data as NavigationItem[]
+        const rootItems = items.filter(item => item.parent_id === null)
+
+        const buildTree = (parentId: number): NavigationItem[] => {
+            return items
+                .filter(item => item.parent_id === parentId)
+                .map(item => ({
+                    ...item,
+                    children: buildTree(item.id)
+                }))
+        }
+
+        return rootItems.map(item => ({
+            ...item,
+            children: buildTree(item.id)
+        }))
+    } catch {
+        return []
+    }
+}
+
+// Enhanced Product interface with English fields
+export interface ProductWithI18n {
+    id?: number
+    slug: string
+    name: string
+    name_en?: string
+    shortDescription: string
+    shortDescription_en?: string
+    fullDescription: string
+    fullDescription_en?: string
+    mainImage: string
+    gallery: string[]
+    features: string[]
+    features_en?: string[]
+    category: string
+    category_en?: string
+}
+
+export async function getProductsWithI18n(): Promise<ProductWithI18n[]> {
+    try {
+        const supabase = createServerClient()
+        const { data, error } = await supabase
+            .from('products')
+            .select('*')
+            .order('created_at', { ascending: true })
+
+        if (error || !data) {
+            return []
+        }
+
+        return data.map(p => ({
+            id: p.id,
+            slug: p.slug,
+            name: p.name,
+            name_en: p.name_en,
+            shortDescription: p.short_description,
+            shortDescription_en: p.short_description_en,
+            fullDescription: p.full_description,
+            fullDescription_en: p.full_description_en,
+            mainImage: p.main_image,
+            gallery: p.gallery || [],
+            features: p.features || [],
+            features_en: p.features_en || [],
+            category: p.category,
+            category_en: p.category_en
+        }))
+    } catch {
+        return []
+    }
+}

@@ -15,9 +15,10 @@ interface HeroSectionProps {
     description: string
     description_en?: string
   }
+  videoUrl?: string
 }
 
-export default function HeroSection({ content }: HeroSectionProps) {
+export default function HeroSection({ content, videoUrl }: HeroSectionProps) {
   const { language, t } = useLanguage()
 
   const title = language === 'en' && content?.title_en
@@ -39,7 +40,7 @@ export default function HeroSection({ content }: HeroSectionProps) {
   return (
     <section id="hero" className="relative w-full h-screen overflow-hidden">
       {/* Video Background */}
-      <HeroVideoBackground />
+      <HeroVideoBackground videoUrl={videoUrl} />
 
       {/* Content */}
       <div className="relative container mx-auto px-4 h-full flex flex-col justify-center items-center text-center">

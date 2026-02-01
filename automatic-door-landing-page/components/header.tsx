@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
@@ -21,17 +21,24 @@ interface NavigationItem {
 interface Settings {
   instagramUrl: string;
   linkedinUrl: string;
+  heroVideoUrl?: string;
 }
 
-export default function Header() {
+interface HeaderProps {
+  navigation?: NavigationItem[];
+  settings?: Settings;
+}
+
+export default function Header({ navigation = [], settings = { instagramUrl: '', linkedinUrl: '' } }: HeaderProps) {
   const { language, setLanguage, t } = useLanguage()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [megaMenuOpen, setMegaMenuOpen] = useState(false)
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false)
-  const [productCategories, setProductCategories] = useState<NavigationItem[]>([])
-  const [settings, setSettings] = useState<Settings>({ instagramUrl: '', linkedinUrl: '' })
   const megaMenuRef = useRef<HTMLDivElement>(null)
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+
+  // Use navigation from props
+  const productCategories = navigation
 
   const navItems = [
     { name: t("nav.home"), href: "/" },
@@ -39,31 +46,6 @@ export default function Header() {
     { name: t("nav.products"), href: "#products", hasMegaMenu: true },
     { name: t("nav.gallery"), href: "/gallery" },
   ]
-
-  // Fetch navigation items and settings on mount
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [navRes, settingsRes] = await Promise.all([
-          fetch('/api/navigation'),
-          fetch('/api/settings')
-        ])
-
-        if (navRes.ok) {
-          const data = await navRes.json()
-          setProductCategories(data)
-        }
-
-        if (settingsRes.ok) {
-          const settingsData = await settingsRes.json()
-          setSettings(settingsData)
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error)
-      }
-    }
-    fetchData()
-  }, [])
 
   const handleMouseEnter = () => {
     if (timeoutRef.current) {

@@ -1,12 +1,15 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Inter, Geist_Mono } from "next/font/google"
+import { Inter } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { LanguageProvider } from "@/lib/i18n"
 import "./globals.css"
 
-const _inter = Inter({ subsets: ["latin"] })
-const _geistMono = Geist_Mono({ subsets: ["latin"] })
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter"
+})
 
 // GitHub Pages için basePath
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
@@ -70,7 +73,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="tr" suppressHydrationWarning>
-      <body className={`font-sans antialiased`}>
+      <body className={`${inter.className} antialiased`}>
         <LanguageProvider>
           {children}
         </LanguageProvider>
@@ -79,3 +82,4 @@ export default function RootLayout({
     </html>
   )
 }
+

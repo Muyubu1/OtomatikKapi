@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { MousePointer } from "lucide-react"
 import { getAssetPath } from "@/lib/utils"
@@ -90,8 +91,15 @@ export default function ProjectSolutionsSection({ content }: ProjectSolutionsSec
             transition={{ duration: 0.7 }}
             className="relative"
           >
-            <div className="aspect-square rounded-lg overflow-hidden shadow-xl">
-              <img src={getAssetPath(image)} alt="3D proje çözümü" className="w-full h-full object-cover" />
+            <div className="aspect-square rounded-lg overflow-hidden shadow-xl relative">
+              <Image
+                src={getAssetPath(image)}
+                alt="3D proje çözümü"
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover"
+                loading="lazy"
+              />
             </div>
           </motion.div>
         </div>
